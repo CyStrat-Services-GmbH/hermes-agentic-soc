@@ -9,6 +9,6 @@ dist/
 runtime/
 *.license
 *.lic
-thor64*
-thor-lite*
+/thor64*
+/thor-lite*
 /submission/catalog-entry.yaml
