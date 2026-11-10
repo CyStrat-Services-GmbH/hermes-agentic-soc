@@ -1,0 +1,38 @@
+manifest_version: 2
+api_version: 1
+name: agentic-soc
+version: "0.1.0"
+description: Evidence-first SOC profiles and deterministic THOR Lite triage with local audit and human approval.
+author: CyStrat Services GmbH and Nextron Systems GmbH
+license: LicenseRef-Pending-Approval
+homepage: https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc
+requires_hermes: ">=0.23.1"
+tags: [security, soc, dfir, thor, detection-engineering]
+capabilities: []
+provides_tools:
+  - soc_template_list
+  - soc_template_install
+  - thor_lite_scan
+  - thor_parse
+  - thor_first_assessment
+  - soc_alert_triage
+  - soc_research_plan
+provides_hooks:
+  - pre_tool_call
+config_schema:
+  thor_path:
+    type: str
+    default: ""
+    description: Absolute path to a separately obtained local THOR Lite executable. Never downloaded by this plugin.
+  evidence_roots:
+    type: list
+    default: []
+    description: Absolute directories the operator permits for evidence imports. Demo and plugin data are always allowed.
+  scan_roots:
+    type: list
+    default: []
+    description: Absolute directories the operator permits THOR to scan. Empty disables real scans.
+  scan_timeout:
+    type: int
+    default: 900
+    description: Maximum local scan runtime in seconds, clamped to 10–3600.

@@ -1,0 +1,15 @@
+{
+  "status": "scaffold",
+  "enabled": false,
+  "technology": "Splunk",
+  "mcp_servers": {},
+  "operator_requirements": [
+    "Verify current vendor API/MCP compatibility",
+    "Configure a read-only tenant-scoped credential in Hermes",
+    "Set trust: untrusted for any opt-in MCP",
+    "Verify per-tool readOnlyHint and server RBAC",
+    "Review data residency and any external indicator disclosure"
+  ],
+  "official_mcp_reference": "https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/2.0/connecting-to-the-mcp-server-and-settings",
+  "note": "Deliberately empty: not auto-loaded, no invented executable or endpoint. See technology skill."
+}

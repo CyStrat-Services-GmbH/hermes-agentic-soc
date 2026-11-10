@@ -1,0 +1,16 @@
+Hermes Agentic SOC
+Built by CyStrat Services GmbH × Nextron Systems GmbH
+2026
+
+The project sponsor has confirmed permission for joint public presentation
+and publication. This is not an additional license grant for THOR or other
+vendor components.
+
+Hermes Agent / Nous Research and THOR / Nextron names identify the relevant
+products. No Nous endorsement or catalog admission is claimed.
+
+The implementation and all supplied detections/example events are original
+or synthetic. No THOR binary, Nextron signature, private rule or license is
+redistributed. Vendor and project documentation is linked, not vendored.
+
+Proposed code license: Apache-2.0; final approval pending. See LICENSE.

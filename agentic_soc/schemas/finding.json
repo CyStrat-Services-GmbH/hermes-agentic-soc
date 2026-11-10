@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Normalized THOR observation",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "finding_id": {
+      "type": "string"
+    },
+    "host": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "scan_id": {
+      "type": "string"
+    },
+    "score": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "level": {
+      "enum": [
+        "ALERT",
+        "WARNING",
+        "NOTICE",
+        "INFO",
+        "ERROR",
+        "DEBUG",
+        "UNKNOWN"
+      ]
+    },
+    "source_level": {
+      "type": "string"
+    },
+    "score_band": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "file": {
+      "type": "string"
+    },
+    "process": {
+      "type": "object"
+    },
+    "hashes": {
+      "type": "object"
+    },
+    "reasons": {
+      "type": "array"
+    },
+    "detection_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_times": {
+      "type": "object"
+    },
+    "evidence_strength": {
+      "enum": [
+        "Confirmed",
+        "Strong Indicator",
+        "Not Derivable"
+      ]
+    },
+    "evidence_claim": {
+      "type": "string"
+    },
+    "attack": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "event_id",
+    "finding_id",
+    "host",
+    "module",
+    "scan_id",
+    "score",
+    "level",
+    "source_level",
+    "score_band",
+    "message",
+    "file",
+    "process",
+    "hashes",
+    "reasons",
+    "detection_time",
+    "artifact_times",
+    "evidence_strength",
+    "evidence_claim",
+    "attack"
+  ],
+  "additionalProperties": false
+}

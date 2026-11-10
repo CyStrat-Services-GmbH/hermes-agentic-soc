@@ -1,0 +1,1 @@
+{'ok': True, 'profile_created': True, 'persona_installed': True, 'credentials_copied': False, 'credential_isolation': False, 'note': 'Configure model/auth separately. Hermes may share root subscription auth. Enable agentic-soc in this profile. SOUL is instruction, not a sandbox.'}

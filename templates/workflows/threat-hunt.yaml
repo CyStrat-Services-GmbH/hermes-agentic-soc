@@ -1,0 +1,30 @@
+{
+  "name": "threat-hunt",
+  "version": "0.1.0",
+  "execution": "declarative_reference_not_workflow_engine",
+  "steps": [
+    {
+      "id": "hypothesis",
+      "type": "skill",
+      "skill": "agentic-soc:threat-hunt"
+    },
+    {
+      "id": "query",
+      "type": "draft_only",
+      "languages": [
+        "KQL",
+        "SPL",
+        "Sigma"
+      ]
+    },
+    {
+      "id": "review",
+      "type": "human",
+      "require": "tenant, telemetry, read-only RBAC, time bounds"
+    },
+    {
+      "id": "evaluate",
+      "type": "supplied_evidence_only"
+    }
+  ]
+}

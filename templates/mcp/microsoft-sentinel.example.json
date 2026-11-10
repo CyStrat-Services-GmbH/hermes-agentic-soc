@@ -1,0 +1,15 @@
+{
+  "status": "scaffold",
+  "enabled": false,
+  "technology": "Microsoft Sentinel",
+  "mcp_servers": {},
+  "operator_requirements": [
+    "Verify current vendor API/MCP compatibility",
+    "Configure a read-only tenant-scoped credential in Hermes",
+    "Set trust: untrusted for any opt-in MCP",
+    "Verify per-tool readOnlyHint and server RBAC",
+    "Review data residency and any external indicator disclosure"
+  ],
+  "official_mcp_reference": null,
+  "note": "Deliberately empty: not auto-loaded, no invented executable or endpoint. See technology skill."
+}

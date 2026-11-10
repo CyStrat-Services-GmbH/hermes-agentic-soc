@@ -1,0 +1,40 @@
+Hermes Agentic SOC | CyStrat Services × Nextron Systems
+OFFLINE SYNTHETIC DEMO. No scanner or target interaction.
+Profiles: 9; six defense MVP templates, three research scaffolds.
+{
+  "ok": true,
+  "report_id": "1b95b1c4fe5742ad9c6e08b8186b5906",
+  "inventory": {
+    "event_count": 4,
+    "finding_count": 3,
+    "levels": {
+      "ALERT": 1,
+      "WARNING": 1,
+      "NOTICE": 1,
+      "INFO": 1
+    },
+    "modules": {
+      "Filescan": 2,
+      "ProcessCheck": 1,
+      "Init": 1
+    },
+    "hosts": [
+      "[host-677a374f794b]"
+    ],
+    "scans": [
+      "[scan-abec43f759f0]"
+    ],
+    "unique_files": 1,
+    "unique_hashes": 1,
+    "unknown_score_count": 1,
+    "coverage_verified": false
+  },
+  "source_sha256": "2c928c5e52e9cc724164271dc636ab4737c9f2e9359a9af1b1ef6dd59f97f89e",
+  "normalized": "/home/user/workspace/soc-demo-final/reports/1b95b1c4fe5742ad9c6e08b8186b5906/normalized.json",
+  "verdict": "Verdächtig",
+  "priority": "P2",
+  "case_json": "/home/user/workspace/soc-demo-final/reports/1b95b1c4fe5742ad9c6e08b8186b5906/case.json",
+  "report": "/home/user/workspace/soc-demo-final/reports/1b95b1c4fe5742ad9c6e08b8186b5906/report.md"
+}
+Exact inventory: 4 events, 3 correlated observation groups.
+Evidence-bounded verdict; no automatic containment. Ticket remains draft-only.

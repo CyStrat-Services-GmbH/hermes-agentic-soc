@@ -1,0 +1,22 @@
+{
+  "name": "alert-triage",
+  "version": "0.1.0",
+  "execution": "declarative_reference_not_workflow_engine",
+  "steps": [
+    {
+      "id": "intake",
+      "type": "human",
+      "require": "source alert, asset, time window"
+    },
+    {
+      "id": "triage",
+      "tool": "soc_alert_triage",
+      "enrichment": "not_implemented"
+    },
+    {
+      "id": "l2",
+      "type": "human",
+      "require": "validate impact and escalation"
+    }
+  ]
+}

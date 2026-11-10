@@ -1,0 +1,31 @@
+[
+  {
+    "log_version": "v2.0.0", "time": "2026-11-11T08:00:00Z", "hostname": "LAB-WS01",
+    "scanid": "S-DEMO", "level": "Alert", "module": "Filescan",
+    "message": "Synthetic suspicious artifact; no actual malware included",
+    "score": 90,
+    "file": {"path": "/home/analyst/demo/synthetic-loader.txt", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    "reasons": [{"name": "DEMO_ONLY_LOADER_PATTERN", "score": 90, "description": "Synthetic detection fixture"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-11T08:00:01Z", "hostname": "LAB-WS01",
+    "scanid": "S-DEMO", "level": "Warning", "module": "Filescan",
+    "message": "Second synthetic observation on the same file",
+    "score": 65,
+    "file": {"path": "/home/analyst/demo/synthetic-loader.txt", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    "reasons": [{"name": "DEMO_ONLY_FILENAME", "score": 65}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-11T08:00:02Z", "hostname": "LAB-WS01",
+    "scanid": "S-DEMO", "level": "Notice", "module": "ProcessCheck",
+    "message": "Synthetic process metadata requiring contextual review",
+    "score": 45,
+    "process": {"name": "demo-process", "pid": 4242},
+    "reasons": [{"name": "DEMO_ONLY_PROCESS", "score": 45}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-11T08:00:03Z", "hostname": "LAB-WS01",
+    "scanid": "S-DEMO", "level": "Info", "module": "Init",
+    "message": "Synthetic fixture ends here. This is not proof of a complete scan."
+  }
+]

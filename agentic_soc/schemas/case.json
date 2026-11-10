@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "First assessment",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "policy_version",
+    "inventory",
+    "findings",
+    "verdict",
+    "classification",
+    "priority",
+    "criticality",
+    "confidence",
+    "rationale",
+    "limitations",
+    "recommended_actions",
+    "ticket_draft"
+  ],
+  "properties": {
+    "priority": {
+      "enum": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    "criticality": {
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
+    "inventory": {
+      "type": "object",
+      "required": [
+        "event_count",
+        "finding_count",
+        "levels",
+        "modules",
+        "coverage_verified"
+      ]
+    },
+    "findings": {
+      "type": "array"
+    },
+    "ticket_draft": {
+      "type": "object",
+      "properties": {
+        "writes_performed": {
+          "const": false
+        }
+      },
+      "required": [
+        "writes_performed",
+        "status"
+      ]
+    }
+  }
+}

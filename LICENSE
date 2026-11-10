@@ -1,0 +1,14 @@
+LICENSE PENDING APPROVAL
+
+Copyright (c) 2026 CyStrat Services GmbH and Nextron Systems GmbH.
+
+Apache License 2.0 is the proposed project license, pending final approval
+by the relevant rights holders. This file is an explicit placeholder and
+does not itself grant an Apache-2.0 license or other open-source rights.
+
+Publication of source is authorized by the project sponsor. No license to
+THOR executables, vendor signatures, private rules, brands or other
+third-party components is granted by this repository.
+
+Before an open-source release, replace this file with the approved license
+and update plugin.yaml, NOTICE, README.md and release metadata together.

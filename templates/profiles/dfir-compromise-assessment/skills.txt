@@ -1,0 +1,3 @@
+agentic-soc:thor-lite
+agentic-soc:thor-assessment
+agentic-soc:incident-response

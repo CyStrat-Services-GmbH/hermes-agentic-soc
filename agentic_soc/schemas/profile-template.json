@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Profile template",
+  "type": "object",
+  "required": [
+    "id",
+    "status",
+    "description",
+    "workflow",
+    "scope_required"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "mvp",
+        "scaffold"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "workflow": {
+      "type": "string"
+    },
+    "scope_required": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

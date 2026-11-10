@@ -1,0 +1,305 @@
+{
+  "schema_version": "1.0",
+  "technologies": [
+    {
+      "id": "microsoft-sentinel",
+      "name": "Microsoft Sentinel",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/microsoft-sentinel.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-microsoft-sentinel"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "splunk",
+      "name": "Splunk",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "vendor_documented_not_configured",
+        "source": "https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/2.0/connecting-to-the-mcp-server-and-settings",
+        "template": "mcp/splunk.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-splunk"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "elastic-security",
+      "name": "Elastic Security",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "vendor_documented_not_configured",
+        "source": "https://www.elastic.co/docs/explore-analyze/ai-features/agent-builder/mcp-server",
+        "template": "mcp/elastic-security.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-elastic-security"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "ibm-qradar",
+      "name": "IBM QRadar",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/ibm-qradar.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-ibm-qradar"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "google-secops",
+      "name": "Google SecOps",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/google-secops.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-google-secops"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "wazuh",
+      "name": "Wazuh",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/wazuh.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-wazuh"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "graylog",
+      "name": "Graylog",
+      "type": "siem",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/graylog.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-graylog"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "thehive-cortex",
+      "name": "TheHive / Cortex",
+      "type": "soar-case",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/thehive-cortex.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-thehive-cortex"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "shuffle",
+      "name": "Shuffle",
+      "type": "soar-case",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/shuffle.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-shuffle"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "xsoar",
+      "name": "Cortex XSOAR",
+      "type": "soar-case",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/xsoar.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-xsoar"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "sentinel-playbooks",
+      "name": "Sentinel Playbooks",
+      "type": "soar-case",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/sentinel-playbooks.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-sentinel-playbooks"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "defender-xdr",
+      "name": "Defender XDR",
+      "type": "edr-xdr",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/defender-xdr.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-defender-xdr"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "crowdstrike",
+      "name": "CrowdStrike",
+      "type": "edr-xdr",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/crowdstrike.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-crowdstrike"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "sentinelone",
+      "name": "SentinelOne",
+      "type": "edr-xdr",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/sentinelone.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-sentinelone"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "velociraptor",
+      "name": "Velociraptor",
+      "type": "edr-xdr",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/velociraptor.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-velociraptor"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "misp",
+      "name": "MISP",
+      "type": "threat-intelligence",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/misp.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-misp"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "opencti",
+      "name": "OpenCTI",
+      "type": "threat-intelligence",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/opencti.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-opencti"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "virustotal",
+      "name": "VirusTotal",
+      "type": "threat-intelligence",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/virustotal.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-virustotal"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "sigma",
+      "name": "Sigma",
+      "type": "detection",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/sigma.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-sigma"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "yara",
+      "name": "YARA",
+      "type": "detection",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/yara.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-yara"
+      ],
+      "live_connector": false
+    }
+  ]
+}

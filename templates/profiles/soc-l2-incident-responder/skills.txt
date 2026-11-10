@@ -1,0 +1,2 @@
+agentic-soc:incident-response
+agentic-soc:alert-triage

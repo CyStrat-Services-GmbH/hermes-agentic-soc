@@ -1,0 +1,40 @@
+{
+  "name": "compromise-assessment",
+  "version": "0.1.0",
+  "execution": "declarative_reference_not_workflow_engine",
+  "steps": [
+    {
+      "id": "scope",
+      "type": "human",
+      "require": "authorized evidence and allowed scan roots"
+    },
+    {
+      "id": "scan",
+      "tool": "thor_lite_scan",
+      "optional": true,
+      "approval": "host",
+      "on_error": "stop"
+    },
+    {
+      "id": "parse",
+      "tool": "thor_parse",
+      "on_error": "stop"
+    },
+    {
+      "id": "assess",
+      "tool": "thor_first_assessment",
+      "on_error": "stop"
+    },
+    {
+      "id": "review",
+      "type": "human",
+      "require": "verify evidence, priority and redaction"
+    },
+    {
+      "id": "ticket",
+      "type": "draft_only",
+      "writes": false,
+      "approval_before_external_write": true
+    }
+  ]
+}
