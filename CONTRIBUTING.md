@@ -19,6 +19,18 @@ The last two commands require a prepared Hermes host. Record actual results and 
 
 **No hosted CI.** This repository deliberately runs no GitHub Actions: the checks above are executed locally before every push, and the pull request states the commands and their output. There is no workflow file and no runner to keep green — a promise of CI that does not run is worse than an explicit local gate. Do not add a workflow without the owner's decision; a failing local run is the blocking signal.
 
+## Plugin packaging and the shared dependency environment
+
+The plugin is a **metadata-only** member of the dependency workspace: `pyproject.toml` carries `[project]` but no `[build-system]`.
+
+That is deliberate. Hermes builds one dependency environment per installation from the union of every live profile's enabled plugins (`pm/plugins_state.py::dependency_homes`), so the same git plugin enabled in two profiles produces two workspace members. uv identifies a member by `[project].name` and refuses duplicates. Hermes renames a member to a unique `hermes-plugin-<dir>-<hash>` only when it is *virtual* — no build backend (`pm/workspace.py::_workspace_member`); a buildable member keeps its declared name because uv verifies it against the built package metadata.
+
+Consequences:
+
+- Do not add `[build-system]` back. It would make the member buildable, keep the shared name, and `uv lock` would fail with `Two workspace members are both named hermes-agentic-soc` as soon as a second profile enables the plugin.
+- The plugin loads from its directory through `plugin.yaml` + `register(ctx)`; nothing needs a wheel. `pip install .` is not part of the documented workflow, and `python -m pytest` runs from the repository root without installing the package.
+- A local workaround that renames `[project].name` inside one profile's copy is not needed with this layout, and it makes `hermes plugins check-updates` report a phantom update.
+
 ## Documentation standards
 
 - **Product claims:** Distinguish implemented local functionality from planning scaffolds, gated previews and verified live integrations.
