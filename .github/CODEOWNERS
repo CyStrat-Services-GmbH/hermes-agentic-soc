@@ -1,0 +1,18 @@
+# Default owner for everything in this repository.
+*                       @CyStrat-Services-GmbH
+
+# Review boundaries: these files decide what the package may do, what it
+# claims, and what a catalog reviewer accepts. Keep them under the owner.
+/.github/               @CyStrat-Services-GmbH
+/SECURITY.md            @CyStrat-Services-GmbH
+/LICENSE                @CyStrat-Services-GmbH
+/NOTICE                 @CyStrat-Services-GmbH
+/CODE_OF_CONDUCT.md     @CyStrat-Services-GmbH
+/plugin.yaml            @CyStrat-Services-GmbH
+/pyproject.toml         @CyStrat-Services-GmbH
+/agentic_soc/security.py @CyStrat-Services-GmbH
+/agentic_soc/runtime.py  @CyStrat-Services-GmbH
+/agentic_soc/audit.py    @CyStrat-Services-GmbH
+/templates/profiles/    @CyStrat-Services-GmbH
+/skills/                @CyStrat-Services-GmbH
+/docs/CATALOG-SUBMISSION.md @CyStrat-Services-GmbH

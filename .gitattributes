@@ -1,0 +1,23 @@
+# Normalise line endings in the repository, not on the checkout.
+* text=auto eol=lf
+
+# Source and documentation: always LF, diffed as text.
+*.py      text eol=lf diff=python
+*.md      text eol=lf
+*.yaml    text eol=lf
+*.yml     text eol=lf
+*.json    text eol=lf
+*.toml    text eol=lf
+*.txt     text eol=lf
+.gitattributes text
+.gitignore     text
+
+# Images: never normalised, never diffed as text.
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.svg     text eol=lf
+
+# Never ship bytecode or local environment files, whichever machine builds it.
+*.pyc     binary
+__pycache__/ export-ignore
