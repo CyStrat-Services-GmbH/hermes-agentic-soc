@@ -11,6 +11,9 @@ Sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.
 | THOR reports, logs or clear-text signatures left from earlier scans | Path is a THOR working or output directory; timestamps match earlier scans. |
 | AV signatures in `pagefile.sys`, disk-surface DeepDive or security-product data folders | DeepDive finding without corroboration; product data paths. |
 | THOR's own process dumps | Dump directory of a previous THOR run. |
+| Hash-named copies in a vendor remediation or snapshot folder (`...\SARemediation\SystemRepair\snapshots\backup\<40 hex>.exe`) | The directory is a product backup store. These copies routinely trigger every "renamed binary" rule at once — `powershell_ANOMALY`, `SUSP_Renamed_Mshta`, `SUSP_Renamed_RunDLL32`, `APT_Cloaked_CERTUTIL`, `SUSP_Renamed_CreateDump`, `SUSP_Renamed_BrowserCore`, `SUSP_Renamed_Fsquirt`, `SUSP_Cloaked_WScript` — because the filename is a hash. A bundled vulnerable-driver hit (`PUA_VULN_Driver_*`) in the same folder is a stored copy, not a loaded driver: check ServiceCheck and the loaded-module list before treating it as a driver load. One such folder can dominate an entire export. |
+| YARA hits inside a vendor AV/EDR module directory (`em018_64.dll`, `em003_64.dll`, `em035_64.dll` below `Program Files\<vendor>\...\Modules\`) | Security products embed sample handling logic. Rules for credential-stealer indicators, wallet extension IDs, browser profile paths and AMSI patching fire on their own modules. Verify signer and product path. |
+| `ProcessIntegrity` → `PE-Sieve found process with implanted/patched section` on many processes | With an AV/EDR that hooks APIs installed, PE-Sieve reports implanted or patched sections in most signed system and browser processes (`svchost.exe`, `firefox.exe`, `explorer.exe`, `dwm.exe`). That is the normal state of a hooked process tree, not injection. Corroborate with the process signer and the installed security product before reporting. |
 | SHIMCache or AmCache entries for THOR itself run from `C:\Temp\` or `C:\thor\` | Path matches the documented THOR run location. |
 
 ## Legitimate software that looks odd
@@ -19,7 +22,7 @@ Sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.
 |---|---|
 | Dual-use admin tools (`nmap.exe`, `ncat.exe`, Sysinternals, remote administration tools) | Authorised by IT; installed in a standard location; consistent with role of the host. |
 | Hack tool in a standard package or backup location (`/usr/bin/ncat`, `/backups/…/bin/ncat`) | Package manager ownership; backup path. |
-| Legitimate tools in the Recycle Bin under renamed names (`$IR4HB6A.exe`) | Original name in the Recycle Bin metadata; hash of the known tool. |
+| Legitimate tools in the Recycle Bin under renamed names (`$IR4HB6A.exe`) | Original name in the Recycle Bin metadata; hash of the known tool. **The `$R` + six random characters form is the standard Recycle Bin nomenclature for every deleted file**, so a rule named "renamed \<product>" fires on any deleted copy of that product by construction. Do not read it as deliberate masquerading; check `$I` metadata for the original name and path. |
 | Very old files triggering size or signature anomalies | Age, product folder, vendor signature. |
 | Old or rare versions of legitimate programs (frequently `java.exe`/`javaw.exe`, unsigned in vendor product folders) | Product installation path and vendor. |
 | Legitimate software or services in `%AppData%` or other unusual locations | Known product; signer; installation records. |
@@ -33,6 +36,7 @@ Sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.
 |---|---|
 | Legitimate files matching a filename regex IOC | Only reason is the name pattern; content and signer are benign. |
 | Services or tasks matching regex filename IOCs | Same. |
+| `REG_SUSP_Processor_Driver_Registry_Modification` on any non-`winprint.dll` print processor | The rule reports *any* third-party print processor, which every printer vendor driver installs (`OKC04EPP.DLL`, `OKX05HPP.DLL`, `PSCRIPT5.DLL` and similar). Decide on the file, not the registry value: does the DLL exist under `spool\prtprocs\x64`, is it signed by the printer vendor, is there a Spooler load record? If the export contains no file evidence, the finding is `Inconclusive` at best — never auto-close it, because this is also the exact SprySOCKS persistence pattern. |
 | Registry values starting with `4d5a` by chance | Value context is not an embedded PE. |
 | Company domains under blacklisted TLDs | Domain is registered to the organisation. |
 | Reversed `in-addr.arpa` strings matching blacklisted IPs | DNS cache entry is a reverse lookup. |
