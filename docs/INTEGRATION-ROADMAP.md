@@ -49,4 +49,4 @@ The 25 entries describe breadth, not launch dates or production readiness. Vendo
 
 Read-only is the default for the planned connector layer. Future isolation, blocking, ticket closure or other writes require a reviewed implementation and explicit human approval; such write connectors do not exist in this MVP.
 
-The repository remains private and the proposed Apache-2.0 license awaits final approval. No public launch, catalog submission or video publication is authorized by this roadmap.
+The repository is public and licensed Apache-2.0; the catalog entry is submitted under [hermes-agent#154079](https://github.com/NousResearch/hermes-agent/pull/154079). Publishing a demo video is not authorized by this roadmap.

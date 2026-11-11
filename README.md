@@ -9,12 +9,12 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.3"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.4"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.0 or newer"></a>
 </p>
 <p align="center">
-  <a href="#license-and-release-status"><img src="assets/badges/preview.svg" alt="Private development preview"></a>
+  <a href="#license-and-release-status"><img src="assets/badges/preview.svg" alt="Early public preview"></a>
   <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="25 planned integrations, not live connectors"></a>
   <a href="LICENSE"><img src="assets/badges/license.svg" alt="Apache-2.0"></a>
 </p>
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.2.3.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
+> **Early public preview · v0.2.4.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
 
 ## Explore the project
 
@@ -72,7 +72,7 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 
 ## What you can use today
 
-| Area | Delivered in v0.2.3 | Boundary |
+| Area | Delivered in v0.2.4 | Boundary |
 |---|---|---|
 | Native Hermes plugin | 7 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
 | Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
@@ -209,7 +209,7 @@ Apache-2.0 was chosen because it fits both sides of this project: it grants the 
 
 Joint development with Nextron Systems is confirmed: **Nextron Systems' management** has agreed to support and cooperate on this plugin. That cooperation covers the project collaboration; it is not a grant of rights to THOR, its signatures or Nextron marks.
 
-This repository is currently private. Changing its visibility, publishing the source or the video, or submitting it to the Hermes plugin catalog or the hackathon requires the owner's explicit approval; this documentation does not authorize them.
+This repository is public under Apache-2.0. The catalog entry is submitted as [NousResearch/hermes-agent#154079](https://github.com/NousResearch/hermes-agent/pull/154079); that PR, not this README, carries the reviewed pin. Publication of a demo video and any change to the licence remain the owner's decision and are not authorized by this document.
 
 ---
 

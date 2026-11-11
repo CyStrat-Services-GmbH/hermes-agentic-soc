@@ -9,12 +9,12 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.3"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.4"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
 <p align="center">
-  <a href="#lizenz-und-veröffentlichungsstatus"><img src="assets/badges/preview.svg" alt="Private Entwicklungsvorschau"></a>
+  <a href="#lizenz-und-veröffentlichungsstatus"><img src="assets/badges/preview.svg" alt="Frühe öffentliche Vorschau"></a>
   <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="25 geplante, nicht aktive Anbindungen"></a>
   <a href="LICENSE"><img src="assets/badges/license.svg" alt="Apache-2.0"></a>
 </p>
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.2.3.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
+> **Frühe öffentliche Vorschau · v0.2.4.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
 
 ## Was heute enthalten ist
 
@@ -111,7 +111,7 @@ Apache-2.0 passt zu beiden Seiten dieses Projekts: Sie erlaubt die patent- und m
 
 Die gemeinsame Entwicklung mit Nextron Systems ist bestätigt: die **Geschäftsführung von Nextron Systems** hat Unterstützung und Zusammenarbeit für dieses Plugin zugesagt. Das betrifft die Projektzusammenarbeit, nicht eine Rechteeinräumung an THOR, Signaturen oder Marken von Nextron.
 
-Das Repository bleibt privat. Eine Änderung der Sichtbarkeit, Veröffentlichung oder Einreichung setzt eine erneute ausdrückliche Freigabe voraus.
+Das Repository ist öffentlich unter Apache-2.0. Der Catalog-Eintrag liegt als [NousResearch/hermes-agent#154079](https://github.com/NousResearch/hermes-agent/pull/154079) vor; den geprüften Pin trägt dieser PR, nicht dieses README. Die Veröffentlichung eines Demo-Videos und jede Änderung der Lizenz bleiben Entscheidungen des Rechteinhabers und sind durch dieses Dokument nicht autorisiert.
 
 ---
 

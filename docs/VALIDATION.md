@@ -1,5 +1,25 @@
 # Validation record
 
+## Release 0.2.4: the repository is public, and the docs said otherwise
+
+The repository became public, but the README a catalog reviewer reads at the pinned commit still called itself a "Private development preview", closed with "This repository is currently private", and told readers that submitting to the catalog "requires the owner's explicit approval" — while the entry was already open. The German README, the integration roadmap and the preview badge said the same.
+
+| Content | Status |
+|---|---|
+| `README.md` / `README.de.md` | Status line, badge alt text and closing paragraph now state the repository is public under Apache-2.0 and link the open catalog PR |
+| `assets/badges/preview.svg` | `Status: public preview` |
+| `docs/INTEGRATION-ROADMAP.md` | "remains private / licence awaits approval" replaced with the public state and the PR link |
+| `docs/VALIDATION.md` (0.1.1 review) | Past tense: the repository *was* private at the time of that review |
+
+| Check | Executed result |
+|---|---|
+| Regression suite | 184 passed |
+| Generator | `build_assets.py` idempotent; 6 profiles, 30 generated + 9 hand-authored skills, 25 technology scaffolds, 3 workflows |
+| Documentation checker | PASS |
+| Plugin Doctor (Hermes 0.23.0) | 7 tools, 1 hook |
+| Catalog validation | `hermes plugins validate . --install-deps` passed |
+
+
 ## Release 0.2.3: rule-13 disclosure in the README, catalog entry submitted
 
 The catalog review reads the README at the pinned commit, and it had no disclosure section: the security content lived in `docs/OPERATOR-GUIDE.md` and `SECURITY.md`, which rule 13 does not name. This release adds a `## Security disclosure` section to both READMEs covering network, commands, reads outside the plugin, writes, credentials, background activity and model context, and removes a leftover release TODO block from the German README that still described the licence as pending.
@@ -251,7 +271,7 @@ Logs are prefixed `review-v012-` in `docs/validation/`. Python 3.12/3.13 and Win
 
 ## Review release 0.1.1 (historical)
 
-The repository is now **private by owner decision**. Review changes and test logs supersede the original MVP snapshot below. The reviewed version adds stronger input/approval/storage boundaries, an operator-disabled exploit labs research preview and CyStrat SOC Suite as the 21st integration scaffold, for 29 total skills.
+The repository was **private by owner decision** at the time of this review; it is public now. Review changes and test logs supersede the original MVP snapshot below. The reviewed version adds stronger input/approval/storage boundaries, an operator-disabled exploit labs research preview and CyStrat SOC Suite as the 21st integration scaffold, for 29 total skills.
 
 Current detailed findings are in `REVIEW-0.1.1.md`; review-specific validation logs are prefixed `review-`. No new THOR vendor-binary or live-tenant validation is claimed.
 
