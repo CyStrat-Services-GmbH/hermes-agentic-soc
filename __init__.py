@@ -4,9 +4,8 @@ import json
 from pathlib import Path
 
 def register(ctx):
-    from .agentic_soc.api import TOOLS, policy, validate
+    from .agentic_soc.api import TOOLS, policy
     from .agentic_soc.runtime import Runtime
-    from .agentic_soc.security import BoundaryError
 
     root = Path(__file__).resolve().parent
 
@@ -18,13 +17,8 @@ def register(ctx):
 
     def make_handler(spec):
         def handle(params, **kwargs):
-            try:
-                validate(params, spec["parameters"])
-            except BoundaryError as exc:
-                # Invalid attempts are still audited through runtime.call, without raw arguments.
-                from .agentic_soc.audit import Audit
-                Audit(runtime.data()).write(spec["name"], "schema_rejected")
-                return json.dumps({"ok": False, "error": str(exc)})
+            # Runtime owns validation + fail-closed audit. Do not create a second
+            # handler-level path that may raise while trying to log invalid input.
             return json.dumps(runtime.call(spec["name"], params), ensure_ascii=False)
         return handle
 
@@ -60,6 +54,10 @@ def register(ctx):
             return "Use soc_template_install for a reviewed installation plan. /soc-templates lists available templates."
         return ctx.dispatch_tool("soc_template_list", {})
 
+    def capabilities_command(raw_args, **kwargs):
+        technology = raw_args.strip()
+        return ctx.dispatch_tool("soc_capabilities", {"technology": technology} if technology else {})
+
     def scan_command(raw_args, **kwargs):
         try:
             params = json.loads(raw_args)
@@ -76,5 +74,6 @@ def register(ctx):
         return ctx.dispatch_tool("thor_first_assessment", {"path": path})
 
     ctx.register_command("soc-templates", templates_command, "List SOC profiles")
+    ctx.register_command("soc-capabilities", capabilities_command, "Show current functions, planned integrations and preview state")
     ctx.register_command("thor-scan", scan_command, "Preview a local THOR Lite scan; execution uses the normal tool approval pipeline")
     ctx.register_command("thor-assess", assess_command, "Assess allowed THOR JSON evidence")

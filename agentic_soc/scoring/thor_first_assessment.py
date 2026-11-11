@@ -56,12 +56,16 @@ def assess(parsed: dict) -> dict:
         priority, criticality = "P3", "MEDIUM"
         classification, verdict = "Suspicious – Further Investigation Required", "Verdächtig"
         rule = "R2: WARNING/NOTICE without ALERT; validate artifacts and false-positive context."
+    elif levels & {"ERROR", "UNKNOWN"}:
+        priority, criticality = "P3", "MEDIUM"
+        classification, verdict = "Inconclusive", "Nicht abschließend beurteilbar"
+        rule = "R3: ERROR/UNKNOWN observations prevent low-risk reassurance; repair telemetry or verify the original export."
     else:
         priority, criticality = "P3", "LOW"
         classification, verdict = "Inconclusive", "Nicht abschließend beurteilbar"
-        rule = "R3: no suspicious finding in supplied export; scan coverage and completeness unverified."
+        rule = "R4: no suspicious finding in supplied export; scan coverage and completeness unverified."
     result = {
-        "schema_version": "1.0", "policy_version": "0.1.1",
+        "schema_version": "1.0", "policy_version": "0.1.2",
         "inventory": inv, "findings": findings, "verdict": verdict,
         "classification": classification, "priority": priority, "criticality": criticality,
         "confidence": {"label": "limited", "meaning": "Evidence coverage, not a numerical compromise probability."},

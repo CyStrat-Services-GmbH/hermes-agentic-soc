@@ -1,0 +1,10 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Using CPython 3.11.17
+Creating virtual environment at: .venv
+   Building hermes-agentic-soc @ file:///home/user/workspace/hermes-agentic-soc
+      Built hermes-agentic-soc @ file:///home/user/workspace/hermes-agentic-soc
+Installed 1 package in 1ms
+........................................................................ [ 49%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+145 passed in 0.57s

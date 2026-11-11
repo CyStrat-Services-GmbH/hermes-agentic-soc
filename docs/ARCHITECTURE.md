@@ -1,6 +1,6 @@
 # Architecture
 
-The native Hermes entrypoint registers seven tools, one `pre_tool_call` hook, three slash commands and the shipped namespaced skills. It performs no network or data-directory I/O at registration. It uses only documented `ctx` operations and the public `plugins.plugin_storage.plugin_data_dir` helper ([Hermes plugin API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)).
+The native Hermes entrypoint registers eight tools, one `pre_tool_call` hook, four slash commands and the shipped namespaced skills. It performs no network or data-directory I/O at registration. It uses only documented `ctx` operations and the public `plugins.plugin_storage.plugin_data_dir` helper ([Hermes plugin API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)).
 
 ## Data flow
 
@@ -25,7 +25,8 @@ No LLM decides severity. No external connector is active by default. Workflow YA
 - **security:** Canonical path containment, best-effort minimisation and structural authorization-scope checks.
 - **tools/thor:** Strict structured import, explicit version rejection, exact counts and verified local FileScan invocation.
 - **scoring:** Conservative provisional policy, evidence limits and case rendering.
-- **runtime:** Operator configuration, private output allocation, lazy salt and lifecycle audit.
+- **runtime:** Operator configuration, private staged report publication, lazy salt and lifecycle audit with explicit post-operation audit-failure semantics.
+- **tools/capabilities:** Offline inventory separating implemented functions, planned technology coverage and unverified configuration presence.
 - **templates/skills:** Extensible role and technology inventory; generated mechanically from reviewable definitions.
 
 ## Compatibility and deliberate limits

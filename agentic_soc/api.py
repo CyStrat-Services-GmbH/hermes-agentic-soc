@@ -22,6 +22,8 @@ def schema(name, description, props, required=()):
 
 
 TOOLS = [
+    schema("soc_capabilities", "Show implemented SOC functions, the planned 21-technology integration catalog and gated-preview state. Local inspection only; configuration is not proof of live connectivity.", {
+        "technology": {"type": "string", "minLength": 1}}),
     schema("soc_template_list", "List shipped SOC profile templates and their implementation status.", {}),
     schema("soc_template_install", "Dry-run or create a fresh no-credential Hermes profile; execution requires host approval.", {
         "template": {"type": "string"}, "name": {"type": "string"},

@@ -1,6 +1,26 @@
 # Validation record
 
-## Review release 0.1.1
+## Review release 0.1.2
+
+The third review introduces a local capability inventory and hardens evidence imports, report publication and audit failure responses. The following checks were executed against the changed source; no live remote connector or licensed THOR scan is implied.
+
+| Review check | Executed result |
+|---|---|
+| Python 3.14 regression suite | 145 passed |
+| Python 3.11 regression suite | 145 passed |
+| Agent Skills validation | All 29 directories valid |
+| Generated assets | Re-running `scripts/build_assets.py` leaves the generated-content diff unchanged |
+| Fresh-home Plugin Doctor | Passed; eight tools and one hook registered |
+| Catalog capability/security checks | Passed; declared tools and hooks match registrations, no core override |
+| Catalog `--install-deps` preparation | Not a clean pass: two fresh-home attempts reported the host warning described below |
+| Offline demo | Exactly 4 synthetic source events and 3 observation groups; complete report bundle created |
+| Capability CLI | 9 profiles, 29 skills, 21 technology templates, 0 live remote connectors; Suite filter tested |
+
+Both `validate --install-deps` attempts printed `dependency preparation failed: Dependency inputs changed while preparing publication; retry.`, then ran successful plugin validation and exited zero. The inspected host catches preparation exceptions and continues with its existing environment. Therefore the successful capability/security checks do not establish a successful fresh dependency-preparation step. No host internals were patched to hide or bypass the warning.
+
+Logs are prefixed `review-v012-` in `docs/validation/`. Python 3.12/3.13 and Windows/macOS were not locally executed for this review; GitHub Actions results are recorded separately when available.
+
+## Review release 0.1.1 (historical)
 
 The repository is now **private by owner decision**. Review changes and test logs supersede the original MVP snapshot below. The reviewed version adds stronger input/approval/storage boundaries, an operator-disabled exploit labs research preview and CyStrat SOC Suite as the 21st integration scaffold, for 29 total skills.
 

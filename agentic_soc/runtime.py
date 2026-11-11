@@ -7,11 +7,12 @@ import os
 import uuid
 import threading
 import tempfile
+import shutil
 from pathlib import Path
 
 from .audit import Audit
 from .security import BoundaryError, Redactor, contained, private_directory
-from .tools import templates, thor, triage
+from .tools import templates, thor, triage, capabilities
 from .scoring.thor_first_assessment import assess, markdown
 
 _SALT_LOCK = threading.Lock()
@@ -67,6 +68,7 @@ class Runtime:
 
     def call(self, name: str, params: dict) -> dict:
         audit = None
+        execution_started = False
         try:
             data = self.data()
             audit = Audit(data)
@@ -75,21 +77,39 @@ class Runtime:
             if name not in BY_NAME:
                 raise BoundaryError("Unknown tool.")
             validate(params, BY_NAME[name]["parameters"])
+            execution_started = True
             result = self.execute(name, params)
-            audit.write(name, "completed", ok=bool(result.get("ok", True)))
-            return result
         except Exception as exc:
             try:
                 if audit is not None:
                     audit.write(name, "rejected", error_type=type(exc).__name__)
             except Exception:
-                return {"ok": False, "error": "Audit unavailable; operation refused. Operator repair required."}
+                return {"ok": False, "error": "Audit unavailable; operator review required.",
+                        "error_code": "AUDIT_UNAVAILABLE", "execution_started": execution_started,
+                        "retry_safe": False}
             if isinstance(exc, BoundaryError):
-                return {"ok": False, "error": str(exc)}
-            return {"ok": False, "error": "Operation failed safely; inspect operator logs. No raw evidence exposed.",
-                    "error_type": type(exc).__name__}
+                return {"ok": False, "error": str(exc), "error_code": "BOUNDARY_REJECTED",
+                        "execution_started": execution_started, "retry_safe": False}
+            message = ("Operation did not complete successfully; partial effects may exist. Do not automatically retry."
+                       if execution_started else "Operation refused before execution. No raw evidence exposed.")
+            return {"ok": False, "error": message,
+                    "error_type": type(exc).__name__, "execution_started": execution_started,
+                    "retry_safe": False}
+        result.setdefault("ok", True)
+        try:
+            audit.write(name, "completed", ok=bool(result["ok"]))
+        except Exception:
+            # Never tell the caller "refused" after a scan/profile/report already ran.
+            # In particular, do not encourage an automatic repeat of a side effect.
+            return {"ok": False, "error_code": "AUDIT_FINALIZATION_FAILED",
+                    "error": "Operation returned a result, but its final audit append failed. Do not automatically retry.",
+                    "operation_completed": True, "retry_safe": False,
+                    "operation_result": result}
+        return result
 
     def execute(self, name: str, p: dict) -> dict:
+        if name == "soc_capabilities":
+            return capabilities.inventory(self.root, self.get_config, p.get("technology"))
         if name == "soc_template_list":
             return templates.list_templates(self.get_config("offensive_preview_enabled", False) is True)
         if name == "soc_template_install":
@@ -103,18 +123,26 @@ class Runtime:
             parsed = thor.parse(self.evidence(p["path"]), self.redactor())
             run_id = uuid.uuid4().hex
             reports = private_directory(self.data(), "reports")
-            out = private_directory(reports, run_id)
-            self.write(out / "normalized.json", parsed)
+            out = reports / run_id
+            staging = Path(tempfile.mkdtemp(prefix=".staging-", dir=reports))
             result = {"ok": True, "report_id": run_id, "inventory": parsed["inventory"],
                       "source_sha256": parsed["source_sha256"], "normalized": str(out / "normalized.json")}
-            if name == "thor_first_assessment":
-                case = assess(parsed)
-                self.write(out / "case.json", case)
-                text = markdown(case, parsed)
-                self.write_text(out / "report.md", text)
-                result.update({"verdict": case["verdict"], "priority": case["priority"],
-                               "case_json": str(out / "case.json"), "report": str(out / "report.md"),
-                               "preview": text[:6000]})
+            try:
+                self.write(staging / "normalized.json", parsed)
+                if name == "thor_first_assessment":
+                    case = assess(parsed)
+                    self.write(staging / "case.json", case)
+                    text = markdown(case, parsed)
+                    self.write_text(staging / "report.md", text)
+                    result.update({"verdict": case["verdict"], "priority": case["priority"],
+                                   "case_json": str(out / "case.json"), "report": str(out / "report.md"),
+                                   "preview": text[:6000]})
+                if out.exists():
+                    raise BoundaryError("Unexpected report-ID collision; no existing report was overwritten.")
+                staging.rename(out)
+            finally:
+                if staging.exists():
+                    shutil.rmtree(staging)
             return result
         if name == "soc_alert_triage":
             return triage.triage(p["alert"], self.redactor())

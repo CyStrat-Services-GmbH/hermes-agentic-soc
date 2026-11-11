@@ -1,20 +1,26 @@
 # Hermes Agentic SOC
 
-Evidence-first cybersecurity specialists for Hermes Agent, built by **CyStrat Services × Nextron Systems**. The MVP provides native tools, deterministic THOR export assessment, reviewable research plans, reusable personas and explicitly labelled technology scaffolds.
+**Cybersecurity from Germany. For the world.**
+
+Your tools. Your data. Your security stack. Hermes Agentic SOC brings cybersecurity experience into Hermes as specialized skills, native tools, workflows and expert profiles, built by **CyStrat Services × Nextron Systems**.
+
+Today, the MVP analyzes supplied evidence and local THOR exports. The integration roadmap prepares Hermes to work directly with your wider environment through approved, read-only connections. Technology templates are shipped; live remote integrations are not. Explore the [full integration roadmap](docs/INTEGRATION-ROADMAP.md).
 
 **Offensive Security / Gated Preview:** exploit labs, led by managing director Johannes Schönborn, is the planned developer and contributor of the Offensive Security part. In this release that partnership appears only in the research skeleton, preview metadata and marketing. No delivered exploit labs operational implementation or additional copyright/license grant is claimed.
 
-Version 0.1.1 targets Hermes >=0.23.1 and Python >=3.11 for the standalone engine. Hermes itself may require a newer Python version. This is an MVP, not an autonomous incident commander or a replacement for a forensic investigation.
+Version 0.1.2 targets Hermes >=0.23.1 and Python >=3.11 for the standalone engine. Hermes itself may require a newer Python version. This is an MVP, not an autonomous incident commander or a replacement for a forensic investigation.
 
 **Private development repository.** The owner has made this repository private. Do not change visibility, publish the source/video or submit a catalog PR without new explicit approval. Existing installation links require authorized GitHub access.
 
-## Review release 0.1.1
+## Review release 0.1.2
 
-The second-pass review adds argument-specific approval fingerprints, strict unknown-version/duplicate-key refusal, conservative correlation when host/scan/hash/process-start identity is missing, private output permissions, symlink guards and UTC-ordered timelines. Reports now quote case-specific observations as inert Markdown rather than repeating only generic assessment prose. See `docs/REVIEW-0.1.1.md` for findings and regression coverage.
+The third-pass review adds `/soc-capabilities`: an honest, local inventory of current functionality, planned integrations and configuration presence. It never mistakes a configured path for a working connection. Report bundles are published only when complete, evidence imports reject mid-read changes and numeric overflow, malformed identity fields cannot establish correlation, and post-operation audit failures warn against automatic retries. See [review findings](docs/REVIEW-0.1.2.md) and [executed validation](docs/VALIDATION.md).
 
 ## License status
 
 **Proposed license: Apache-2.0. Final approval is pending.** `LICENSE` deliberately grants no provisional open-source rights. Public source visibility is not a license grant. Do not label this release Apache-2.0 or OSI-open-source until the rights holders approve and replace `LICENSE`, `plugin.yaml` and `NOTICE` together. This is a release blocker, not a hidden TODO.
+
+- [ ] **Release-blocking TODO:** Obtain final rights-holder approval and replace the license placeholder before any open-source release.
 
 The partners' joint-publication permission has been confirmed by the project sponsor. That does not grant redistribution rights for THOR executables, signatures, licenses, private rules or third-party content.
 
@@ -22,7 +28,8 @@ The partners' joint-publication permission has been confirmed by the project spo
 
 | Component | Status |
 |---|---|
-| Seven native Hermes tools, three slash commands, approval policy hook | Implemented |
+| Eight native Hermes tools, four slash commands, approval policy hook | Implemented |
+| Local capability and roadmap inventory | Implemented; no network access or credential disclosure |
 | THOR JSON v1/v2, JSON arrays, event wrapper and NDJSON import | Implemented, synthetic-fixture tested |
 | Counts, same-artifact observation grouping, German case JSON/Markdown | Implemented, deterministic |
 | THOR launcher | Implemented; separately installed local executable required, actual vendor-binary scan not tested here |
@@ -31,7 +38,7 @@ The partners' joint-publication permission has been confirmed by the project spo
 | Twenty-one technology-specific skills and MCP descriptors, including CyStrat SOC Suite | Scaffolds, no live SIEM/SOAR/EDR/TI integration |
 | Four workflow references | Declarative YAML references, not an executable workflow engine |
 | Containment, blocking, rule deployment, ticket posting | Not implemented; draft-only |
-| THOR v3, legacy text/CSV, full forensic correlation | Not supported in 0.1.1 |
+| THOR v3, legacy text/CSV, full forensic correlation | Not supported in 0.1.2 |
 
 No THOR executable, rules, signatures or license files are included or downloaded by the plugin. Obtain THOR separately from the [official Nextron THOR Lite page](https://www.nextron-systems.com/thor-lite/). That page currently reserves third-party networks and paid engagements for THOR Enterprise; confirm your specific partner license with Nextron before using customer systems ([Nextron licensing information](https://www.nextron-systems.com/thor-lite/)).
 
@@ -61,6 +68,8 @@ The review release also includes a standard-library-only CLI:
 
 ```bash
 python -m agentic_soc profiles
+python -m agentic_soc capabilities
+python -m agentic_soc capabilities --technology cystrat-soc-suite
 python -m agentic_soc demo --output /tmp/hermes-agentic-soc-demo
 python -m agentic_soc assess /absolute/evidence/thor.json --output /tmp/soc-case
 ```
@@ -73,6 +82,7 @@ In a Hermes session, use absolute paths:
 
 ```text
 /soc-templates
+/soc-capabilities
 /thor-assess /absolute/path/hermes-agentic-soc/examples/demo/thor.json
 /thor-scan {"target":"/absolute/operator-approved/directory","execute":false}
 ```
@@ -112,6 +122,7 @@ Offensive Research is an operator-controlled gated preview: `offensive_preview_e
 | Tool | Purpose |
 |---|---|
 | `soc_template_list` | List all nine role templates, status and workflow |
+| `soc_capabilities` | Distinguish implemented functions, planned integrations and configuration presence; optional technology filter |
 | `soc_template_install` | Preview or create a new `soc-` profile via `hermes profile create --no-credentials` |
 | `thor_lite_scan` | Probe local THOR capabilities, or request a human-approved FileScan |
 | `thor_parse` | Strict allowed-root import, exact event inventory and artifact grouping |
@@ -141,6 +152,17 @@ JSON v2 is open-ended, and THOR 11 introduces a different v3 object model; this 
 ## Technology and MCP expansion
 
 `templates/registry.yaml` contains twenty-one technology entries, including **CyStrat SOC Suite**. Each has its own skill with a query starter or structured query plan, an inactive MCP descriptor and explicit scaffold status.
+
+| Planned coverage | Technology templates |
+|---|---|
+| SIEM | Microsoft Sentinel, Splunk, Elastic Security, IBM QRadar, Google SecOps, Wazuh, Graylog |
+| SOAR and case management | TheHive / Cortex, Shuffle, Cortex XSOAR, Sentinel Playbooks |
+| EDR, XDR and endpoint investigation | Defender XDR, CrowdStrike, SentinelOne, Velociraptor |
+| Threat intelligence | MISP, OpenCTI, VirusTotal |
+| Detection engineering | Sigma, YARA |
+| SOC platform | CyStrat SOC Suite |
+
+This is a planned technology and workflow ecosystem, not 21 production connectors. Sigma/YARA are detection toolchains rather than remote SOC services. Live tenant compatibility, endpoints, authorization and data-sharing controls must be verified separately for each integration.
 
 The CyStrat SOC Suite entry includes a dedicated tenant-/case-scoped skill and an explicitly proposed read-only MCP contract. The inspected Suite V2 routes contain no implemented application endpoints; no live MCP endpoint is invented. Integration status remains scaffold until the deployed API, authorization and tenant-isolation tests are available.
 

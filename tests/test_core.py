@@ -346,7 +346,7 @@ def test_manifest_matches_actual_registration():
     assert set(context.tools) == set(manifest["provides_tools"])
     assert set(context.hooks) == set(manifest["provides_hooks"])
     assert len(context.skills) == 29
-    assert set(context.commands) == {"soc-templates", "thor-scan", "thor-assess"}
+    assert set(context.commands) == {"soc-templates", "soc-capabilities", "thor-scan", "thor-assess"}
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":true}')
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":"false"}')
     for tool in context.tools.values():

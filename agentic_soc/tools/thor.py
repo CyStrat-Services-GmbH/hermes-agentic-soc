@@ -14,9 +14,11 @@ import os
 import platform
 import re
 import subprocess
+import stat
 import tempfile
 import uuid
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 from ..security import BoundaryError, Redactor, canonical, contained, private_directory
@@ -66,9 +68,15 @@ def events_from_text(text: str) -> list[dict]:
     def reject_constant(value):
         raise BoundaryError("Non-finite JSON constants are not supported.")
 
+    def finite_float(value):
+        number = float(value)
+        if not math.isfinite(number):
+            raise BoundaryError("JSON numeric overflow is not supported.")
+        return number
+
     def loads(value):
         try:
-            return json.loads(value, object_pairs_hook=pairs, parse_constant=reject_constant)
+            return json.loads(value, object_pairs_hook=pairs, parse_constant=reject_constant, parse_float=finite_float)
         except RecursionError:
             raise BoundaryError("JSON nesting exceeds supported limits.") from None
     try:
@@ -94,11 +102,45 @@ def events_from_text(text: str) -> list[dict]:
     return data
 
 
-def parse(path: Path, redactor: Redactor) -> dict:
-    with path.open("rb") as stream:
+def read_stable_evidence(path: Path) -> bytes:
+    """Bounded regular-file read; do not follow a final-component replacement symlink."""
+    try:
+        fd = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0))
+    except OSError:
+        raise BoundaryError("Evidence could not be opened as a stable regular file.") from None
+    with os.fdopen(fd, "rb") as stream:
+        before = os.fstat(stream.fileno())
+        if not stat.S_ISREG(before.st_mode):
+            raise BoundaryError("Evidence must be a regular file.")
+        if before.st_size > MAX_BYTES:
+            raise BoundaryError("Evidence exceeds the 50 MiB import limit.")
         raw = stream.read(MAX_BYTES + 1)
+        after = os.fstat(stream.fileno())
+    if (before.st_size, before.st_mtime_ns, before.st_ctime_ns) != (after.st_size, after.st_mtime_ns, after.st_ctime_ns):
+        raise BoundaryError("Evidence changed during import. Acquire a stable copy before analysis.")
     if len(raw) > MAX_BYTES:
         raise BoundaryError("Evidence exceeds the 50 MiB import limit.")
+    return raw
+
+
+def identity_text(value):
+    return value if isinstance(value, str) and value.strip() and not any(ord(c) < 32 for c in value) else ""
+
+
+def positive_id(value):
+    return ((isinstance(value, int) and not isinstance(value, bool) and value > 0)
+            or (isinstance(value, str) and value.isascii() and value.isdecimal() and int(value) > 0))
+
+
+def timestamp_identity(value):
+    try:
+        return isinstance(value, str) and datetime.fromisoformat(value.replace("Z", "+00:00")).tzinfo is not None
+    except (ValueError, TypeError, OverflowError):
+        return False
+
+
+def parse(path: Path, redactor: Redactor) -> dict:
+    raw = read_stable_evidence(path)
     try:
         records = events_from_text(raw.decode("utf-8-sig"))
     except UnicodeDecodeError:
@@ -107,7 +149,7 @@ def parse(path: Path, redactor: Redactor) -> dict:
     unsupported = []
     for index, raw_event in enumerate(records):
         e = lowerkeys(raw_event)
-        version = str(e.get("log_version", e.get("version", ""))).lstrip("v")
+        version = str(e.get("log_version", e.get("version", ""))).removeprefix("v")
         if (version and not re.fullmatch(r"[12](?:\.\d+){0,2}", version)) or str(e.get("type", "")).startswith("THOR "):
             unsupported.append(index + 1)
             continue
@@ -145,8 +187,9 @@ def parse(path: Path, redactor: Redactor) -> dict:
         if source_level not in {"ALERT", "WARNING", "NOTICE", "INFO", "ERROR", "DEBUG"}:
             source_level = "UNKNOWN"
         severity = source_level if source_level != "UNKNOWN" else band(score)
-        host = str(e.get("hostname", e.get("host", "unknown")))
-        path_value = str(file_obj.get("path", file_obj.get("name", obj.get("filename", obj.get("path", "")))))
+        host = identity_text(e.get("hostname", e.get("host"))) or "unknown"
+        scan_id = identity_text(e.get("scanid"))
+        path_value = identity_text(file_obj.get("path", file_obj.get("name", obj.get("filename", obj.get("path", "")))))
         reason_text = canonical(normalized_reasons) + str(obj.get("message", "")) + path_value
         credential_context = bool(re.search(r"(?i)(?:\b(?:sam|ntds|ntlm|lmhash|password|credential)\b|\.sam\b)", reason_text))
         hashes = {}
@@ -166,10 +209,10 @@ def parse(path: Path, redactor: Redactor) -> dict:
                     process.get("pid"), obj.get("eventid"), obj.get("recordid"),
                     obj.get("detectionid")]
         # Missing host/scan, unhashed paths and reused PIDs cannot establish identity.
-        stable_host_scan = host not in {"", "unknown"} and bool(e.get("scanid"))
+        stable_host_scan = host not in {"", "unknown"} and bool(scan_id)
         stable_file = bool(path_value and hashes)
-        stable_record = bool(obj.get("recordid") and obj.get("eventid") and obj.get("channel"))
-        stable_process = bool(process.get("pid") and process.get("start_time"))
+        stable_record = bool(positive_id(obj.get("recordid")) and positive_id(obj.get("eventid")) and identity_text(obj.get("channel")))
+        stable_process = bool(positive_id(process.get("pid")) and timestamp_identity(process.get("start_time")))
         identity.extend([obj.get("channel"), process.get("start_time")])
         if not stable_host_scan or not (stable_file or stable_record or stable_process):
             identity.extend([module, index])
@@ -177,7 +220,7 @@ def parse(path: Path, redactor: Redactor) -> dict:
         event = {
             "event_id": f"E{index + 1:06d}", "finding_id": f"F-{key}",
             "host": redactor.token(host, "host"), "module": module,
-            "scan_id": redactor.token(str(e.get("scanid", "unknown")), "scan"),
+            "scan_id": redactor.token(scan_id or "unknown", "scan"),
             "score": score, "level": severity, "source_level": source_level,
             "score_band": band(score), "message": str(obj.get("message", "")),
             "file": path_value, "process": {"name": process.get("name", ""), "pid": process.get("pid")},

@@ -1,7 +1,7 @@
 manifest_version: 2
 api_version: 1
 name: agentic-soc
-version: "0.1.1"
+version: "0.1.2"
 description: Evidence-first SOC profiles and deterministic THOR Lite triage with local audit and human approval.
 author: CyStrat Services GmbH and Nextron Systems GmbH
 license: LicenseRef-Pending-Approval
@@ -10,6 +10,7 @@ requires_hermes: ">=0.23.1"
 tags: [security, soc, dfir, thor, detection-engineering]
 capabilities: []
 provides_tools:
+  - soc_capabilities
   - soc_template_list
   - soc_template_install
   - thor_lite_scan

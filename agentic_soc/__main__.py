@@ -12,6 +12,7 @@ from pathlib import Path
 from . import __version__
 from .runtime import Runtime
 from .tools.templates import list_templates
+from .tools.capabilities import inventory
 
 
 def main(argv=None) -> int:
@@ -19,6 +20,8 @@ def main(argv=None) -> int:
     parser.add_argument("--version", action="version", version=__version__)
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("profiles", help="List shipped profile templates without modifying state")
+    caps = sub.add_parser("capabilities", help="Separate implemented capabilities from the planned integration roadmap")
+    caps.add_argument("--technology")
     demo = sub.add_parser("demo", help="Assess shipped synthetic evidence; no real scan")
     demo.add_argument("--output", type=Path, required=True)
     assess_parser = sub.add_parser("assess", help="Assess a supplied local JSON export; no scanner execution")
@@ -29,6 +32,13 @@ def main(argv=None) -> int:
         print(json.dumps(list_templates(), ensure_ascii=False, indent=2))
         return 0
     root = Path(__file__).resolve().parents[1]
+    if args.command == "capabilities":
+        try:
+            print(json.dumps(inventory(root, lambda k, d=None: d, args.technology), ensure_ascii=False, indent=2))
+            return 0
+        except ValueError as exc:
+            print(json.dumps({"ok": False, "error": str(exc)}))
+            return 1
     source = root / "examples/demo/thor.json" if args.command == "demo" else args.input.expanduser().resolve()
     # Explicit CLI input authorizes this file's parent for this offline invocation only.
     output = args.output.expanduser().resolve()
