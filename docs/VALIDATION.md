@@ -1,5 +1,19 @@
 # Validation record
 
+## Hermes minimum version: 0.23.0
+
+The declared minimum is 0.23.0. The package uses only documented registration, configuration and storage seams, and the earlier `>=0.23.1` floor blocked registration on a 0.23.0 host without a demonstrated API dependency. The floor was lowered after registering and exercising the plugin on such a host.
+
+| Check | Executed result |
+|---|---|
+| `hermes plugins doctor . --ci` on Hermes 0.23.0 | Passed: 8 tools, 1 hook |
+| `hermes plugins validate .` | Validation passed: declared hooks and middleware match registrations, no built-in tool collisions, security scan safe, no core override |
+| Tool execution on 0.23.0 | `soc_capabilities`, `thor_parse` and `thor_first_assessment` ran against a 4,023-event THOR 10.7.31 JSON v2 export; inventory reproduced (4,023 events, 4,022 observation groups, INFO 3,848 / WARNING 129 / NOTICE 46), Verdächtig / P3 / MEDIUM |
+| Boundary enforcement | A path outside the configured `evidence_roots` was refused with `BOUNDARY_REJECTED`; the run continued only on a byte-identical copy inside the allowed root |
+| Regression suite | 191 passed |
+
+Not established: behaviour on Hermes builds older than 0.23.0, and any API surface introduced after 0.23.0 — the plugin does not use one, but that is an inspection result, not a runtime test.
+
 ## Release 0.1.3: THOR analysis suite and profile personas
 
 Version 0.1.3 adds a nine-skill THOR analysis suite with eight reference files, a synthetic multi-module worked example and rewritten, role-specific SOUL.md templates for all nine profiles. Tools, hooks, slash commands, the assessment policy and runtime boundaries are unchanged; `policy_version` remains `0.1.2`.
@@ -116,7 +130,7 @@ The source and test logs are stored under `docs/validation/`. The repository's G
 
 ## Inspected host and environment
 
-Hermes upstream revision: `b1a6350602383fdbed9b0bd0eb15d86eaa335da8`. The GitHub latest release observed during this build was `v0.23.1`, which is the declared minimum. The native package uses only documented registration/config/storage seams ([plugin API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)).
+Hermes upstream revision: `b1a6350602383fdbed9b0bd0eb15d86eaa335da8`. The declared minimum is `v0.23.0`: the package uses only documented registration, configuration and storage seams, and registration plus tool execution were verified on a 0.23.0 host (see below). The native package uses only documented registration/config/storage seams ([plugin API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)).
 
 An initial direct `uv pip install -e hermes-upstream` encountered an upstream dependency conflict: `browser-harness==0.1.13` requested Pillow 12.3.0 while Hermes requested Pillow 13.0.0. No plugin dependency caused it: the plugin has zero third-party runtime dependencies. A separate development environment was prepared, and the Hermes CLI's own runtime preparation subsequently completed for Doctor and `validate --install-deps`. This is disclosed rather than misrepresented as a successful initial full-environment install.
 

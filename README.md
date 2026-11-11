@@ -11,7 +11,7 @@
 <p align="center">
   <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.3"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
-  <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.1 or newer"></a>
+  <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.0 or newer"></a>
 </p>
 <p align="center">
   <a href="#license-and-release-status"><img src="assets/badges/preview.svg" alt="Private development preview"></a>
