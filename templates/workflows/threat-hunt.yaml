@@ -1,6 +1,6 @@
 {
   "name": "threat-hunt",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "execution": "declarative_reference_not_workflow_engine",
   "steps": [
     {

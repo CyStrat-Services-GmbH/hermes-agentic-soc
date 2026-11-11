@@ -9,6 +9,18 @@ and the released commit is the one pinned in the catalog entry.
 
 ## [Unreleased]
 
+## [0.2.5] — 2026-11-12
+
+### Fixed
+- Three README badges still described an older project: `license.svg` said
+  "Pending approval" while the manifest, LICENSE and README all say Apache-2.0,
+  `integrations.svg` said 21 planned instead of 25, and `hermes.svg` advertised
+  0.23.1 although `requires_hermes` is `>=0.23.0`. They are the first thing a
+  visitor sees on the repository page.
+- Tests now derive each badge from its source of truth (`plugin.yaml` licence and
+  floor, `templates/registry.yaml` count), so a badge cannot drift again without
+  the suite failing.
+
 ## [0.2.4] — 2026-11-11
 
 ### Changed
