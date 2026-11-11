@@ -1,5 +1,32 @@
 # Validation record
 
+## Release 0.2.0: defense-only package, Apache-2.0, catalog evidence
+
+Breaking release. The offensive/research part is no longer part of the shipped package — not disabled, removed: three research profiles, the `authorized-research` skill, the `purple-team` workflow, the `soc_research_plan` tool, the `offensive_preview_enabled` config key and the scope checker that only that tool used. `docs/PLANNED-OFFENSIVE-RESEARCH.md` states what is planned for a later release and that nothing of it is previewable or enableable now.
+
+| Content | Status |
+|---|---|
+| Defense-only profile set: six roles from L1 triage to vulnerability management | Implemented |
+| Removal of all offensive/research artefacts (profiles, skill, workflow, tool, config key, scope checker) | Implemented |
+| License changed from a placeholder to Apache-2.0 (`LICENSE`, `NOTICE`, `plugin.yaml`, both READMEs) | Implemented |
+| Nextron Systems support and cooperation recorded (confirmed by Florian Roth and managing director Mark), without claiming a vendor licence grant | Documentation |
+| `docs/CATALOG-SUBMISSION.md`: all 18 catalog admission rules mapped to evidence; prepared entry in `submission/catalog-entry.yaml` (not version-controlled) | Documentation |
+| Vulnerability management domain with four templates (see 0.1.7 content in the previous section) | Implemented |
+
+| Check | Executed result |
+|---|---|
+| Regression suite | 180 passed |
+| Generator | `build_assets.py` idempotent; 6 profiles, 30 generated + 9 hand-authored skills, 25 technology scaffolds, 3 workflows |
+| Documentation checker | PASS: 23 Markdown files, 198 local targets, 3 brand PNGs |
+| Plugin Doctor (Hermes 0.23.0) | 7 tools, 1 hook |
+| Catalog validation | Validation passed (hooks, middleware, collisions, security scan, no core override) |
+| `soc_capabilities` | `profiles: 6, skills: 39, technology_templates: 25, live_remote_connectors: 0` |
+| No offensive residue | No profile, skill, workflow, tool or config key for offensive research exists in the tree |
+
+Breaking for consumers: a caller of `soc_research_plan` or an installer of a research profile has to stop calling it. Tool count 8 → 7, profiles 9 → 6, skills 40 → 39, workflows 4 → 3.
+
+Not established: the catalog admission itself (repository is private, owner decision open), and any hackathon-specific requirement, which is not part of this repository.
+
 ## Release 0.1.6: metadata-only workspace member
 
 The plugin shipped a `[build-system]` (setuptools). Hermes materialises every enabled plugin as a member of one dependency workspace per installation — `pm/plugins_state.py::dependency_homes` returns the default home plus every live profile — and uv identifies a member by `[project].name`. A buildable member keeps that name (`pm/workspace.py::_workspace_member` renames only virtual members), so enabling this plugin in two profiles produced two members called `hermes-agentic-soc` and `uv lock` refused:

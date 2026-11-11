@@ -2,13 +2,13 @@
 
 # Operator guide
 
-This guide is the detailed operational reference for Hermes Agentic SOC v0.1.6. Start with [Getting started](GETTING-STARTED.md) for a short evaluation path, or use the sections below to review configuration, tool behavior and assessment policy.
+This guide is the detailed operational reference for Hermes Agentic SOC v0.2.0. Start with [Getting started](GETTING-STARTED.md) for a short evaluation path, or use the sections below to review configuration, tool behavior and assessment policy.
 
 [Install](#install) · [Offline demo](#quick-offline-demonstration) · [Configuration](#operator-configuration) · [Tools and profiles](#tools-and-profiles) · [Assessment policy](#assessment-policy) · [MCP expansion](#technology-and-mcp-expansion) · [Security](#security-disclosure)
 
 ## Operating assumptions
 
-Version 0.1.6 targets Hermes >=0.23.0 and Python >=3.11 for the standalone engine; Hermes itself may require a newer Python version. Use [capabilities](CAPABILITIES.md) for the supported scope, [validation](VALIDATION.md) for executed tests and the [0.1.2 review](REVIEW-0.1.2.md) for detailed findings.
+Version 0.2.0 targets Hermes >=0.23.0 and Python >=3.11 for the standalone engine; Hermes itself may require a newer Python version. Use [capabilities](CAPABILITIES.md) for the supported scope, [validation](VALIDATION.md) for executed tests and the [0.1.2 review](REVIEW-0.1.2.md) for detailed findings.
 
 The code is licensed under Apache-2.0. The [integration roadmap](INTEGRATION-ROADMAP.md) describes planned, not live, integrations; [offensive research](PLANNED-OFFENSIVE-RESEARCH.md) is planned for a later release and is not part of this version.
 
