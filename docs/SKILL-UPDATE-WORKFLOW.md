@@ -101,9 +101,39 @@ A harvest PR is reviewed against four questions, in this order:
 4. **Contract** — generator idempotent, `check_docs.py` green, `pytest` green, Plugin Doctor reports
    the same tools and hooks as `plugin.yaml` declares.
 
-## 6. Distribution (the step that used to be missing)
+## 6. Release (dev → main), then distribute
 
-After the merge, the change reaches the profiles only if it is pushed there explicitly:
+A release is a merge of `dev` into `main`, and it has five parts. Skipping the last three is how `dev` silently falls behind and how a version ends up tagged but not released.
+
+```bash
+# 1. the release commit carries the version bump
+git switch dev
+#    bump plugin.yaml, pyproject.toml, agentic_soc/__init__.py, the badge, both READMEs,
+#    CAPABILITIES, OPERATOR-GUIDE, the workflow descriptors and the test assertion
+python scripts/build_assets.py && python -m pytest -q && python scripts/check_docs.py
+
+# 2. pull request dev -> main, then merge it
+gh pr create --base main --head dev --title "Release X.Y.Z" --body-file <notes>
+gh pr merge <n> --merge
+
+# 3. tag on main and publish the release page
+git switch main && git pull --ff-only
+git tag -a vX.Y.Z -m "Release X.Y.Z" && git push origin vX.Y.Z
+gh release create vX.Y.Z --title "…" --notes "…"
+
+# 4. bring dev back onto main -- the merge commit exists only on main
+git switch dev && git merge --ff-only origin/main && git push origin dev
+
+# 5. distribute to the profiles (see below)
+```
+
+**Step 4 is not optional.** `main` always gains a merge commit that `dev` does not have, so leaving it out shows `dev is 1 commit behind` on every release. `git rev-parse main^{tree}` and `git rev-parse dev^{tree}` must be equal afterwards — equal commits, not just equal content.
+
+A tag without a release page is a half-finished release: `gh release list` is where a reader looks for what shipped. Both are part of step 3.
+
+### Distribution
+
+After the release, the change reaches the profiles only if it is pushed there explicitly:
 
 ```bash
 hermes plugins update agentic-soc                 # or git fetch + checkout in the install dir
