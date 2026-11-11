@@ -262,5 +262,5 @@ def test_release_versions_agree():
     import tomllib
     from agentic_soc import __version__
     project = tomllib.loads((ROOT / "pyproject.toml").read_text())
-    assert project["project"]["version"] == __version__ == "0.2.2"
+    assert project["project"]["version"] == __version__ == "0.2.3"
     assert f'version: "{__version__}"' in (ROOT / "plugin.yaml").read_text()

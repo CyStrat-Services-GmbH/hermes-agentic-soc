@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.2"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.3"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.2.2.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
+> **Private Entwicklungsvorschau · v0.2.3.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
 
 ## Was heute enthalten ist
 
@@ -89,6 +89,20 @@ Installation, Profilkonfiguration und Evidenzverzeichnisse sind im [Schnelleinst
 
 Lesen Sie vor Kundenevidenz oder Scan-Ausführung das [Sicherheitsmodell](SECURITY.md). Die Roadmap verspricht weder produktive Herstellerkompatibilität noch verbindliche Liefertermine.
 
+## Sicherheits-Offenlegung
+
+Was das Plugin auf der Maschine tut, in den Kategorien, die vor einer Installation geprüft werden:
+
+| Verhalten | Was passiert |
+|---|---|
+| **Netzwerk** | Keines. Kein HTTP-Client, kein Abruf, keine Telemetrie, keine Update-Prüfung. Evidenz verlässt die Maschine über dieses Plugin nicht. |
+| **Kommandozeile** | Zwei Subprozesse. `thor_lite_scan` startet die THOR-Binary des Betreibers aus `thor_path` — separat lizenziert, nie gebündelt oder nachgeladen — nachdem die `--help`-Ausgabe auf die erforderlichen Flags geprüft wurde. `soc_template_install` ruft nach ausdrücklicher Freigabe lokal `hermes profile create … --no-credentials --no-skills --no-alias` auf. Beide bekommen eine PATH-only-Umgebung, erben also keinen Provider-Key und kein Proxy-Secret. |
+| **Lesen außerhalb des Plugins** | Evidenzdateien werden nur innerhalb der konfigurierten `evidence_roots` und `scan_roots` gelesen. Pfade außerhalb werden abgewiesen, Symlinks aufgelöst und eingegrenzt, Zugangsdateien (`.env`, `auth.json`, Schlüsselmaterial) namentlich verweigert. |
+| **Schreiben** | Fälle, Berichte, Inventare und ein JSONL-Audit landen unter `plugin_data_dir("agentic-soc")` mit Modus `0700`. In die untersuchte Evidenz wird nichts geschrieben. |
+| **Zugangsdaten** | Werden nicht gelesen, gespeichert oder weitergereicht. Das Plugin deklariert kein `requires_env` und berührt keinen Secret-Store. |
+| **Hintergrundaktivität** | Keine. Kein Watcher, kein Scheduler, kein Daemon; THOR läuft mit Timeout, die Ausgabe wird beim Rückkehr des Aufrufs gelesen. |
+| **Modell-Kontext** | Geparste Events und erzeugte Berichte gehen wie jedes andere Tool-Ergebnis in den Session-Kontext und damit zum konfigurierten Modell-Provider. Personendaten werden nach bestem Bemühen minimiert (`--suppresspi`); Ausgaben vor Weitergabe prüfen. |
+
 ## Lizenz und Veröffentlichungsstatus
 
 **Apache-2.0.** Der vollständige Lizenztext liegt in [LICENSE](LICENSE); [NOTICE](NOTICE) nennt die Rechteinhaber und was die Lizenz nicht umfasst.
@@ -96,8 +110,6 @@ Lesen Sie vor Kundenevidenz oder Scan-Ausführung das [Sicherheitsmodell](SECURI
 Apache-2.0 passt zu beiden Seiten dieses Projekts: Sie erlaubt die patent- und markensichere Nutzung, die ein Sicherheitsprodukt braucht, ist mit der Open-Source-Lizenz von Hermes Agent vereinbar und erlaubt Unternehmen die Evaluation ohne Sonderprüfung. Sie gilt für Quellcode und Dokumentation — THOR, Signaturen und die Marken von Nextron bleiben unter den Bedingungen von Nextron; Herstellerdokumentation wird verlinkt, nicht einbundelt.
 
 Die gemeinsame Entwicklung mit Nextron Systems ist bestätigt: die **Geschäftsführung von Nextron Systems** hat Unterstützung und Zusammenarbeit für dieses Plugin zugesagt. Das betrifft die Projektzusammenarbeit, nicht eine Rechteeinräumung an THOR, Signaturen oder Marken von Nextron.
-
-- [ ] **Release-blockierendes TODO:** Finale Zustimmung einholen und `LICENSE`, `NOTICE` sowie `plugin.yaml` gemeinsam aktualisieren.
 
 Das Repository bleibt privat. Eine Änderung der Sichtbarkeit, Veröffentlichung oder Einreichung setzt eine erneute ausdrückliche Freigabe voraus.
 

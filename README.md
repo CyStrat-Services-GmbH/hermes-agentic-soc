@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.2"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.3"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.0 or newer"></a>
 </p>
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.2.2.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
+> **Private development preview · v0.2.3.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
 
 ## Explore the project
 
@@ -72,7 +72,7 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 
 ## What you can use today
 
-| Area | Delivered in v0.2.2 | Boundary |
+| Area | Delivered in v0.2.3 | Boundary |
 |---|---|---|
 | Native Hermes plugin | 7 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
 | Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
@@ -159,6 +159,20 @@ Company links lead to the respective official websites. The Hermes resource docu
 - **Audit is local:** Metadata is recorded under `plugin_data_dir("agentic-soc")`. Local JSONL is not tamper-proof or a chain-of-custody certificate.
 
 Read [SECURITY.md](SECURITY.md) before handling customer evidence or enabling any execution path. A synthetic test suite is not an independent security audit.
+
+## Security disclosure
+
+What the plugin does on the machine, in the categories a reviewer checks before installing:
+
+| Behaviour | What happens |
+|---|---|
+| **Network** | None. No HTTP client, no fetch, no telemetry, no update check. Evidence never leaves the machine through this plugin. |
+| **Commands** | Two subprocesses. `thor_lite_scan` runs the operator's own THOR executable at `thor_path` — separately licensed, never bundled or downloaded — after verifying its `--help` output carries the required flags. `soc_template_install` runs the local `hermes profile create … --no-credentials --no-skills --no-alias` after explicit approval. Both receive a PATH-only environment, so no provider key or proxy secret is inherited. |
+| **Reads outside the plugin** | Evidence files are read only inside the operator-configured `evidence_roots` and `scan_roots`. A path outside them is refused; symlinks are resolved and contained; credential files (`.env`, `auth.json`, key material) are refused by name. |
+| **Writes** | Cases, reports, inventories and a JSONL audit trail go under `plugin_data_dir("agentic-soc")` with mode `0700`. Nothing is written into the scanned evidence. |
+| **Credentials** | None read, stored or forwarded. The plugin declares no `requires_env` and touches no secret store. |
+| **Background activity** | None. No watcher, no scheduler, no daemon; THOR runs with a timeout and its output is read when the call returns. |
+| **Model context** | Parsed events and generated reports enter the session context like any other tool result, so they reach the model provider the user configured. Personal data is minimised best effort (`--suppresspi`); review output before sharing it. |
 
 ## Documentation
 

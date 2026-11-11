@@ -1,5 +1,25 @@
 # Validation record
 
+## Release 0.2.3: rule-13 disclosure in the README, catalog entry submitted
+
+The catalog review reads the README at the pinned commit, and it had no disclosure section: the security content lived in `docs/OPERATOR-GUIDE.md` and `SECURITY.md`, which rule 13 does not name. This release adds a `## Security disclosure` section to both READMEs covering network, commands, reads outside the plugin, writes, credentials, background activity and model context, and removes a leftover release TODO block from the German README that still described the licence as pending.
+
+| Content | Status |
+|---|---|
+| `README.md` / `README.de.md`: `## Security disclosure` | Added, in the categories rule 13 lists |
+| `README.de.md`: stale "release-blocking TODO: obtain final licence approval" | Removed — the licence is settled as Apache-2.0 |
+| `docs/CATALOG-SUBMISSION.md` | PR number, test count and open items corrected; hackathon section added |
+| `submission/catalog-entry.yaml` | Kept identical to the submitted entry file |
+
+| Check | Executed result |
+|---|---|
+| Regression suite | 184 passed |
+| Generator | `build_assets.py` idempotent; 6 profiles, 30 generated + 9 hand-authored skills, 25 technology scaffolds, 3 workflows |
+| Documentation checker | PASS |
+| Plugin Doctor (Hermes 0.23.0) | 7 tools, 1 hook |
+| Catalog validation | `hermes plugins validate . --install-deps` passed |
+
+
 ## Release 0.2.2: exploit labs is a confirmed cooperation partner
 
 exploit labs was described as a planned contributor only. Their support and cooperation on the plugin are confirmed, so every statement now says so — while the offensive-research capability itself stays unbuilt and out of this version. Agreed cooperation is not a shipped feature, and the documentation keeps the two apart.

@@ -1,6 +1,6 @@
 {
   "name": "compromise-assessment",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "execution": "declarative_reference_not_workflow_engine",
   "steps": [
     {
