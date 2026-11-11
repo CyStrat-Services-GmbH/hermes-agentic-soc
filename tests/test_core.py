@@ -231,7 +231,8 @@ def test_profile_create_fixed_cli_and_profile_context(tmp_path):
         assert run.call_args_list[0].kwargs["env"]["HERMES_HOME"] == str(home)
         assert (destination / "SOUL.hermes-default.md").read_text() == "Hermes fresh default"
         assert "dfir-compromise-assessment" in (destination / "SOUL.md").read_text()
-        assert len(list((destination / "skills/agentic-soc").glob("*/SKILL.md"))) == 29
+        assert len(list((destination / "skills/agentic-soc").glob("*/SKILL.md"))) == 36
+        assert (destination / "skills/agentic-soc/thor-module-analysis/references/modules.md").is_file()
 
 
 def test_runtime_audit_and_report_files(tmp_path):
@@ -345,7 +346,7 @@ def test_manifest_matches_actual_registration():
     manifest = yaml.safe_load((ROOT / "plugin.yaml").read_text())
     assert set(context.tools) == set(manifest["provides_tools"])
     assert set(context.hooks) == set(manifest["provides_hooks"])
-    assert len(context.skills) == 29
+    assert len(context.skills) == 36
     assert set(context.commands) == {"soc-templates", "soc-capabilities", "thor-scan", "thor-assess"}
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":true}')
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":"false"}')

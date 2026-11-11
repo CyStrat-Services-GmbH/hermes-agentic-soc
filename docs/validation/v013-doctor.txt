@@ -1,0 +1,4 @@
+Plugin Doctor: <repository>
+  manifest: agentic-soc 0.1.3 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 8 tool(s), 1 hook(s)

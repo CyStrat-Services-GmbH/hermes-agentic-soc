@@ -1,3 +1,10 @@
-agentic-soc:thor-lite
 agentic-soc:thor-assessment
+agentic-soc:thor-lite
+agentic-soc:thor-siem-export-intake
+agentic-soc:thor-module-analysis
+agentic-soc:thor-signature-interpretation
+agentic-soc:thor-false-positive-review
+agentic-soc:thor-timeline-correlation
+agentic-soc:thor-fleet-triage
+agentic-soc:thor-ioc-handling
 agentic-soc:incident-response

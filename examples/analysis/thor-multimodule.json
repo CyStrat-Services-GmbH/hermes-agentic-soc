@@ -1,0 +1,56 @@
+[
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:14:02Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Alert", "module": "Filescan",
+    "message": "Synthetic hack-tool style file in a folder that should not contain executables",
+    "score": 85,
+    "file": {"path": "C:\\Users\\Public\\Documents\\svc-helper.exe", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    "timestamps": {"created": "2026-11-09T22:41:10Z", "modified": "2026-03-02T11:00:00Z"},
+    "reasons": [{"name": "DEMO_HKTL_RemoteExec_Nov26", "score": 80, "description": "Synthetic hack-tool rule, no real signature"},
+                {"name": "DEMO_SUSP_Location_Public_Documents", "score": 50, "description": "Synthetic location anomaly"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:20:44Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Warning", "module": "SHIMCache",
+    "message": "Synthetic SHIMCache entry for the same executable path, no hash available",
+    "score": 60,
+    "file": {"path": "C:\\Users\\Public\\Documents\\svc-helper.exe"},
+    "reasons": [{"name": "DEMO_SUSP_Location_Public_Documents", "score": 60, "description": "Synthetic location anomaly"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:21:05Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Warning", "module": "ServiceCheck",
+    "message": "Synthetic service with random-looking name started from a temporary directory",
+    "score": 70,
+    "file": {"path": "C:\\Windows\\Temp\\k3x9q.bat"},
+    "reasons": [{"name": "DEMO_SUSP_Service_Random_Name_TempPath", "score": 70, "description": "Synthetic service anomaly"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:22:30Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Notice", "module": "Autoruns",
+    "message": "New or changed autoruns element (synthetic)",
+    "score": 40,
+    "reasons": [{"name": "DEMO_Autoruns_Change_Notice", "score": 40, "description": "Synthetic change notice"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:25:12Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Alert", "module": "ProcessCheck",
+    "message": "Synthetic YARA match in the memory of a security product process",
+    "score": 90,
+    "process": {"name": "demo-av-engine.exe", "pid": 3120},
+    "reasons": [{"name": "DEMO_MAL_Generic_InMemory_Nov26", "score": 90, "description": "Synthetic in-memory signature match"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:31:48Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Notice", "module": "Filescan",
+    "message": "Synthetic vulnerable configuration in a backup folder",
+    "score": 45,
+    "file": {"path": "D:\\Backup\\2019\\tomcat\\conf\\tomcat-users.xml", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+    "reasons": [{"name": "DEMO_VUL_Default_Config_Backup", "score": 45, "description": "Synthetic vulnerability rule"}]
+  },
+  {
+    "log_version": "v2.0.0", "time": "2026-11-10T09:40:00Z", "hostname": "LAB-WS02",
+    "scanid": "S-ANALYSIS-01", "level": "Info", "module": "Init",
+    "message": "Synthetic fixture ends here. Not proof of a complete scan or a clean host."
+  }
+]

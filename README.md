@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.2"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.3"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.1 or newer"></a>
 </p>
@@ -48,13 +48,14 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.1.2.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
+> **Private development preview · v0.1.3.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
 
 ## Explore the project
 
 | Evaluate | Operate | Build |
 |---|---|---|
 | [Current capabilities](#what-you-can-use-today) | [Offline quickstart](#start-with-evidence-not-credentials) | [Architecture](docs/ARCHITECTURE.md) |
+| [THOR analysis suite](docs/THOR-ANALYSIS.md) | [THOR worked example](skills/thor-assessment/references/worked-example.md) | [Skill sources](skills/) |
 | [Integration roadmap](#one-agent-your-wider-security-stack) | [Operator guide](docs/OPERATOR-GUIDE.md) | [Contributing](CONTRIBUTING.md) |
 | [Companies and expertise](#different-strengths-one-mission) | [Security model](SECURITY.md) | [Validation and test limits](docs/VALIDATION.md) |
 
@@ -64,18 +65,19 @@ The goal is not to replace your security stack. It is to give Hermes a disciplin
 
 - **Evidence before conclusions:** Exact event inventories, conservative same-artifact grouping and traceable first assessments instead of model-invented incident narratives.
 - **Specialists for the task:** Six defense personas cover triage, incident response, hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable operational knowledge:** 29 shipped skills combine eight domain/workflow skills with 21 technology-specific planning scaffolds.
+- **Reusable operational knowledge:** 36 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), six domain/workflow skills and 21 technology-specific planning scaffolds.
 - **Control by design:** Local evidence boundaries, metadata-only audit records and Hermes-owned approval for sensitive execution. No plugin telemetry, self-updater or hidden LLM calls.
 
 The assessment engine is deterministic. Hermes may use its configured model to interpret tool output, but the plugin does not call a model to calculate severity.
 
 ## What you can use today
 
-| Area | Delivered in v0.1.2 | Boundary |
+| Area | Delivered in v0.1.3 | Boundary |
 |---|---|---|
 | Native Hermes plugin | 8 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
 | Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
 | First assessment | Exact counts, observation groups, German case JSON/Markdown | Provisional triage, not proof of compromise |
+| THOR analysis suite | 9 skills: module and signature interpretation, false-positive review, correlation and timeline, fleet triage, safe IOC handling, SIEM-export intake | Analyst guidance on top of the deterministic tools; [details](docs/THOR-ANALYSIS.md) |
 | Local THOR launcher | Fixed-argument FileScan preparation and execution path | External licensed binary and human approval required; real vendor scan not validated here |
 | Specialist profiles | 6 defense profiles; 3 research-planning scaffolds | Research preview off by default; no target interaction |
 | Workflow references | 4 declarative workflow definitions | Not an executable workflow engine |
@@ -162,6 +164,7 @@ Read [SECURITY.md](SECURITY.md) before handling customer evidence or enabling an
 |---|---|
 | Run a safe demo or install the plugin | [Getting started](docs/GETTING-STARTED.md) |
 | Configure evidence roots, scanning and specialist profiles | [Operator guide](docs/OPERATOR-GUIDE.md) |
+| Analyse THOR results like a compromise-assessment team | [THOR analysis suite](docs/THOR-ANALYSIS.md) |
 | Understand components and trust boundaries | [Architecture](docs/ARCHITECTURE.md) |
 | See tools, commands and specialist roles | [Capability reference](docs/CAPABILITIES.md) |
 | Plan an integration or review CyStrat SOC Suite | [Integration roadmap](docs/INTEGRATION-ROADMAP.md) · [SOC Suite](docs/CYSTRAT-SOC-SUITE.md) |

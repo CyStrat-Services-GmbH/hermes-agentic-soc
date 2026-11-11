@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.2"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.3"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.1"></a>
 </p>
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.1.2.** Die lokale Evidenzanalyse ist implementiert. Die 21 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren; Offensive Security ist eine deaktivierte Planungsvorschau. Apache-2.0 ist lediglich vorgeschlagen.
+> **Private Entwicklungsvorschau · v0.1.3.** Die lokale Evidenzanalyse ist implementiert. Die 21 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren; Offensive Security ist eine deaktivierte Planungsvorschau. Apache-2.0 ist lediglich vorgeschlagen.
 
 ## Was heute enthalten ist
 
@@ -49,10 +49,12 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 | Hermes-Erweiterung | 8 native Tools, 4 Slash-Kommandos, 1 Approval-Hook | Öffentliche Plugin-Schnittstellen |
 | Evidenzanalyse | THOR JSON v1/v2 und NDJSON, exakte Zählung und konservative Beobachtungsgruppen | Keine Unterstützung für v3 oder Legacy-CSV/Text |
 | Erstbewertung | Deterministische Bewertung, JSON und deutscher Neun-Abschnitte-Bericht | Vorläufige Triage, kein automatischer Kompromittierungsnachweis |
-| Fachwissen | 6 Defense-Profile, 3 Research-Skelette, 29 Skills | Davon 21 technologiebezogene Planungsvorlagen |
+| Fachwissen | 6 Defense-Profile, 3 Research-Skelette, 36 Skills | 9 Skills für die THOR-Ergebnisanalyse, 6 Domain-Skills, 21 technologiebezogene Planungsvorlagen |
 | Workflows | 4 deklarative Referenzen | Keine ausführbare Workflow-Engine |
 | Anbindungen | 21 geplante Technologien einschließlich CyStrat SOC Suite | 0 verifiziert aktive Remote-Connectoren |
 | Lokaler Scan | Wrapper für separat bezogenes THOR | Menschliche Freigabe nötig; echter Herstellerscan hier nicht validiert |
+
+Die [THOR-Analyse-Suite](docs/THOR-ANALYSIS.md) bündelt neun Skills für die Auswertung von THOR-Ergebnissen: Modul- und Signaturinterpretation, False-Positive-Prüfung, Korrelation und Timeline, Flottenanalyse, sicherer Umgang mit IOCs und die Übernahme von SIEM-Exporten. Die Zählung bleibt bei den deterministischen Tools; die Skills sorgen für die fachlich saubere Bewertung.
 
 Die [Capability-Referenz](docs/CAPABILITIES.md) beschreibt die Werkzeuge und Rollen. Der [Validierungsnachweis](docs/VALIDATION.md) trennt ausgeführte Tests von offenen Abnahmen.
 

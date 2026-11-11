@@ -38,4 +38,11 @@ See the [architecture](docs/ARCHITECTURE.md) before changing registration or sta
 
 Run `python scripts/build_assets.py` from the repository root. Generated JSON in `.yaml` files is valid YAML 1.2 and requires no runtime YAML dependency.
 
+## Profile personas and THOR skills
+
+- **SOUL.md:** Edit role definitions in `scripts/profile_souls.py`, not the generated files. Each role keeps identity, operating loop, decision standards, deliverable, escalation, boundaries and its shipped skills; `tests/test_thor_skills.py` enforces this contract, including the gated-preview rules.
+- **THOR analysis suite:** The nine `thor-*` skills are hand-authored under `skills/` with their `references/` files and listed in `HAND_AUTHORED` in `scripts/build_assets.py`. The generator validates but never overwrites them.
+- **Facts:** Ground module, scoring and field guidance in Nextron's public THOR Manual or Log Analysis Manual and link the source. Do not copy private Nextron rules or signature content.
+- **Worked examples:** Keep examples synthetic and keep their numbers covered by tests that run the real tools.
+
 No connector may silently enable writes, inherit arbitrary CLI tokens, fetch source-code updates or run arbitrary shell arguments. Any future write action requires a host-owned approval path tested on interactive and unattended surfaces, not an `approved:true` input field.

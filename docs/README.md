@@ -10,6 +10,7 @@ Hermes Agentic SOC turns supplied evidence into a conservative first assessment 
 |---|---|
 | Evaluating the project | [Product overview](../README.md) → [Capabilities](CAPABILITIES.md) → [Roadmap](INTEGRATION-ROADMAP.md) |
 | Running the plugin | [Getting started](GETTING-STARTED.md) → [Operator guide](OPERATOR-GUIDE.md) → [Security model](../SECURITY.md) |
+| Analysing THOR results | [THOR analysis suite](THOR-ANALYSIS.md) → [Operator guide](OPERATOR-GUIDE.md#assessment-policy) |
 | Reviewing architecture | [Architecture](ARCHITECTURE.md) → [Security model](../SECURITY.md) → [Validation](VALIDATION.md) |
 | Building an integration | [Roadmap and acceptance gates](INTEGRATION-ROADMAP.md) → [SOC Suite contract](CYSTRAT-SOC-SUITE.md) → [Contributing](../CONTRIBUTING.md) |
 | Reviewing Offensive Security | [Gated preview](GATED-PREVIEW.md) → [Scope and host boundaries](../SECURITY.md) |
@@ -26,7 +27,7 @@ A configured path or endpoint is not evidence of a working integration. Check th
 
 ## Reference and governance
 
-- **Operations:** [Quickstart](GETTING-STARTED.md), [operator guide](OPERATOR-GUIDE.md), [tools and roles](CAPABILITIES.md).
+- **Operations:** [Quickstart](GETTING-STARTED.md), [operator guide](OPERATOR-GUIDE.md), [tools and roles](CAPABILITIES.md), [THOR analysis suite](THOR-ANALYSIS.md).
 - **Design:** [Architecture](ARCHITECTURE.md), [integration roadmap](INTEGRATION-ROADMAP.md), [CyStrat SOC Suite](CYSTRAT-SOC-SUITE.md).
 - **Assurance:** [Security](../SECURITY.md), [executed validation](VALIDATION.md), [0.1.2 review](REVIEW-0.1.2.md), [historical 0.1.1 review](REVIEW-0.1.1.md).
 - **Contribution:** [Development guide](../CONTRIBUTING.md), [release blockers](../TODO.md), [license placeholder](../LICENSE), [notice](../NOTICE).

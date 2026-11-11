@@ -1,5 +1,27 @@
 # Validation record
 
+## Release 0.1.3: THOR analysis suite and profile personas
+
+Version 0.1.3 adds a nine-skill THOR analysis suite with eight reference files, a synthetic multi-module worked example and rewritten, role-specific SOUL.md templates for all nine profiles. Tools, hooks, slash commands, the assessment policy and runtime boundaries are unchanged; `policy_version` remains `0.1.2`.
+
+| Check | Executed result |
+|---|---|
+| Python 3.14.8 regression suite | 191 passed (`v013-python314.txt`) |
+| Python 3.11.17 regression suite | 191 passed (`v013-python311.txt`) |
+| Agent Skills validator | All 36 skill directories valid (`v013-skills.txt`) |
+| Skill contracts | Frontmatter, size, links, tool and skill references, no long hex strings, safety phrases and nine-section order tested for all THOR skills |
+| Worked example against real tools | `examples/analysis/thor-multimodule.json`: 7 events, 7 automatic groups, ALERT 2 / WARNING 2 / NOTICE 2 / INFO 1, Verdächtig P2; SHIMCache-without-hash stays separate; numbers in the worked example asserted by tests |
+| SOUL contracts | All nine SOULs: required sections, shipped skills match `skills.txt`, common boundaries present, gated-preview rules and credits correct |
+| Generator | `scripts/build_assets.py` is idempotent (identical tree hash after a second run) and validates the hand-authored skills |
+| Hermes `skill_view` (real host, scratch home) | Plugin enabled; 36 `agentic-soc:` skills registered; `thor-assessment` lists its three references; `worked-example.md` and `modules.md` served via `file_path` |
+| Profile provisioning (real Hermes CLI, scratch home) | `dfir-compromise-assessment` created; new SOUL.md installed, default SOUL backed up, 36 skills and 8 reference files copied |
+| Plugin Doctor, fresh home | Passed; 8 tools, 1 hook (`v013-doctor.txt`) |
+| Catalog validation `--install-deps`, fresh home | Validation passed: declared tools/hooks match, security scan safe, no core override. The host again printed `dependency preparation failed: Dependency inputs changed while preparing publication; retry.` before validating; as in 0.1.2 this is not a clean dependency-preparation pass (`v013-catalog.txt`) |
+| Documentation checker | 194 local targets across 21 Markdown files passed |
+| Documented CLI example | `python -m agentic_soc assess …/thor-multimodule.json` returned 7 events, 7 groups, Verdächtig, P2 |
+
+Not established: the skills' behavioural quality with a specific model on real customer data, a licensed THOR Enterprise or Lite run, and Windows/macOS hosts. The skills guide reasoning; they do not add parser support for THOR JSON v3, text logs or the legacy CSV.
+
 ## README navigation and badge refinement
 
 The README refinement adds six locally stored static SVG badges, linked topic tags and explicit official-company links in both language versions. No runtime, registration, repository visibility or license change is included.

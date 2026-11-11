@@ -1,1 +1,4 @@
 agentic-soc:threat-hunt
+agentic-soc:thor-fleet-triage
+agentic-soc:thor-signature-interpretation
+agentic-soc:thor-ioc-handling

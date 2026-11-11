@@ -1,2 +1,3 @@
 agentic-soc:authorized-research
 agentic-soc:detection-engineering
+agentic-soc:thor-signature-interpretation

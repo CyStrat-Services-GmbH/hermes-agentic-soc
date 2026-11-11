@@ -1,1 +1,4 @@
 agentic-soc:alert-triage
+agentic-soc:thor-assessment
+agentic-soc:thor-false-positive-review
+agentic-soc:thor-siem-export-intake

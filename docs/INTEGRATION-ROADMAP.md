@@ -11,7 +11,7 @@ Cybersecurity from Germany. For the world. Our product vision is to turn operati
 
 - **Evidence-led analysis:** Local THOR JSON v1/v2 import, exact event counts, conservative observation grouping and traceable first assessments.
 - **Specialist roles:** Six defense profiles spanning L1 triage, incident response, threat hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable knowledge:** 29 skills, comprising eight domain/workflow skills and 21 technology-specific scaffolds. Four declarative workflow references guide analysis; they are not a workflow execution engine.
+- **Reusable knowledge:** 36 skills, comprising a nine-skill THOR analysis suite, six domain/workflow skills and 21 technology-specific scaffolds. Four declarative workflow references guide analysis; they are not a workflow execution engine.
 - **Native tooling:** Eight registered tools and four slash commands, including `/soc-capabilities` to inspect actual scope without contacting a vendor or revealing credentials.
 - **Controlled local scanning:** A launcher for an independently acquired THOR executable, subject to host approval. No actual licensed vendor scan has been validated in this build.
 

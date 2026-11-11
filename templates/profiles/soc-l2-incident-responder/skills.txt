@@ -1,2 +1,5 @@
 agentic-soc:incident-response
 agentic-soc:alert-triage
+agentic-soc:thor-assessment
+agentic-soc:thor-timeline-correlation
+agentic-soc:thor-ioc-handling
