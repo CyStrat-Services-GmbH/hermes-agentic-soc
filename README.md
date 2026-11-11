@@ -109,7 +109,9 @@ For native installation, evidence-root configuration and approval boundaries, fo
 
 ## One agent. Your wider security stack.
 
-The planned integration layer is designed to bring approved security context into Hermes without silently granting write access. Every technology below has a shipped planning skill and inactive MCP descriptor; none is a production connector in this release.
+The planned integration layer is designed to bring approved security context into Hermes without silently granting write access. Every entry below has a shipped planning skill and an inactive MCP descriptor: 24 technology scaffolds across six domains, plus the cross-domain CyStrat SOC Suite — 25 in total, and none is a production connector in this release.
+
+**Cross-domain platform — CyStrat SOC Suite.** The Suite is not a seventh domain: its modules cover all six domains below. Intended value is tenant- and case-scoped analysis with provenance back to the source system, under a proposed read-only MCP contract.
 
 | Domain | Planned technology coverage | Intended value |
 |---|---|---|
@@ -118,7 +120,7 @@ The planned integration layer is designed to bring approved security context int
 | EDR / XDR | Defender XDR, CrowdStrike, SentinelOne, Velociraptor | Existing detections and endpoint evidence |
 | Threat intelligence | MISP, OpenCTI, VirusTotal | Authorized indicator context, no automatic public uploads |
 | Detection engineering | Sigma, YARA | Original detection drafts and controlled fixture testing |
-| SOC platform | CyStrat SOC Suite | Proposed tenant- and case-scoped read-only integration |
+| Vulnerability management | Tenable Vulnerability Management, Qualys VMDR, Rapid7 InsightVM, Greenbone / OpenVAS | Existing findings, affected assets and remediation state; no scan launch, rescan, exception change or ticket write |
 
 Sigma and YARA are detection toolchains, not remote SOC services. Future containment, blocking, ticket posting or rule deployment requires a separately reviewed implementation and explicit human approval.
 
