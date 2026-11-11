@@ -17,6 +17,8 @@ hermes plugins validate . --install-deps
 
 The last two commands require a prepared Hermes host. Record actual results and warnings; do not infer a clean install from a zero exit code when dependency preparation reported a failure.
 
+**No hosted CI.** This repository deliberately runs no GitHub Actions: the checks above are executed locally before every push, and the pull request states the commands and their output. There is no workflow file and no runner to keep green — a promise of CI that does not run is worse than an explicit local gate. Do not add a workflow without the owner's decision; a failing local run is the blocking signal.
+
 ## Documentation standards
 
 - **Product claims:** Distinguish implemented local functionality from planning scaffolds, gated previews and verified live integrations.
