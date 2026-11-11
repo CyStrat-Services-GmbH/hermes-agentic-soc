@@ -9,6 +9,17 @@ and the released commit is the one pinned in the catalog entry.
 
 ## [Unreleased]
 
+## [0.2.6] — 2026-11-12
+
+### Changed
+- The README opens with the line the demo video uses: *"When agentic AI goes on
+the offensive, the world needs a new kind of defense."* The following paragraph
+is the second sentence of the same announcement (*"Defenders don't need
+another chatbot beside their security stack…"*), so README and video say the
+same thing in the same words. The German README carries the translation.
+- Removed the duplicated "when agentic AI goes on the offensive" wording from
+the old opening paragraph.
+
 ## [0.2.5] — 2026-11-12
 
 ### Fixed
