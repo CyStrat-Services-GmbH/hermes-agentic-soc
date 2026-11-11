@@ -1,0 +1,51 @@
+name: Feature request
+description: Propose a capability, a template or a documentation change.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Offensive-research capabilities are intentionally not part of this release; proposals
+        for them are noted but will not be implemented before their own release. Read
+        [docs/PLANNED-OFFENSIVE-RESEARCH.md](https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc/blob/main/docs/PLANNED-OFFENSIVE-RESEARCH.md) first.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Which SOC/DFIR task is not covered today, and what do you do instead?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What should Hermes do, and which Hermes surface would carry it?
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of change
+      options:
+        - New skill
+        - New profile persona
+        - New tool or slash command
+        - Technology template
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Boundary impact
+      description: |
+        Does it read outside the plugin's data directory, run a subprocess, need a network
+        call, or touch credentials? If yes, say which and why — it changes the disclosure.
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: Acknowledgement
+      options:
+        - label: I understand this project keeps offensive capability out of the open release.
+          required: true

@@ -1,6 +1,8 @@
 # Contributing
 
-The code license is pending; resolve the release blocker before accepting contributions under an asserted open-source grant. Apache-2.0 is proposed only. Do not submit private rules, customer evidence or vendor assets.
+This project is licensed under **Apache-2.0** (see [LICENSE](LICENSE) and [NOTICE](NOTICE)). Contributions are accepted under that licence. Do not submit private rules, customer evidence or vendor assets.
+
+By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md). Security problems go to a private advisory, never to a public issue — see [SECURITY.md](SECURITY.md).
 
 ## Development checks
 

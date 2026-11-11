@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc/security/advisories/new
+    about: Report privately. Never open a public issue for a vulnerability or customer data.
+  - name: How the plugin handles evidence and approvals
+    url: https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc/blob/main/SECURITY.md
+    about: Read the security model before filing a bug about boundaries or approval behaviour.
+  - name: Contributing and local checks
+    url: https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc/blob/main/CONTRIBUTING.md
+    about: Test commands, documentation rules and the pull-request checklist.

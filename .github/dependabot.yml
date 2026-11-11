@@ -1,0 +1,25 @@
+# Version updates for the only dependency surface this plugin has: Python.
+# The runtime declares no dependencies at all; `test` extras are the only place
+# a package can appear, so a noisy ecosystem matrix is pointless here.
+#
+# `github-actions` is intentionally absent: GitHub Actions are disabled in this
+# repository by decision, and a dependabot entry for an ecosystem that never
+# runs would only produce noise.
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      test-tooling:
+        patterns:
+          - "pytest"
+          - "jsonschema"
+          - "PyYAML"
