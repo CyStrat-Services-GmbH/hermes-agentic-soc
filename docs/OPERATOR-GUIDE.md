@@ -2,7 +2,7 @@
 
 # Operator guide
 
-This guide is the detailed operational reference for Hermes Agentic SOC v0.2.4. Start with [Getting started](GETTING-STARTED.md) for a short evaluation path, or use the sections below to review configuration, tool behavior and assessment policy.
+This guide is the detailed operational reference for Hermes Agentic SOC v0.2.5. Start with [Getting started](GETTING-STARTED.md) for a short evaluation path, or use the sections below to review configuration, tool behavior and assessment policy.
 
 [Install](#install) · [Offline demo](#quick-offline-demonstration) · [Configuration](#operator-configuration) · [Tools and profiles](#tools-and-profiles) · [Assessment policy](#assessment-policy) · [MCP expansion](#technology-and-mcp-expansion) · [Security](#security-disclosure)
 

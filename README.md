@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.4"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.5"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.0 or newer"></a>
 </p>
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Early public preview · v0.2.4.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
+> **Early public preview · v0.2.5.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
 
 ## Explore the project
 

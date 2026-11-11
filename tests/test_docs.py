@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import runpy
+import json
 import re
 import xml.etree.ElementTree as ET
 
@@ -90,6 +91,48 @@ def test_version_badge_matches_manifest():
     root = ET.parse(repository / "assets/badges/version.svg").getroot()
     labels = [item.text for item in root.iter("{http://www.w3.org/2000/svg}text")]
     assert version in labels
+
+
+def _badge_labels(repository, name):
+    """Every visible label plus the SVG title, as one lowercase-free string."""
+    root = ET.parse(repository / f"assets/badges/{name}.svg").getroot()
+    ns = "{http://www.w3.org/2000/svg}"
+    texts = [item.text or "" for item in root.iter(f"{ns}text")]
+    title = root.find(f"{ns}title")
+    texts.append((title.text or "") if title is not None else "")
+    return " ".join(texts)
+
+
+def _manifest_field(repository, field):
+    manifest = (repository / "plugin.yaml").read_text(encoding="utf-8")
+    match = re.search(rf'^{field}:\s*(.+)$', manifest, re.MULTILINE)
+    assert match, f"{field} missing from plugin.yaml"
+    return match.group(1).strip().strip('"')
+
+
+def test_license_badge_matches_manifest():
+    """A badge that still says 'pending approval' contradicts a settled licence."""
+    repository = CHECK.parents[1]
+    licence = _manifest_field(repository, "license")
+    labels = _badge_labels(repository, "license")
+    assert licence in labels
+    assert "pending" not in labels.lower()
+    assert "proposed" not in labels.lower()
+
+
+def test_hermes_badge_matches_manifest_floor():
+    repository = CHECK.parents[1]
+    floor = _manifest_field(repository, "requires_hermes").lstrip(">= ").strip()
+    labels = _badge_labels(repository, "hermes")
+    assert floor in labels, f"badge does not show the manifest floor {floor}"
+
+
+def test_integrations_badge_matches_registry():
+    repository = CHECK.parents[1]
+    registry = json.loads((repository / "templates/registry.yaml").read_text(encoding="utf-8"))
+    count = len(registry["technologies"])
+    labels = _badge_labels(repository, "integrations")
+    assert str(count) in labels, f"badge does not show the registry count {count}"
 
 
 SECTION = (
