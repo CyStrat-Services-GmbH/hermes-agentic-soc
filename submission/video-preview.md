@@ -5,11 +5,11 @@ A 76-second German product-video draft accompanies review release 0.1.1 as a sep
 ## Content
 
 - Evidence-first positioning and six defense specialist roles.
-- 36 skills (including a nine-skill THOR analysis suite) and 21 technology scaffolds, including CyStrat SOC Suite.
+- 39 skills (including a nine-skill THOR analysis suite) and 25 technology scaffolds, plus CyStrat SOC Suite as the cross-domain platform.
 - Real offline CLI results from synthetic THOR evidence: four events, three observation groups, provisional P2/suspicious.
 - Strict separation between observation, suspicion and unsupported conclusions.
 - THOR as a separately installed external tool; no bundled scanner/signatures.
-- exploit labs and managing director Johannes Schönborn as the planned Offensive Security contributor, restricted to skeleton and Gated Preview.
+- exploit labs and managing director Johannes Schönborn as the planned contributor of a **future** offensive-research release; nothing of it is shown because nothing of it ships.
 - Operator-disabled preview, scope checks and draft-only response actions.
 
 ## Production

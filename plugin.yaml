@@ -1,10 +1,10 @@
 manifest_version: 2
 api_version: 1
 name: agentic-soc
-version: "0.1.6"
+version: "0.2.0"
 description: Evidence-first SOC profiles and deterministic THOR Lite triage with local audit and human approval.
 author: CyStrat Services GmbH and Nextron Systems GmbH
-license: LicenseRef-Pending-Approval
+license: Apache-2.0
 homepage: https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc
 requires_hermes: ">=0.23.0"
 tags: [security, soc, dfir, thor, detection-engineering]
@@ -17,14 +17,9 @@ provides_tools:
   - thor_parse
   - thor_first_assessment
   - soc_alert_triage
-  - soc_research_plan
 provides_hooks:
   - pre_tool_call
 config_schema:
-  offensive_preview_enabled:
-    type: bool
-    default: false
-    description: Explicit operator opt-in for exploit labs offensive-research planning scaffolds. No target execution. Authorization scope remains required.
   thor_path:
     type: str
     default: ""

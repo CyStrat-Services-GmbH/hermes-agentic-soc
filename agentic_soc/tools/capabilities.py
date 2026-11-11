@@ -16,7 +16,7 @@ def inventory(root, get_config, technology=None):
         if not selected:
             raise BoundaryError("Unknown technology id. Call soc_capabilities without a filter to list valid ids.")
     settings = {key: get_config(key, default) for key, default in (
-        ("thor_path", ""), ("evidence_roots", []), ("scan_roots", []), ("offensive_preview_enabled", False))}
+        ("thor_path", ""), ("evidence_roots", []), ("scan_roots", []))}
     return {
         "ok": True, "version": __version__, "network_calls": 0,
         "summary": {
@@ -35,12 +35,6 @@ def inventory(root, get_config, technology=None):
             {**row, "integration_state": "planned", "live_verified": False}
             for row in selected
         ],
-        "offensive_preview": {
-            "enabled": settings["offensive_preview_enabled"] is True,
-            "contributor": "exploit labs", "lead": "Johannes Schönborn",
-            "contribution_status": "planned_external_contribution",
-            "execution_supported": False, "scope_still_required": True,
-        },
         "local_configuration": {
             "thor_path_configured": isinstance(settings["thor_path"], str) and bool(settings["thor_path"].strip()),
             "evidence_roots_configured": isinstance(settings["evidence_roots"], list) and bool(settings["evidence_roots"]),

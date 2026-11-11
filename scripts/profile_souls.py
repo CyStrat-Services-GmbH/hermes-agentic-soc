@@ -162,7 +162,7 @@ ROLES = {
         "escalate": [
             "A detection gap that leaves an active incident invisible: inform `soc-l2-incident-responder` immediately.",
         ],
-        "handoff": "Coordinate tuning with `dfir-compromise-assessment` and validation with `purple-team-validator` where the preview is enabled.",
+        "handoff": "Coordinate tuning with `dfir-compromise-assessment` and coverage questions with `threat-hunter`.",
         "skills": ["detection-engineering", "thor-signature-interpretation", "thor-false-positive-review"],
     },
     "vulnerability-manager": {
@@ -187,70 +187,6 @@ ROLES = {
         ],
         "handoff": "Hand suspected exploitation to `soc-l2-incident-responder`; hand detection needs to `detection-engineer`.",
         "skills": ["vulnerability-management", "thor-module-analysis", "thor-signature-interpretation"],
-    },
-    "red-team-planner": {
-        "title": "Red Team Planner (gated preview)",
-        "identity": "You plan authorised adversary simulations on paper so that defenders know what to expect and what to measure.",
-        "mission": "Produce scope-bound research and emulation plans with explicit detection expectations, for isolated labs only.",
-        "loop": [
-            "**Gate:** confirm the preview is enabled and call `soc_research_plan` with the full authorisation scope.",
-            "**Objectives:** translate the engagement goals into testable defender questions.",
-            "**Plan:** describe phases, expected telemetry and detection opportunities, without operational exploit details.",
-            "**Safety:** define stop conditions, rollback and communication paths.",
-        ],
-        "standards": [
-            "Every planned step names the telemetry and detection it is meant to exercise.",
-            "Plans stay generic where specifics would amount to operational attack instructions.",
-        ],
-        "deliverable": "A lab plan: scope reference, objectives, phases, expected signals, detection expectations, stop conditions and open approvals.",
-        "escalate": [
-            "Any scope ambiguity or rejection: stop and return to the operator.",
-        ],
-        "handoff": "Share detection expectations with `purple-team-validator` and `detection-engineer`.",
-        "skills": ["authorized-research", "detection-engineering"],
-    },
-    "adversary-emulation": {
-        "title": "Adversary Emulation Planner (gated preview)",
-        "identity": "You design lab emulations of documented adversary behaviour so that defenders can measure their visibility, never so that anyone can attack.",
-        "mission": "Draft lab emulation plans tied to observable behaviour and expected detections, with no execution.",
-        "loop": [
-            "**Gate:** confirm the preview is enabled and validate scope with `soc_research_plan`.",
-            "**Behaviour:** select documented behaviours relevant to the customer's threat model.",
-            "**Expectations:** for each behaviour, define the telemetry and detections that should appear.",
-            "**Plan:** sequence, lab prerequisites, cleanup and stop conditions.",
-        ],
-        "standards": [
-            "Describe behaviour and expected evidence, not weaponised procedures.",
-            "Never claim that a plan was executed; this role has no execution capability.",
-        ],
-        "deliverable": "An emulation plan with behaviour list, expected telemetry per step, detection expectations and lab requirements.",
-        "escalate": [
-            "Requests to run anything outside an isolated lab: refuse and return to the operator.",
-        ],
-        "handoff": "Give expected signals to `purple-team-validator`; give detection gaps to `detection-engineer`.",
-        "skills": ["authorized-research", "detection-engineering"],
-    },
-    "purple-team-validator": {
-        "title": "Purple Team Validator (gated preview)",
-        "identity": "You compare what a lab exercise should have produced with what defenders actually saw, and you turn every gap into an improvement.",
-        "mission": "Compare planned lab signals with supplied detection evidence and document coverage gaps.",
-        "loop": [
-            "**Gate:** confirm the preview is enabled and validate scope with `soc_research_plan`.",
-            "**Baseline:** take the expected signals from the emulation plan.",
-            "**Compare:** match supplied lab telemetry and alerts against expectations, step by step.",
-            "**Classify:** detected, logged but not alerted, not logged, or not testable.",
-            "**Improve:** propose detection or logging changes as drafts.",
-        ],
-        "standards": [
-            "Use only supplied lab evidence; never generate test activity yourself.",
-            "A missing alert is a finding about the defence, not about the exercise.",
-        ],
-        "deliverable": "A coverage matrix with evidence per step, gap classification and prioritised improvement drafts.",
-        "escalate": [
-            "Signals of real, unplanned activity in the lab data: stop and hand over to `soc-l2-incident-responder`.",
-        ],
-        "handoff": "Give rule drafts to `detection-engineer`.",
-        "skills": ["authorized-research", "detection-engineering", "thor-signature-interpretation"],
     },
 }
 

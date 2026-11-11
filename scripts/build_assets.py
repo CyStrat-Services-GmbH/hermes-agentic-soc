@@ -86,19 +86,6 @@ Do not copy Nextron private rules or signature packs. Review licenses of externa
 3. Prioritize using impact, reachability, business criticality and current mitigations, not CVSS alone.
 4. Draft vendor-supported remediation, rollback and a read-only verification plan.
 5. Record unknowns and approvals. Do not exploit, patch, rescan or close tickets automatically."""),
-    "authorized-research": (
-        "Create scope-gated offensive-research and purple-team lab plans. Use for authorized planning, not exploitation, persistence or target interaction.",
-        """Gated Preview: planned Offensive Security contribution from exploit labs, led by managing director Johannes Schönborn.
-No exploit labs operational implementation is included in this release. The operator-owned offensive_preview_enabled switch defaults to false. Never enable it yourself to bypass a denial.
-
-1. Collect exact targets, authorization reference, timezone-aware validity window, rules of engagement and allowed activities.
-2. Call soc_research_plan. Reject expired scope, missing references, wildcards and unlisted targets.
-3. Verify authorization with the asset owner: structural validation is not legal verification.
-4. Plan research, emulation signals and detection expectations in an isolated lab only.
-5. Compare supplied lab observations with expected telemetry; document gaps and rollback.
-6. Never interact with targets through this tool. It has no execution capability. A profile/SOUL is not a sandbox.
-
-Do not ask another tool to bypass a scope rejection."""),
 }
 
 TECHS = [
@@ -123,6 +110,14 @@ TECHS = [
     ("virustotal", "VirusTotal", "threat-intelligence", "query-plan", "Hash reputation lookup only after approval to disclose that indicator; never upload a file."),
     ("sigma", "Sigma", "detection", "rule-plan", "Draft a rule from a supplied event schema and test fixtures; do not deploy."),
     ("yara", "YARA", "detection", "rule-plan", "Draft an original rule and validate with benign/positive synthetic lab fixtures."),
+    ("tenable", "Tenable Vulnerability Management", "vulnerability-management", "query-plan",
+     "Export assets and findings for an approved tag or folder scope; never launch, schedule or resume a scan."),
+    ("qualys", "Qualys VMDR", "vulnerability-management", "QQL",
+     "vulnerabilities: (severity>3) and (status:Active)"),
+    ("rapid7-insightvm", "Rapid7 InsightVM", "vulnerability-management", "query-plan",
+     "List affected assets for a supplied vulnerability ID within an approved site scope."),
+    ("greenbone", "Greenbone / OpenVAS", "vulnerability-management", "query-plan",
+     "Read the result set of an existing completed task; do not start, stop or rescan anything."),
 ]
 
 OFFICIAL = {
@@ -155,7 +150,10 @@ def main():
     registry = []
     for slug, name, typ, language, query in TECHS:
         source = OFFICIAL.get(slug)
-        registry.append({"id": slug, "name": name, "type": typ, "status": "scaffold",
+        registry.append({"id": slug, "name": name, "type": typ,
+                         # The Suite sits above the domains instead of beside them.
+                         "scope": "all-domains" if typ == "soc-platform" else "single-domain",
+                         "status": "scaffold",
                          "mcp": {"status": "vendor_documented_not_configured" if source else "not_verified",
                                  "source": source, "template": f"mcp/{slug}.example.json"},
                          "skills": [f"agentic-soc:tech-{slug}"], "live_connector": False})
@@ -289,11 +287,6 @@ Example: supplied case export -> source-labelled evidence inventory -> analyst a
             {"id": "query", "type": "draft_only", "languages": ["KQL", "SPL", "Sigma"]},
             {"id": "review", "type": "human", "require": "tenant, telemetry, read-only RBAC, time bounds"},
             {"id": "evaluate", "type": "supplied_evidence_only"}],
-        "purple-team": [
-            {"id": "scope", "tool": "soc_research_plan", "on_error": "stop"},
-            {"id": "emulation", "type": "draft_only", "execution": False},
-            {"id": "detections", "type": "skill", "skill": "agentic-soc:detection-engineering"},
-            {"id": "gaps", "type": "supplied_lab_evidence_only"}],
     }
     for name, steps in workflows.items():
         js(f"templates/workflows/{name}.yaml", {"name": name, "version": __version__,
@@ -324,14 +317,12 @@ Example: supplied case export -> source-labelled evidence inventory -> analyst a
                        "ticket_draft": {"type": "object", "properties": {"writes_performed": {"const": False}},
                                         "required": ["writes_performed", "status"]}}})
     js("agentic_soc/schemas/profile-template.json", {"$schema": "https://json-schema.org/draft/2020-12/schema",
-        "title": "Profile template", "type": "object", "required": ["id", "status", "description", "workflow", "scope_required"],
-        "properties": {"id": {"type": "string"}, "status": {"enum": ["mvp", "scaffold"]},
-                       "description": {"type": "string"}, "workflow": {"type": "string"}, "scope_required": {"type": "boolean"},
-                       "availability": {"enum": ["available", "gated_preview", "preview_enabled"]},
-                       "contributor": {"type": "string"},
-                       "contribution_status": {"enum": ["implemented", "planned_external_contribution"]}},
+        "title": "Profile template", "type": "object", "required": ["id", "status", "description", "workflow"],
+        "properties": {"id": {"type": "string"},
+                       "status": {"enum": ["mvp"]},
+                       "description": {"type": "string"}, "workflow": {"type": "string"}},
         "additionalProperties": False})
-    print(f"Generated {len(PROFILES)} profiles, {len(SKILLS) + len(TECHS)} generated + {len(HAND_AUTHORED)} hand-authored skills, {len(TECHS)} technology scaffolds, 4 workflows and 3 schemas.")
+    print(f"Generated {len(PROFILES)} profiles, {len(SKILLS) + len(TECHS)} generated + {len(HAND_AUTHORED)} hand-authored skills, {len(TECHS)} technology scaffolds, {len(workflows)} workflows and 3 schemas.")
 
 
 if __name__ == "__main__":

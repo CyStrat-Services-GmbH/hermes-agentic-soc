@@ -5,6 +5,7 @@
       "id": "cystrat-soc-suite",
       "name": "CyStrat SOC Suite",
       "type": "soc-platform",
+      "scope": "all-domains",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -20,6 +21,7 @@
       "id": "microsoft-sentinel",
       "name": "Microsoft Sentinel",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -35,6 +37,7 @@
       "id": "splunk",
       "name": "Splunk",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "vendor_documented_not_configured",
@@ -50,6 +53,7 @@
       "id": "elastic-security",
       "name": "Elastic Security",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "vendor_documented_not_configured",
@@ -65,6 +69,7 @@
       "id": "ibm-qradar",
       "name": "IBM QRadar",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -80,6 +85,7 @@
       "id": "google-secops",
       "name": "Google SecOps",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -95,6 +101,7 @@
       "id": "wazuh",
       "name": "Wazuh",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -110,6 +117,7 @@
       "id": "graylog",
       "name": "Graylog",
       "type": "siem",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -125,6 +133,7 @@
       "id": "thehive-cortex",
       "name": "TheHive / Cortex",
       "type": "soar-case",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -140,6 +149,7 @@
       "id": "shuffle",
       "name": "Shuffle",
       "type": "soar-case",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -155,6 +165,7 @@
       "id": "xsoar",
       "name": "Cortex XSOAR",
       "type": "soar-case",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -170,6 +181,7 @@
       "id": "sentinel-playbooks",
       "name": "Sentinel Playbooks",
       "type": "soar-case",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -185,6 +197,7 @@
       "id": "defender-xdr",
       "name": "Defender XDR",
       "type": "edr-xdr",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -200,6 +213,7 @@
       "id": "crowdstrike",
       "name": "CrowdStrike",
       "type": "edr-xdr",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -215,6 +229,7 @@
       "id": "sentinelone",
       "name": "SentinelOne",
       "type": "edr-xdr",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -230,6 +245,7 @@
       "id": "velociraptor",
       "name": "Velociraptor",
       "type": "edr-xdr",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -245,6 +261,7 @@
       "id": "misp",
       "name": "MISP",
       "type": "threat-intelligence",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -260,6 +277,7 @@
       "id": "opencti",
       "name": "OpenCTI",
       "type": "threat-intelligence",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -275,6 +293,7 @@
       "id": "virustotal",
       "name": "VirusTotal",
       "type": "threat-intelligence",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -290,6 +309,7 @@
       "id": "sigma",
       "name": "Sigma",
       "type": "detection",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -305,6 +325,7 @@
       "id": "yara",
       "name": "YARA",
       "type": "detection",
+      "scope": "single-domain",
       "status": "scaffold",
       "mcp": {
         "status": "not_verified",
@@ -313,6 +334,70 @@
       },
       "skills": [
         "agentic-soc:tech-yara"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "tenable",
+      "name": "Tenable Vulnerability Management",
+      "type": "vulnerability-management",
+      "scope": "single-domain",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/tenable.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-tenable"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "qualys",
+      "name": "Qualys VMDR",
+      "type": "vulnerability-management",
+      "scope": "single-domain",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/qualys.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-qualys"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "rapid7-insightvm",
+      "name": "Rapid7 InsightVM",
+      "type": "vulnerability-management",
+      "scope": "single-domain",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/rapid7-insightvm.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-rapid7-insightvm"
+      ],
+      "live_connector": false
+    },
+    {
+      "id": "greenbone",
+      "name": "Greenbone / OpenVAS",
+      "type": "vulnerability-management",
+      "scope": "single-domain",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/greenbone.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-greenbone"
       ],
       "live_connector": false
     }

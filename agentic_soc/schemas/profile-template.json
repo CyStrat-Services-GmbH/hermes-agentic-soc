@@ -6,8 +6,7 @@
     "id",
     "status",
     "description",
-    "workflow",
-    "scope_required"
+    "workflow"
   ],
   "properties": {
     "id": {
@@ -15,8 +14,7 @@
     },
     "status": {
       "enum": [
-        "mvp",
-        "scaffold"
+        "mvp"
       ]
     },
     "description": {
@@ -24,25 +22,6 @@
     },
     "workflow": {
       "type": "string"
-    },
-    "scope_required": {
-      "type": "boolean"
-    },
-    "availability": {
-      "enum": [
-        "available",
-        "gated_preview",
-        "preview_enabled"
-      ]
-    },
-    "contributor": {
-      "type": "string"
-    },
-    "contribution_status": {
-      "enum": [
-        "implemented",
-        "planned_external_contribution"
-      ]
     }
   },
   "additionalProperties": false

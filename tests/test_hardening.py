@@ -247,37 +247,6 @@ def valid_scope():
             "allowed_activities": ["research"]}
 
 
-def test_preview_default_closed_even_with_valid_scope(tmp_path):
-    runtime = Runtime(ROOT, lambda: tmp_path, lambda k, d=None: d)
-    result = runtime.call("soc_research_plan", {"scope": valid_scope(), "target": "lab.internal"})
-    assert not result["ok"] and "disabled gated preview" in result["error"]
-    profiles = runtime.call("soc_template_list", {})["profiles"]
-    offensive = [p for p in profiles if p["scope_required"]]
-    assert len(offensive) == 3
-    assert all(p["availability"] == "gated_preview" and p["contributor"] == "exploit labs" for p in offensive)
-
-
-@pytest.mark.parametrize("enabled", ["true", 1, "yes", False, None])
-def test_preview_requires_real_boolean_optin(tmp_path, enabled):
-    runtime = Runtime(ROOT, lambda: tmp_path, lambda k, d=None: enabled if k == "offensive_preview_enabled" else d)
-    result = runtime.call("soc_research_plan", {"scope": valid_scope(), "target": "lab.internal"})
-    assert not result["ok"]
-
-
-def test_preview_optin_still_scope_gated_no_execution(tmp_path):
-    runtime = Runtime(ROOT, lambda: tmp_path, lambda k, d=None: True if k == "offensive_preview_enabled" else d)
-    good = runtime.call("soc_research_plan", {"scope": valid_scope(), "target": "lab.internal"})
-    assert good["execution"] == "not_supported" and good["network_calls"] == 0
-    bad = runtime.call("soc_research_plan", {"scope": valid_scope(), "target": "outside.internal"})
-    assert not bad["ok"]
-
-
-def test_model_cannot_enable_preview_in_arguments(tmp_path):
-    runtime = Runtime(ROOT, lambda: tmp_path, lambda k, d=None: d)
-    result = runtime.call("soc_research_plan", {"scope": valid_scope(), "target": "lab.internal", "preview_enabled": True})
-    assert not result["ok"]
-
-
 def test_suite_skill_and_mcp_are_explicit_scaffolds():
     registry = json.loads((ROOT / "templates/registry.yaml").read_text())
     suite = next(x for x in registry["technologies"] if x["id"] == "cystrat-soc-suite")
@@ -293,5 +262,5 @@ def test_release_versions_agree():
     import tomllib
     from agentic_soc import __version__
     project = tomllib.loads((ROOT / "pyproject.toml").read_text())
-    assert project["project"]["version"] == __version__ == "0.1.6"
+    assert project["project"]["version"] == __version__ == "0.2.0"
     assert f'version: "{__version__}"' in (ROOT / "plugin.yaml").read_text()

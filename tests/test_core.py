@@ -205,10 +205,13 @@ def test_schema_guards_and_host_approval():
     assert policy("thor_parse", None)["action"] == "block"
 
 
-def test_research_profiles_scope_gated(tmp_path):
+def test_only_defense_templates_are_shipped():
+    listing = templates.list_templates()["profiles"]
+    assert len(listing) == 6
+    assert all(p["status"] == "mvp" for p in listing)
+    assert templates.install(ROOT, "soc-l1-triage", "soc-l1")["dry_run"]
     with pytest.raises(BoundaryError):
         templates.install(ROOT, "red-team-planner", "soc-lab")
-    assert templates.install(ROOT, "soc-l1-triage", "soc-l1")["dry_run"]
 
 
 def test_profile_creation_requires_host_home():
@@ -231,7 +234,7 @@ def test_profile_create_fixed_cli_and_profile_context(tmp_path):
         assert run.call_args_list[0].kwargs["env"]["HERMES_HOME"] == str(home)
         assert (destination / "SOUL.hermes-default.md").read_text() == "Hermes fresh default"
         assert "dfir-compromise-assessment" in (destination / "SOUL.md").read_text()
-        assert len(list((destination / "skills/agentic-soc").glob("*/SKILL.md"))) == 36
+        assert len(list((destination / "skills/agentic-soc").glob("*/SKILL.md"))) == 39
         assert (destination / "skills/agentic-soc/thor-module-analysis/references/modules.md").is_file()
 
 
@@ -310,7 +313,7 @@ def test_every_template_skill_and_registry_complete():
         for name in (folder / "skills.txt").read_text().splitlines():
             assert (ROOT / "skills" / name.split(":")[1] / "SKILL.md").is_file()
     registry = yaml.safe_load((ROOT / "templates/registry.yaml").read_text())
-    assert len(registry["technologies"]) == 21
+    assert len(registry["technologies"]) == 25
     for tech in registry["technologies"]:
         assert tech["status"] == "scaffold" and tech["live_connector"] is False
         mcp = json.loads((ROOT / "templates" / tech["mcp"]["template"]).read_text())
@@ -346,7 +349,7 @@ def test_manifest_matches_actual_registration():
     manifest = yaml.safe_load((ROOT / "plugin.yaml").read_text())
     assert set(context.tools) == set(manifest["provides_tools"])
     assert set(context.hooks) == set(manifest["provides_hooks"])
-    assert len(context.skills) == 36
+    assert len(context.skills) == 39
     assert set(context.commands) == {"soc-templates", "soc-capabilities", "thor-scan", "thor-assess"}
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":true}')
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":"false"}')

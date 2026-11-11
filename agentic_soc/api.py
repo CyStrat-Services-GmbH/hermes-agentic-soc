@@ -25,10 +25,9 @@ TOOLS = [
     schema("soc_capabilities", "Show implemented SOC functions, the planned 21-technology integration catalog and gated-preview state. Local inspection only; configuration is not proof of live connectivity.", {
         "technology": {"type": "string", "minLength": 1}}),
     schema("soc_template_list", "List shipped SOC profile templates and their implementation status.", {}),
-    schema("soc_template_install", "Dry-run or create a fresh no-credential Hermes profile; execution requires host approval.", {
+    schema("soc_template_install", "Preview or create a new defense profile in dry-run first; existing profiles are never overwritten.", {
         "template": {"type": "string"}, "name": {"type": "string"},
-        "execute": {"type": "boolean", "default": False},
-        "scope": SCOPE, "target": {"type": "string"}}, ("template", "name")),
+        "execute": {"type": "boolean", "default": False}}, ("template", "name")),
     schema("thor_lite_scan", "Probe separately installed THOR Lite or execute an operator-allowed local directory scan after host approval.", {
         "target": {"type": "string"}, "execute": {"type": "boolean", "default": False}}, ("target",)),
     schema("thor_parse", "Import THOR JSON v1/v2 or NDJSON from an allowed root; count and correlate all events.", {
@@ -40,8 +39,6 @@ TOOLS = [
                    "host": {"type": "string"}, "timestamp": {"type": "string"},
                    "evidence": {"type": "array", "items": {"type": "string"}}, "asset_criticality": {"type": "string"}},
                   "required": ["title"], "additionalProperties": False}}, ("alert",)),
-    schema("soc_research_plan", "Validate declared authorization scope and create a research/lab plan only; never interacts with targets.", {
-        "scope": SCOPE, "target": {"type": "string"}}, ("scope", "target")),
 ]
 BY_NAME = {s["name"]: s for s in TOOLS}
 
