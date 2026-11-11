@@ -90,3 +90,52 @@ def test_version_badge_matches_manifest():
     root = ET.parse(repository / "assets/badges/version.svg").getroot()
     labels = [item.text for item in root.iter("{http://www.w3.org/2000/svg}text")]
     assert version in labels
+
+
+SECTION = (
+    "## One agent. Your wider security stack.\n\n"
+    "{table}\n\n"
+    "## Next section\n"
+)
+
+
+def scaffold(root, technology):
+    directory = root / "templates/mcp"
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / f"{technology.lower().replace(' ', '-')}.example.json").write_text(
+        '{"status": "scaffold", "enabled": false, "technology": "%s"}' % technology,
+        encoding="utf-8",
+    )
+
+
+def test_integration_table_matching_registry_passes(documentation):
+    scaffold(documentation, "Tenable Vulnerability Management")
+    (documentation / "README.md").write_text(
+        SECTION.format(table="| Domain | Technologies |\n|---|---|\n| Vulnerability management | Tenable Vulnerability Management |"),
+        encoding="utf-8",
+    )
+    assert run_check(documentation) == 0
+
+
+def test_scaffold_missing_from_readme_is_refused(documentation):
+    scaffold(documentation, "Qualys VMDR")
+    (documentation / "README.md").write_text(
+        SECTION.format(table="| Domain | Technologies |\n|---|---|\n| SIEM | Splunk |"),
+        encoding="utf-8",
+    )
+    assert run_check(documentation) == 1
+
+
+def test_soc_suite_as_peer_domain_row_is_refused(documentation):
+    scaffold(documentation, "CyStrat SOC Suite")
+    (documentation / "README.md").write_text(
+        SECTION.format(table="| Domain | Technologies |\n|---|---|\n| SOC platform | CyStrat SOC Suite |"),
+        encoding="utf-8",
+    )
+    assert run_check(documentation) == 1
+
+
+def test_missing_integration_section_is_refused(documentation):
+    scaffold(documentation, "Splunk")
+    (documentation / "README.md").write_text("# Readme\n", encoding="utf-8")
+    assert run_check(documentation) == 1
