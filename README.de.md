@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.0"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.1"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.2.0.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
+> **Private Entwicklungsvorschau · v0.2.1.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
 
 ## Was heute enthalten ist
 
@@ -61,8 +61,8 @@ Die [Capability-Referenz](docs/CAPABILITIES.md) beschreibt die Werkzeuge und Rol
 ## Drei Unternehmen, klar abgegrenzte Beiträge
 
 - **[CyStrat Services GmbH](https://www.cystrat-services.com/):** SOC- und Incident-Response-Erfahrung als Grundlage für wiederverwendbare Skills, Rollen und Abläufe im gemeinsamen Defense-Projekt.
-- **[Nextron Systems](https://www.nextron-systems.com/):** THOR und forensische Bewertung im gemeinsamen Projekt; Unterstützung und Zusammenarbeit von Florian Roth und Geschäftsführer Mark bestätigt. Scanner, Signaturen, Regeln und Lizenzen werden nicht mitgeliefert.
-- **[exploit labs](https://xplt.com/):** Geplanter Entwickler und Contributor des künftigen Offensive-Research-Teils unter Geschäftsführer Johannes Schönborn. In dieser Version nicht enthalten; siehe [Planung](docs/PLANNED-OFFENSIVE-RESEARCH.md).
+- **[Nextron Systems](https://www.nextron-systems.com/):** THOR und forensische Bewertung im gemeinsamen Projekt; Unterstützung und Zusammenarbeit durch die Geschäftsführung von Nextron Systems bestätigt. Scanner, Signaturen, Regeln und Lizenzen werden nicht mitgeliefert.
+- **[exploit labs](https://xplt.com/):** Geplanter Entwickler und Contributor des künftigen Offensive-Research-Teils. In dieser Version nicht enthalten; siehe [Planung](docs/PLANNED-OFFENSIVE-RESEARCH.md).
 
 Die [Research-Vorschau](docs/PLANNED-OFFENSIVE-RESEARCH.md) erfordert Operator-Opt-in und einen gültigen deklarierten Scope. Sie erstellt ausschließlich Pläne und enthält weder operative Exploits noch Interaktionen mit Zielsystemen.
 
@@ -95,7 +95,7 @@ Lesen Sie vor Kundenevidenz oder Scan-Ausführung das [Sicherheitsmodell](SECURI
 
 Apache-2.0 passt zu beiden Seiten dieses Projekts: Sie erlaubt die patent- und markensichere Nutzung, die ein Sicherheitsprodukt braucht, ist mit der Open-Source-Lizenz von Hermes Agent vereinbar und erlaubt Unternehmen die Evaluation ohne Sonderprüfung. Sie gilt für Quellcode und Dokumentation — THOR, Signaturen und die Marken von Nextron bleiben unter den Bedingungen von Nextron; Herstellerdokumentation wird verlinkt, nicht einbundelt.
 
-Die gemeinsame Entwicklung mit Nextron Systems ist bestätigt: **Florian Roth** und Geschäftsführer **Mark** haben Unterstützung und Zusammenarbeit für dieses Plugin zugesagt. Das betrifft die Projektzusammenarbeit, nicht eine Rechteeinräumung an THOR, Signaturen oder Marken von Nextron.
+Die gemeinsame Entwicklung mit Nextron Systems ist bestätigt: die **Geschäftsführung von Nextron Systems** hat Unterstützung und Zusammenarbeit für dieses Plugin zugesagt. Das betrifft die Projektzusammenarbeit, nicht eine Rechteeinräumung an THOR, Signaturen oder Marken von Nextron.
 
 - [ ] **Release-blockierendes TODO:** Finale Zustimmung einholen und `LICENSE`, `NOTICE` sowie `plugin.yaml` gemeinsam aktualisieren.
 

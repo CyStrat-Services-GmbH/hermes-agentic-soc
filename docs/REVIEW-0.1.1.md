@@ -25,7 +25,7 @@ Review date: 2026-11-11. This is a source-code review with implemented fixes and
 
 ### exploit labs
 
-The sponsor has designated exploit labs and managing director Johannes Schönborn for the planned Offensive Security contribution. This appears only in the research skeleton, marketing and gated-preview documentation. No delivered exploit labs operative implementation or copyright/license grant is asserted.
+The sponsor has designated exploit labs for the planned Offensive Security contribution. This appears only in the research skeleton, marketing and gated-preview documentation. No delivered exploit labs operative implementation or copyright/license grant is asserted.
 
 `offensive_preview_enabled` is a strict boolean operator setting, false by default. The policy hook and runtime reject offensive-profile and research-plan calls while disabled. Valid scope remains mandatory after opt-in; no target interaction is implemented.
 

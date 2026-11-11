@@ -4,7 +4,7 @@ This page describes a capability that is **planned for a future release** and is
 
 ## What is planned
 
-CyStrat Services and Nextron Systems intend to add an offensive-research capability in a later version, contributed by **exploit labs** under managing director **Johannes Schönborn**. The intended scope is planning work for isolated, authorised labs:
+CyStrat Services and Nextron Systems intend to add an offensive-research capability in a later version, contributed by **exploit labs**. The intended scope is planning work for isolated, authorised labs:
 
 - research and emulation plans with explicit detection expectations
 - comparison of planned lab signals against supplied lab telemetry

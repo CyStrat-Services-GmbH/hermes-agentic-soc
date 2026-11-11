@@ -1,7 +1,7 @@
 Mehr Alarme sind noch keine besseren Entscheidungen.
 Hermes Agentic SOC verbindet spezialisierte KI-Agenten mit nachvollziehbarer Sicherheitsanalyse.
 Defense: CyStrat Services und Nextron Systems.
-Offensive Security ist der geplante Beitrag von exploit labs und Johannes Schönborn, zunächst als Gated Preview.
+Offensive Research ist der geplante Beitrag von exploit labs und in dieser Version nicht enthalten.
 
 Sechs Defense-Profile übernehmen klar definierte Rollen: von der ersten Triage bis zum Compromise Assessment.
 Skills und Technologievorlagen, inklusive CyStrat SOC Suite.

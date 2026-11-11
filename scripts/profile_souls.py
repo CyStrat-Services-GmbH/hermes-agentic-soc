@@ -33,7 +33,7 @@ COMMUNICATION = [
 
 DEFENSE_CREDIT = "Hermes Agentic SOC · built by CyStrat Services × Nextron Systems."
 PREVIEW_CREDIT = ("Hermes Agentic SOC · Offensive Security gated preview. Planned contribution: exploit labs, "
-                  "led by managing director Johannes Schönborn. No operational exploit labs capability is included in this release.")
+                  "No operational exploit labs capability is included in this release.")
 
 PREVIEW_BOUNDARIES = [
     "This role is a **disabled gated preview**. It works only after the operator sets `offensive_preview_enabled: true`; never enable it yourself or suggest bypassing a denial.",
