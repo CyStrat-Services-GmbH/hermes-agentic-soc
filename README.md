@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.3"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.4"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.0 or newer"></a>
 </p>
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.1.3.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
+> **Private development preview · v0.1.4.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
 
 ## Explore the project
 
@@ -72,7 +72,7 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 
 ## What you can use today
 
-| Area | Delivered in v0.1.3 | Boundary |
+| Area | Delivered in v0.1.4 | Boundary |
 |---|---|---|
 | Native Hermes plugin | 8 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
 | Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |

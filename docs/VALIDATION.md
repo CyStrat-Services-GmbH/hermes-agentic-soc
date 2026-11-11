@@ -1,5 +1,31 @@
 # Validation record
 
+## Release 0.1.4: harvest of profile skill lessons, update workflow, Hermes floor
+
+Version 0.1.4 brings back what two running SOC profiles learned while working real exports, and defines how that traffic happens from now on.
+
+| Content | Status |
+|---|---|
+| THOR skill lessons from `soc-dfir-thor` (tool path): output-shape intake, `--lookback` semantics, max file size, behavioural coverage, Eventlog/EVTX double count, per-rule match cap, Sigma titles in `DESCRIPTION_1`; four new references and four inventory scripts | Implemented |
+| THOR skill lessons from `soc-thor-assessment` (no-tool path): `references/export-inventory.md`, fallback for an exposed-but-refusing tool, artefact-family grouping, "quantify an all N claim" | Implemented |
+| `docs/SKILL-UPDATE-WORKFLOW.md` — repo-first authoring, harvest, review gates, distribution including the gateway restart | Documentation |
+| `scripts/harvest_profile_skills.py` — dry-run drift report, `--write` into the repository only | Tooling |
+| Hermes minimum lowered from 0.23.1 to 0.23.0 after registration and real tool execution on 0.23.0 | Implemented |
+
+| Check | Executed result |
+|---|---|
+| Regression suite (Python 3.14.9) | 191 passed |
+| Generator | `build_assets.py` idempotent; hand-authored THOR skills validated, never overwritten |
+| Documentation checker | PASS: 22 Markdown files, 195 local targets, 3 brand PNGs |
+| Plugin Doctor, Hermes 0.23.0, repository checkout | Passed: 8 tools, 1 hook |
+| Catalog validation `hermes plugins validate .` | Validation passed: declared hooks and middleware match, no tool collisions, security scan safe, no core override |
+| Boundary gate | A path outside `evidence_roots` refused with `BOUNDARY_REJECTED`; the case continued only on a byte-identical copy inside the allowed root |
+| Drift after the harvest | `harvest_profile_skills.py` reports the repository as a superset; no lesson exists only in a profile |
+
+Two profiles edited the same fallback block of `thor-assessment/SKILL.md`. They are complementary (tool path vs. no-tool path), so both survive in that order; the merge is recorded in the pull request.
+
+Not established: the behavioural quality of the new guidance on a specific model, a licensed THOR Enterprise or Lite run, and hosts outside the verified versions.
+
 ## Hermes minimum version: 0.23.0
 
 The declared minimum is 0.23.0. The package uses only documented registration, configuration and storage seams, and the earlier `>=0.23.1` floor blocked registration on a 0.23.0 host without a demonstrated API dependency. The floor was lowered after registering and exercising the plugin on such a host.
