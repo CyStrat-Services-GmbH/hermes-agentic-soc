@@ -59,6 +59,6 @@ Read [SECURITY.md](../SECURITY.md) for the full threat boundary and the [operato
 
 ## Compatibility and deliberate limits
 
-Hermes v0.23.1 is the declared minimum, with integration validation against the inspected upstream revision recorded in VALIDATION.md. The actual vendor scanner is external and version-probed through its own CLI help. JSON v3 is explicitly unsupported because it is structurally distinct ([Nextron JSON versions](https://github.com/NextronSystems/jsonlog)).
+Hermes v0.23.0 is the declared minimum, with integration validation against the inspected upstream revision recorded in VALIDATION.md. The actual vendor scanner is external and version-probed through its own CLI help. JSON v3 is explicitly unsupported because it is structurally distinct ([Nextron JSON versions](https://github.com/NextronSystems/jsonlog)).
 
 The same-host/scan/file+hash identity is conservative observation grouping, not complete forensic event correlation. Records with no stable artifact key remain separate. Human analysts validate suspicious behavior, potential duplicates, attack time, priority and business impact.

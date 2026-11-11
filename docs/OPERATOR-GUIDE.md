@@ -8,7 +8,7 @@ This guide is the detailed operational reference for Hermes Agentic SOC v0.1.3. 
 
 ## Operating assumptions
 
-Version 0.1.3 targets Hermes >=0.23.1 and Python >=3.11 for the standalone engine; Hermes itself may require a newer Python version. Use [capabilities](CAPABILITIES.md) for the supported scope, [validation](VALIDATION.md) for executed tests and the [0.1.2 review](REVIEW-0.1.2.md) for detailed findings.
+Version 0.1.3 targets Hermes >=0.23.0 and Python >=3.11 for the standalone engine; Hermes itself may require a newer Python version. Use [capabilities](CAPABILITIES.md) for the supported scope, [validation](VALIDATION.md) for executed tests and the [0.1.2 review](REVIEW-0.1.2.md) for detailed findings.
 
 The repository remains private and the code license is pending. The [integration roadmap](INTEGRATION-ROADMAP.md) and [Offensive Security preview](GATED-PREVIEW.md) are not live production integrations or operational exploitation features.
 

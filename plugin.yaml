@@ -6,7 +6,7 @@ description: Evidence-first SOC profiles and deterministic THOR Lite triage with
 author: CyStrat Services GmbH and Nextron Systems GmbH
 license: LicenseRef-Pending-Approval
 homepage: https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc
-requires_hermes: ">=0.23.1"
+requires_hermes: ">=0.23.0"
 tags: [security, soc, dfir, thor, detection-engineering]
 capabilities: []
 provides_tools:
