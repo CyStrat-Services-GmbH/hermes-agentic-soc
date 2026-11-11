@@ -30,7 +30,7 @@ A configured path or endpoint is not evidence of a working integration. Check th
 - **Operations:** [Quickstart](GETTING-STARTED.md), [operator guide](OPERATOR-GUIDE.md), [tools and roles](CAPABILITIES.md), [THOR analysis suite](THOR-ANALYSIS.md).
 - **Design:** [Architecture](ARCHITECTURE.md), [integration roadmap](INTEGRATION-ROADMAP.md), [CyStrat SOC Suite](CYSTRAT-SOC-SUITE.md).
 - **Assurance:** [Security](../SECURITY.md), [executed validation](VALIDATION.md), [0.1.2 review](REVIEW-0.1.2.md), [historical 0.1.1 review](REVIEW-0.1.1.md).
-- **Contribution:** [Development guide](../CONTRIBUTING.md), [release blockers](../TODO.md), [license placeholder](../LICENSE), [notice](../NOTICE).
+- **Contribution:** [Development guide](../CONTRIBUTING.md), [skill feedback and update workflow](SKILL-UPDATE-WORKFLOW.md), [release blockers](../TODO.md), [license placeholder](../LICENSE), [notice](../NOTICE).
 - **Presentation:** [English messaging](MARKETING-EN.md), [logo provenance](../assets/brand/README.md).
 
 Historical review logs document the version tested, not a promise about every future commit. The private repository and pending license are release constraints throughout this documentation.

@@ -107,6 +107,12 @@ Apply `agentic-soc:thor-timeline-correlation`. One entry per distinct activity o
 
 Concrete, prioritised and specific to the findings, not generic IR boilerplate. Each action has a target, an owner role and a statement that it requires approval if it changes a system. Typical order: validate → preserve evidence → scope (fleet, other telemetry) → contain (approval) → eradicate and recover (approval) → detection improvements.
 
+## Druckfähige Fassung (HTML/PDF)
+
+The Markdown case is the authoritative long form. A printable version is a **derived** artefact: same numbers, same labels, no new claims, and the same prohibition on credential material — a forwarded PDF must not contain what the Markdown withholds. Build it from [printable-deliverable.md](printable-deliverable.md), which carries the HTML/CSS structure, the headless-Chrome render command and the layout pitfalls.
+
+Carry the argument's order onto the page: verdict banner first, then the KPI figures, then the detail, then the limits. A reader who stops after ten seconds must still leave with the correct, bounded answer.
+
 ## Appendix
 
 - `Einschränkungen` from the tool, extended by analyst limitations.

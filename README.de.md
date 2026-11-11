@@ -9,9 +9,9 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.3"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.4"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
-  <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.1"></a>
+  <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
 <p align="center">
   <a href="#lizenz-und-veröffentlichungsstatus"><img src="assets/badges/preview.svg" alt="Private Entwicklungsvorschau"></a>
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.1.3.** Die lokale Evidenzanalyse ist implementiert. Die 21 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren; Offensive Security ist eine deaktivierte Planungsvorschau. Apache-2.0 ist lediglich vorgeschlagen.
+> **Private Entwicklungsvorschau · v0.1.4.** Die lokale Evidenzanalyse ist implementiert. Die 21 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren; Offensive Security ist eine deaktivierte Planungsvorschau. Apache-2.0 ist lediglich vorgeschlagen.
 
 ## Was heute enthalten ist
 

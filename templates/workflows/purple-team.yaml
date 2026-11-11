@@ -1,6 +1,6 @@
 {
   "name": "purple-team",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "execution": "declarative_reference_not_workflow_engine",
   "steps": [
     {

@@ -7,6 +7,8 @@ Check every item before handover. Any "no" keeps the case in draft and names the
 - [ ] Event count, levels and modules come from `thor_parse` / `thor_first_assessment`, not from reading.
 - [ ] INFO, NOTICE, unknown-score and ERROR events are accounted for.
 - [ ] Events, automatic observation groups and analyst findings are reported separately, with the reason they differ.
+- [ ] The per-finding event counts were computed in code and sum exactly to the finding-event count (not added up by eye).
+- [ ] The mapping table states the partition of finding events (how many carry `reasons`, how many are reason-less module observations such as `ProcessIntegrity`), and that partition explains the events-vs-findings gap.
 - [ ] Export origin, THOR edition, known flags/mode, filters and split parts are documented.
 - [ ] Coverage gaps are stated (e.g. THOR Lite: no Registry, Eventlog, SHIMCache or Sigma).
 
@@ -27,6 +29,7 @@ Check every item before handover. Any "no" keeps the case in draft and names the
 - [ ] Attribution inferred from a rule or IOC name.
 - [ ] Lateral movement, credential use or password cracking without matching artefacts.
 - [ ] A clean host inferred from missing findings.
+- [ ] Undated evidence quietly ordered into the timeline. A match whose captured context carries no timestamp (a session line in a tool trace, a substring from a log) is Confirmed as an event and **Not Derivable** as to time: give it an explicit `undatiert` entry and say so in `Grenzen` — never omit it, never date it from the containing file's mtime.
 
 ## Output
 

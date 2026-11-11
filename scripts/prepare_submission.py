@@ -25,7 +25,7 @@ def main():
         "name": "agentic-soc", "repo": repo, "sha": sha,
         "description": "Evidence-first SOC specialists and deterministic THOR JSON triage; THOR is installed separately.",
         "maintainer": "CyStrat-Services-GmbH", "tier": "community", "category": "tools",
-        "requires_hermes": ">=0.23.1", "version": version,
+        "requires_hermes": ">=0.23.0", "version": version,
         "docs_url": repo, "readme": True, "platforms": [],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

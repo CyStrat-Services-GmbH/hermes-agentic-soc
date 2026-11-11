@@ -7,7 +7,7 @@ Start with the offline demonstration to understand the output before granting ac
 ## Prerequisites
 
 - **Offline engine:** Python 3.11 or newer and an authorized checkout of this private repository. No third-party runtime package is required.
-- **Native plugin:** Hermes `>=0.23.1`; use the Python version required by your Hermes installation, which may be newer than the standalone engine's minimum.
+- **Native plugin:** Hermes `>=0.23.0`; use the Python version required by your Hermes installation, which may be newer than the standalone engine's minimum.
 - **Real scans:** A separately acquired, appropriately licensed THOR executable. The offline demonstration does not need it.
 
 Read the [license status](../README.md#license-and-release-status) and [security model](../SECURITY.md) before use. The [validation record](VALIDATION.md) lists the host revision and actual acceptance limits.
