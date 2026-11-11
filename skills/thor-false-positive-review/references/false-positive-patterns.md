@@ -15,6 +15,9 @@ Sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.
 | YARA hits inside a vendor AV/EDR module directory (`em018_64.dll`, `em003_64.dll`, `em035_64.dll` below `Program Files\<vendor>\...\Modules\`) | Security products embed sample handling logic. Rules for credential-stealer indicators, wallet extension IDs, browser profile paths and AMSI patching fire on their own modules. Verify signer and product path. |
 | `ProcessIntegrity` → `PE-Sieve found process with implanted/patched section` on many processes | With an AV/EDR that hooks APIs installed, PE-Sieve reports implanted or patched sections in most signed system and browser processes (`svchost.exe`, `firefox.exe`, `explorer.exe`, `dwm.exe`). That is the normal state of a hooked process tree, not injection. Corroborate with the process signer and the installed security product before reporting. |
 | SHIMCache or AmCache entries for THOR itself run from `C:\Temp\` or `C:\thor\` | Path matches the documented THOR run location. |
+| Compressed or archived output of an earlier THOR scan (`*.jsonl.gz`, `*.7z`, `*.zip` wrapping an audit JSONL) | Score 90+ appears because the archive still holds the previously reported match strings, so every rule that fired before fires again inside the container. Verify via the archive fields (`ARCHIVE_FILE`, `ARCHIVE_TYPE`, `EXISTS: nonlocal`), a path under the THOR run or download directory, and a file name carrying an earlier scan ID. Self-reference, not a new finding. |
+| `LM_hash_empty_String` plus a `SUSP_ShellcodeIndicator_*` rule stacking to score 90+ in the memory of a signed Microsoft binary (`winlogon.exe`, `msedge.exe`, `WindowsTerminal.exe`) | `LM_hash_empty_String` matches the well-known empty-LM-hash constant that sits in many Windows memory images, and the shellcode indicators match generic byte sequences in Chromium and logon code. Verify: image owner `NT SERVICE\TrustedInstaller`, unchanged image SHA-256 across a second scan, the same rule pair also hitting other signed vendor binaries in the same export, and no file, service or command-line artefact behind it. Do not call it malicious on the rule pair alone — and do not call it benign without that second reference either. |
+| Content matches in registry hives, `.evtx` files, MPLog, `access.log` or `pagefile.sys` for a string a real attack command produced (`SUSP_Echo_Pipe_Pattern_Jun26`, `SUSP_Commands_Disabling_Windows_Firewall_Jul23`, `SUSP_PS1_Cmdlet_Defender_Exclusion_Apr21_1`) | Same fact stored in several artefacts, not several findings: one `cmd.exe /c echo <name> > \\.\pipe\<name>` leaves its command line in Event 7045/4688, the registry, the hive copies, the evtx containers and the Defender log. Tie every hit back to the originating event and count it once. |
 
 ## Legitimate software that looks odd
 
@@ -29,6 +32,7 @@ Sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.
 | Admin-registered services in odd places (`C:\srvany.exe`) | Change record or admin confirmation. |
 | Software updaters and admin scheduled tasks | Vendor, signer, business-language task names. |
 | New autorun entries after legitimate installations | Software deployment record. |
+| Registry keys whose `modified` timestamp falls inside the OS install window (`CMSTP App Paths`, `Internet Explorer\MAIN\FeatureControl\…\msn.exe`) | Compare `subject.modified` with `installed_on` from the System Information event. A `CMSTP App Paths` key written during provisioning is OS setup, not UAC-bypass staging; an IE FeatureControl key from years earlier is a default. The signature cannot tell them apart — the timestamp can. |
 
 ## Naming and pattern collisions
 
@@ -61,6 +65,9 @@ Sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.
 | Very old log files (`…\2003-04-17-access.log`) | Date in path and content. |
 | Vulnerable configurations in inactive locations (backups, localhost-only dev installs) | No running service uses the file. |
 | "No hotfixes installed" because THOR could not read hotfix information | Other hotfix sources; module errors. |
+| A block of Event 4719 ("auditing disabled") in the same second, subject is the machine account `<HOST>$` | Provisioning applies the audit policy as a batch via `auditpol` or GPO. Tampering spreads over minutes and comes from a user or SYSTEM context with a preceding process record. Check the timestamp against `installed_on` before writing "anti-forensics". |
+| `SHIMCache is suspiciously empty` with `entries: 0` on Windows 11 or Server 2022+ | `AppCompatCache` is not maintained the same way on modern builds, so an empty result is a platform state there. Look for a *change* to 0 between two scans, and for other anti-forensic artefacts. A value of 0 in every export of the same host is not evidence of a flush. |
+| ShimDB notices citing malware families ("Russian Business Network", "Typical Malware names VT evaluation", "Internal Investigation Client E2") | These are name lists inside the Application Compatibility shim database, matched without a target path, hash or load event. Without a file and a shim-load record they are `False Positive`. |
 
 ## Environment-specific
 

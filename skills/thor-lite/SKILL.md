@@ -25,6 +25,8 @@ Consequences for the case:
 5. **Completion check.** A timeout, a non-zero exit code or missing `thor.json` is an incomplete scan. Incomplete output cannot establish a clean result.
 6. **Hand-over.** Pass the returned output path to `thor_parse` and continue with `agentic-soc:thor-assessment`. Record THOR version, flags, start and end in the case.
 
+If `thor_lite_scan` is missing from the session's tool list although the plugin is enabled, the gateway was started before the plugin was installed — see `agentic-soc:thor-assessment` step 2 for the session probe and the operator restart. Until the tool is back, no local scan can be requested: do not hand-build a THOR command line as a substitute for the approved launcher, because that bypasses the root restriction and the human approval the launcher exists for.
+
 ## Limits of the launcher
 
 - Fixed argument list, no custom flags, no remote scans, no process or memory scans, no `--action_command`.
