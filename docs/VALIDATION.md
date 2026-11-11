@@ -1,5 +1,29 @@
 # Validation record
 
+## Release 0.1.5: corrections from the harvest and local-only validation
+
+A patch release on top of 0.1.4. It restores two skill paragraphs the harvest dropped, and removes hosted CI in favour of the local gate.
+
+| Content | Status |
+|---|---|
+| `thor-module-analysis/SKILL.md`: an AmCache `first_run` is not per-file execution time; count distinct values and bucket sizes before dating an execution, and never read a `$Recycle.Bin` path as proof of where a program ran | Restored from `soc-thor-assessment` |
+| `thor-timeline-correlation/references/timestamp-semantics.md`: every `accessed` time inside the scan window is an artefact of the scan itself; same distribution check on the AmCache `first_run` row | Restored from `soc-thor-assessment` |
+| `.github/workflows/test.yml` removed, Actions disabled in the repository settings | No hosted CI |
+| `CONTRIBUTING.md`: local validation policy — checks run before every push, a failing local run blocks, no workflow without an owner decision | Documentation |
+
+| Check | Executed result |
+|---|---|
+| Regression suite | 191 passed |
+| Generator | `build_assets.py` idempotent |
+| Documentation checker | PASS: 22 Markdown files, 195 local targets, 3 brand PNGs |
+| Plugin Doctor (Hermes 0.23.0) | 8 tools, 1 hook |
+| Catalog validation | Validation passed |
+| Drift after both harvests | `harvest_profile_skills.py`: the repository is a superset of both profiles |
+
+Why the correction was needed: one commit took the `soc-dfir-thor` version of two files wholesale instead of merging both profiles. The re-run of the drift report after the merge caught it — which is the behaviour the workflow in `docs/SKILL-UPDATE-WORKFLOW.md` prescribes.
+
+No hosted CI exists in this repository. Every figure above comes from a local run on Python 3.14.9 and Hermes Agent v0.23.0; nothing is inferred from a runner.
+
 ## Release 0.1.4: harvest of profile skill lessons, update workflow, Hermes floor
 
 Version 0.1.4 brings back what two running SOC profiles learned while working real exports, and defines how that traffic happens from now on.
@@ -114,7 +138,7 @@ The third review introduces a local capability inventory and hardens evidence im
 
 Both `validate --install-deps` attempts printed `dependency preparation failed: Dependency inputs changed while preparing publication; retry.`, then ran successful plugin validation and exited zero. The inspected host catches preparation exceptions and continues with its existing environment. Therefore the successful capability/security checks do not establish a successful fresh dependency-preparation step. No host internals were patched to hide or bypass the warning.
 
-Logs are prefixed `review-v012-` in `docs/validation/`. Python 3.12/3.13 and Windows/macOS were not locally executed for this review; GitHub Actions results are recorded separately when available.
+Logs are prefixed `review-v012-` in `docs/validation/`. Python 3.12/3.13 and Windows/macOS were not locally executed for this review. No hosted CI is used in this repository, so there are no runner results to compare against.
 
 ## Review release 0.1.1 (historical)
 
@@ -152,7 +176,7 @@ Validation date: 2026-11-11. The following results were executed in the build sa
 | Scan-launcher tests | CLI capability probe, fixed FileScan argv, dry-run, no-output exit and timeout tested with mocks |
 | Slash-command execution restriction | `execute:true` refused by `/thor-scan`; normal tool pipeline required |
 
-The source and test logs are stored under `docs/validation/`. The repository's GitHub Actions workflow declares Python 3.11–3.14; only the two versions listed above are claimed as locally executed.
+The source and test logs are stored under `docs/validation/`. The project targets Python 3.11–3.14; only the two versions listed above are claimed as locally executed, and no hosted CI exists to cover the others.
 
 ## Inspected host and environment
 
