@@ -4,7 +4,7 @@ This page describes a capability that is **planned for a future release** and is
 
 ## What is planned
 
-CyStrat Services and Nextron Systems intend to add an offensive-research capability in a later version, contributed by **exploit labs**. The intended scope is planning work for isolated, authorised labs:
+CyStrat Services, Nextron Systems and **exploit labs** have confirmed their cooperation on this plugin. An offensive-research capability is planned for a later version and will be contributed by **exploit labs**; the cooperation is agreed, the capability is not built. The intended scope is planning work for isolated, authorised labs:
 
 - research and emulation plans with explicit detection expectations
 - comparison of planned lab signals against supplied lab telemetry
@@ -27,4 +27,4 @@ When the capability ships, it will come with its own scope validation, an explic
 
 ## Status wording
 
-Any external description of this project may state that offensive research is planned with exploit labs. It must not state or imply that it is included, previewable or enabled in this version.
+Any external description of this project may state that exploit labs supports and cooperates on the plugin and that offensive research is planned with them for a later release. It must not state or imply that the offensive-research capability is included, previewable or enabled in this version — cooperation is agreed, delivery is not.

@@ -1,5 +1,23 @@
 # Validation record
 
+## Release 0.2.2: exploit labs is a confirmed cooperation partner
+
+exploit labs was described as a planned contributor only. Their support and cooperation on the plugin are confirmed, so every statement now says so — while the offensive-research capability itself stays unbuilt and out of this version. Agreed cooperation is not a shipped feature, and the documentation keeps the two apart.
+
+| Content | Status |
+|---|---|
+| README, README.de, INTEGRATION-ROADMAP, MARKETING-EN, PLANNED-OFFENSIVE-RESEARCH, submission notes | Reworded: confirmed supporter and cooperation partner, contributor of the planned offensive-research part |
+| Generator footers (`scripts/build_assets.py`, `scripts/profile_souls.py`) | Reworded; profile SOULs regenerated |
+| "Planned, not shipped" boundary for the offensive-research capability | Unchanged — still absent, not previewable, not enableable |
+
+| Check | Executed result |
+|---|---|
+| Regression suite | 180 passed |
+| Generator | `build_assets.py` idempotent; 6 profiles, 30 generated + 9 hand-authored skills, 25 technology scaffolds, 3 workflows |
+| Documentation checker | PASS: 23 Markdown files, 198 local targets, 3 brand PNGs |
+| Plugin Doctor (Hermes 0.23.0) | 7 tools, 1 hook |
+| Catalog validation | Validation passed |
+
 ## Release 0.2.1: partnership and contributor statements carry no personal names
 
 Documentation and generated persona text named individuals from Nextron Systems and exploit labs. Those statements now speak about the companies only: Nextron Systems' management confirms support and cooperation, exploit labs is the planned contributor of the future offensive-research release. No claim, credit or role changes; only who is named.

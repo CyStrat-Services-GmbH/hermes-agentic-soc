@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.1"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.2"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.2.1.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
+> **Private Entwicklungsvorschau · v0.2.2.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
 
 ## Was heute enthalten ist
 
@@ -62,7 +62,7 @@ Die [Capability-Referenz](docs/CAPABILITIES.md) beschreibt die Werkzeuge und Rol
 
 - **[CyStrat Services GmbH](https://www.cystrat-services.com/):** SOC- und Incident-Response-Erfahrung als Grundlage für wiederverwendbare Skills, Rollen und Abläufe im gemeinsamen Defense-Projekt.
 - **[Nextron Systems](https://www.nextron-systems.com/):** THOR und forensische Bewertung im gemeinsamen Projekt; Unterstützung und Zusammenarbeit durch die Geschäftsführung von Nextron Systems bestätigt. Scanner, Signaturen, Regeln und Lizenzen werden nicht mitgeliefert.
-- **[exploit labs](https://xplt.com/):** Geplanter Entwickler und Contributor des künftigen Offensive-Research-Teils. In dieser Version nicht enthalten; siehe [Planung](docs/PLANNED-OFFENSIVE-RESEARCH.md).
+- **[exploit labs](https://xplt.com/):** Bestätigter Unterstützer und Kooperationspartner; Entwickler und Contributor des künftigen Offensive-Research-Teils. Dieser Teil ist weiterhin für eine spätere Version geplant und hier nicht enthalten; siehe [Planung](docs/PLANNED-OFFENSIVE-RESEARCH.md).
 
 Die [Research-Vorschau](docs/PLANNED-OFFENSIVE-RESEARCH.md) erfordert Operator-Opt-in und einen gültigen deklarierten Scope. Sie erstellt ausschließlich Pläne und enthält weder operative Exploits noch Interaktionen mit Zielsystemen.
 

@@ -9,7 +9,7 @@ A 76-second German product-video draft accompanies review release 0.1.1 as a sep
 - Real offline CLI results from synthetic THOR evidence: four events, three observation groups, provisional P2/suspicious.
 - Strict separation between observation, suspicion and unsupported conclusions.
 - THOR as a separately installed external tool; no bundled scanner/signatures.
-- exploit labs as the planned contributor of a **future** offensive-research release; nothing of it is shown because nothing of it ships.
+- exploit labs as a **confirmed cooperation partner** and contributor of a future offensive-research release; nothing of it is shown because nothing of it ships.
 - Operator-disabled preview, scope checks and draft-only response actions.
 
 ## Production

@@ -2,7 +2,7 @@
 
 # Capability reference
 
-The native entrypoint is `plugin.yaml` plus `register(ctx)` in `__init__.py`. This reference describes v0.2.1; `soc_capabilities` provides a local inventory without contacting vendors or exposing configuration values.
+The native entrypoint is `plugin.yaml` plus `register(ctx)` in `__init__.py`. This reference describes v0.2.2; `soc_capabilities` provides a local inventory without contacting vendors or exposing configuration values.
 
 ## Native tools
 

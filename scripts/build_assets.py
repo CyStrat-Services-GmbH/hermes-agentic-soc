@@ -267,7 +267,7 @@ Example: supplied case export -> source-labelled evidence inventory -> analyst a
         write(f"{base}/skills.txt", "\n".join("agentic-soc:" + x for x in skills) + "\n")
         write(f"{base}/config.example.yaml", "# Review and merge manually; do not copy credentials between profiles.\nmcp_servers: {}\n")
         js(f"{base}/mcp.example.json", {"mcpServers": {}})
-        contribution = ("\n\n## Planned contribution\n\nOffensive research is planned to be developed and contributed by exploit labs in a later release. Nothing of it exists in this version: no profile, skill, workflow, tool or switch. No endorsement beyond the project sponsor's description, company legal form, delivered code authorship or license grant is inferred.\n"
+        contribution = ("\n\n## Planned contribution\n\nexploit labs is a confirmed supporter and cooperation partner; the offensive-research part is planned for a later release. Nothing of it exists in this version: no profile, skill, workflow, tool or switch. No endorsement beyond the project sponsor's description, company legal form, delivered code authorship or license grant is inferred.\n"
                         if status == "scaffold" else "")
         write(f"{base}/README.md", f"# {name}\n\nStatus: {status}. {description}.{contribution}\n\nUse soc_template_install in dry-run mode, then approve creation through Hermes. Existing profiles are not overwritten. Model/auth setup and plugin enablement are explicit operator steps. Offline skills are copied to the new profile; no MCP server is auto-enabled.\n\nThe persona does not sandbox other Hermes tools. See root SECURITY.md. Workflow: ../../workflows/{workflow}.yaml.\n")
     workflows = {

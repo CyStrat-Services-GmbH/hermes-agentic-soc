@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.1"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.2"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.0 or newer"></a>
 </p>
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.2.1.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
+> **Private development preview · v0.2.2.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
 
 ## Explore the project
 
@@ -72,7 +72,7 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 
 ## What you can use today
 
-| Area | Delivered in v0.2.1 | Boundary |
+| Area | Delivered in v0.2.2 | Boundary |
 |---|---|---|
 | Native Hermes plugin | 7 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
 | Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
@@ -130,7 +130,7 @@ Read the [integration roadmap and acceptance gates](docs/INTEGRATION-ROADMAP.md)
 |---|---|---|
 | [CyStrat Services GmbH](https://www.cystrat-services.com/) | SOC and incident-response experience translated into skills, profiles and workflows | Defense-focused project development with Nextron Systems |
 | [Nextron Systems](https://www.nextron-systems.com/) | THOR and forensic-assessment expertise within the joint project; support and cooperation confirmed by Nextron Systems' management | THOR software, signatures and licenses are acquired separately |
-| [exploit labs](https://xplt.com/) | Planned developer and contributor of the future offensive-research part | Nothing shipped in this version; see [the plan](docs/PLANNED-OFFENSIVE-RESEARCH.md) |
+| [exploit labs](https://xplt.com/) | Confirmed supporter and cooperation partner; developer and contributor of the future offensive-research part | The offensive-research part is still planned for a later release and not shipped in this version; see [the plan](docs/PLANNED-OFFENSIVE-RESEARCH.md) |
 
 Offensive research is [planned for a later release](docs/PLANNED-OFFENSIVE-RESEARCH.md) and is not shipped: no profile, skill, workflow, tool or configuration switch for it exists in this version.
 
@@ -142,7 +142,7 @@ Logos identify the named contributors and remain their respective owners' marks.
 |---|---|
 | CyStrat Services | [Company website](https://www.cystrat-services.com/) |
 | Nextron Systems | [Company website](https://www.nextron-systems.com/) · [THOR Lite acquisition and license information](https://www.nextron-systems.com/thor-lite/) |
-| exploit labs | [Company website](https://xplt.com/) · [Contribution and preview boundary](docs/PLANNED-OFFENSIVE-RESEARCH.md) |
+| exploit labs | [Company website](https://xplt.com/) · [Cooperation and what is not shipped](docs/PLANNED-OFFENSIVE-RESEARCH.md) |
 | Hermes | [Native plugin documentation](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins) |
 | CyStrat SOC Suite | [Integration scope and proposed MCP contract](docs/CYSTRAT-SOC-SUITE.md) |
 

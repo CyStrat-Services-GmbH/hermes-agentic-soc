@@ -8,7 +8,7 @@ Prepared submission text, not a claim that this PR is open or admitted. The repo
 
 Hermes Agentic SOC provides seven native tools, three slash commands, one pre-tool approval policy and namespaced skills. It imports supplied THOR JSON v1/v2 evidence, counts all events exactly, groups matching artifact observations and produces deterministic bounded first-assessment JSON/Markdown. It can invoke an independently installed local THOR Lite FileScan and provision a fresh no-credential specialist profile through the public Hermes CLI.
 
-Six defense personas are fully authored; twenty-five technology integrations, including CyStrat SOC Suite as the cross-domain platform, remain clearly labelled scaffolds. Three YAML workflow references are declarative guidance, not an executable engine. No UI or automatic MCP startup is claimed. Offensive research is planned with exploit labs for a later release and is not part of this version.
+Six defense personas are fully authored; twenty-five technology integrations, including CyStrat SOC Suite as the cross-domain platform, remain clearly labelled scaffolds. Three YAML workflow references are declarative guidance, not an executable engine. No UI or automatic MCP startup is claimed. exploit labs is a confirmed supporter and cooperation partner; the offensive-research part is planned for a later release and is not part of this version.
 
 ## Rule 13 disclosure
 

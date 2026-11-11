@@ -33,6 +33,7 @@ COMMUNICATION = [
 
 DEFENSE_CREDIT = "Hermes Agentic SOC · built by CyStrat Services × Nextron Systems."
 PREVIEW_CREDIT = ("Hermes Agentic SOC · Offensive Security gated preview. Planned contribution: exploit labs, "
+                  "confirmed supporter and cooperation partner. "
                   "No operational exploit labs capability is included in this release.")
 
 PREVIEW_BOUNDARIES = [
