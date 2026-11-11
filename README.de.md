@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.5"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.6"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
@@ -24,7 +24,9 @@
   <a href="https://xplt.com/">exploit labs</a>
 </p>
 
-Wenn agentische KI offensiv eingesetzt wird, brauchen Verteidiger mehr als einen weiteren Chatbot. Sie brauchen einen Assistenten, der mit ihrer Evidenz arbeitet, Grenzen kennt und die Entscheidungen beim verantwortlichen Team belässt.
+<p align="center"><strong>Wenn agentische KI in die Offensive geht, braucht die Welt eine neue Art der Verteidigung.</strong></p>
+
+Verteidiger brauchen keinen weiteren Chatbot neben ihrem Security-Stack. Sie brauchen Security-Expertise im Agenten, die mit ihrer Evidenz, ihren Werkzeugen und ihren Grenzen arbeitet.
 
 Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes-Profile, Skills, native Tools und strukturierte Workflow-Referenzen. Das Projekt von CyStrat Services und Nextron Systems startet mit nachvollziehbarer Triage und deterministischer THOR-Erstbewertung; die Roadmap erweitert diesen Ansatz um ausdrücklich freigegebene, standardmäßig lesende Anbindungen an die bestehende Sicherheitslandschaft.
 
@@ -40,7 +42,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Frühe öffentliche Vorschau · v0.2.5.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
+> **Frühe öffentliche Vorschau · v0.2.6.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
 
 ## Was heute enthalten ist
 
