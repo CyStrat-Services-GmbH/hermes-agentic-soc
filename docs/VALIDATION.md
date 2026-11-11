@@ -1,5 +1,28 @@
 # Validation record
 
+## Release 0.1.6: metadata-only workspace member
+
+The plugin shipped a `[build-system]` (setuptools). Hermes materialises every enabled plugin as a member of one dependency workspace per installation — `pm/plugins_state.py::dependency_homes` returns the default home plus every live profile — and uv identifies a member by `[project].name`. A buildable member keeps that name (`pm/workspace.py::_workspace_member` renames only virtual members), so enabling this plugin in two profiles produced two members called `hermes-agentic-soc` and `uv lock` refused:
+
+```
+Two workspace members are both named `hermes-agentic-soc`
+```
+
+`hermes plugins enable` aborted; the second profile had to carry a local rename in its copy, which in turn made `check-updates` report a phantom update.
+
+0.1.6 removes `[build-system]`. The plugin is a manifest plugin loaded from its directory; it needs no wheel. Hermes now treats it as a virtual member and gives each profile a unique `hermes-plugin-<dir>-<hash>` name.
+
+| Check | Executed result |
+|---|---|
+| Two live profiles, same plugin, same install root | Both `enable` calls succeeded; no `uv lock` conflict; both report `8 tool(s), 1 hook(s)` |
+| `hermes plugins validate .` without the build backend | Validation passed: hooks and middleware match, no collisions, security scan safe, no core override |
+| Regression suite | 191 passed |
+| Generator | `build_assets.py` idempotent |
+| Documentation checker | PASS |
+| Loading path | `plugin.yaml` + `register(ctx)` from the plugin directory; no package install involved |
+
+Not established: whether `pip install .` on this tree still works — it is not part of the documented workflow. If a wheel is ever needed, restore `[build-system]` **and** accept that only one profile per installation may enable the plugin.
+
 ## Release 0.1.5: corrections from the harvest and local-only validation
 
 A patch release on top of 0.1.4. It restores two skill paragraphs the harvest dropped, and removes hosted CI in favour of the local gate.
