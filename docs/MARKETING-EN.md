@@ -14,7 +14,7 @@ Cybersecurity from Germany. For the world. Your tools, your data and your securi
 - **The expertise:** CyStrat Services and Nextron Systems unite defense and forensics in specialized Hermes workflows. Profiles guide behavior; they are not independent certified experts or security sandboxes.
 - **Available today:** Analyze supported local THOR exports and supplied alerts, connect observations conservatively and produce traceable first assessments.
 - **The roadmap:** 25 technology templates span SIEM, SOAR/case management, EDR/XDR/DFIR, threat intelligence, detection engineering and vulnerability management, with CyStrat SOC Suite above all of them. Templates exist today; verified live remote connectors do not.
-- **The plan:** Offensive research is the planned contribution of exploit labs, led by managing director Johannes Schönborn. It is **not** in this version — do not show, describe or imply a preview of it. Only the roadmap statement and the credit belong in the material.
+- **The plan:** Offensive research is the planned contribution of exploit labs. It is **not** in this version — do not show, describe or imply a preview of it. Only the roadmap statement and the credit belong in the material.
 - **The promise of control:** Read-only planned integrations, explicit scope and human approval for sensitive actions. No autonomous containment or production-write connector is shipped.
 
 ## Trailer direction
@@ -25,7 +25,7 @@ Voice-over and screen typography are English; any future subtitles should use th
 
 ## Approved attribution boundaries
 
-Use the [original contributor logos](../assets/brand/README.md) without recoloring or distortion. In copy, distinguish the current CyStrat × Nextron defense project from the planned exploit labs Offensive Security contribution led by Managing Director Johannes Schönborn.
+Use the [original contributor logos](../assets/brand/README.md) without recoloring or distortion. In copy, distinguish the current CyStrat × Nextron defense project from the planned exploit labs offensive-research contribution.
 
 Avoid “25 connected platforms,” “fully autonomous SOC,” “confirmed compromise” from an ALERT alone, “GDPR compliant by default” and “Apache-2.0 open source” before license approval. Prefer precise descriptions of the implemented scope and explicit roadmap labels.
 

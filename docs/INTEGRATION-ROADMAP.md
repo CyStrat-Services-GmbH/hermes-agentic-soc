@@ -42,8 +42,8 @@ The 25 entries describe breadth, not launch dates or production readiness. Vendo
 ## Partner expertise
 
 - **CyStrat Services GmbH:** SOC, DFIR and incident-response practice translated into profiles, skills and workflows.
-- **Nextron Systems GmbH:** THOR and forensic-assessment expertise. Support and cooperation for this plugin are confirmed by Florian Roth and managing director Mark. THOR software, signatures and licenses remain separate; nothing of it is bundled.
-- **exploit labs:** planned contributor of a future offensive-research release, led by managing director Johannes Schönborn. Nothing of it is in this version; see [the plan](PLANNED-OFFENSIVE-RESEARCH.md).
+- **Nextron Systems GmbH:** THOR and forensic-assessment expertise. Support and cooperation for this plugin are confirmed by Nextron Systems' management. THOR software, signatures and licenses remain separate; nothing of it is bundled.
+- **exploit labs:** planned contributor of a future offensive-research release. Nothing of it is in this version; see [the plan](PLANNED-OFFENSIVE-RESEARCH.md).
 
 ## Your team stays in control
 
