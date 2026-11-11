@@ -1,7 +1,7 @@
 manifest_version: 2
 api_version: 1
 name: agentic-soc
-version: "0.2.4"
+version: "0.2.5"
 description: Evidence-first SOC profiles and deterministic THOR Lite triage with local audit and human approval.
 author: CyStrat Services GmbH and Nextron Systems GmbH
 license: Apache-2.0
