@@ -1,5 +1,22 @@
 # Validation record
 
+## README navigation and badge refinement
+
+The README refinement adds six locally stored static SVG badges, linked topic tags and explicit official-company links in both language versions. No runtime, registration, repository visibility or license change is included.
+
+| Check | Executed result |
+|---|---|
+| Python 3.14.8 regression suite | 158 passed |
+| Python 3.11.17 regression suite | 158 passed |
+| Offline documentation checker | 181 local file targets across 20 Markdown files passed |
+| Badge tests | Six accessible, self-contained SVGs parsed; version label matches `plugin.yaml` |
+| GitHub Markdown API | Both README versions rendered; English output retains the three linked logos, six linked badges and company links |
+| Badge visual inspection | Two-row badge montage inspected for clipping and contrast |
+| Company destinations | CyStrat, Nextron Systems and exploit labs official homepages fetched successfully |
+| Whitespace validation | `git diff --check` passed |
+
+Badge values are static documentation labels, not live service or CI monitors. Local file checks do not validate renderer-specific fragment anchors; successful homepage fetches are a point-in-time check, not ongoing availability monitoring.
+
 ## Documentation refresh
 
 The documentation refresh leaves the plugin at v0.1.2 and adds six documentation-check tests to the previous 145-test suite. Runtime behavior, registrations and generated skills/templates are unchanged.

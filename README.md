@@ -4,9 +4,26 @@
   <a href="https://xplt.com/"><img src="assets/brand/exploit-labs.png" width="30%" alt="exploit labs"></a>
 </p>
 
-# Hermes Agentic SOC
+<h1 align="center">Hermes Agentic SOC</h1>
 
-**Cybersecurity from Germany. For the world.**
+<p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
+
+<p align="center">
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.1.2"></a>
+  <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone engine: Python 3.11 or newer"></a>
+  <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes 0.23.1 or newer"></a>
+</p>
+<p align="center">
+  <a href="#license-and-release-status"><img src="assets/badges/preview.svg" alt="Private development preview"></a>
+  <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="21 planned integrations, not live connectors"></a>
+  <a href="LICENSE"><img src="assets/badges/license.svg" alt="License approval pending; Apache-2.0 proposed only"></a>
+</p>
+
+<p align="center">
+  <a href="https://www.cystrat-services.com/">CyStrat Services</a> ·
+  <a href="https://www.nextron-systems.com/">Nextron Systems</a> ·
+  <a href="https://xplt.com/">exploit labs</a>
+</p>
 
 When agentic AI goes on the offensive, defenders need more than another chatbot. They need cybersecurity expertise that can work with their evidence, their tools and their operational boundaries.
 
@@ -15,13 +32,31 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 <p align="center">
   <a href="docs/README.md">Documentation</a> ·
   <a href="docs/GETTING-STARTED.md">Quickstart</a> ·
+  <a href="docs/CAPABILITIES.md">Capabilities</a> ·
   <a href="docs/INTEGRATION-ROADMAP.md">Integration roadmap</a> ·
   <a href="SECURITY.md">Security</a> ·
   <a href="README.de.md">Deutsch</a>
 </p>
 
+<p align="center">
+  <a href="docs/CAPABILITIES.md"><code>Agentic SOC</code></a> ·
+  <a href="docs/OPERATOR-GUIDE.md#assessment-policy"><code>DFIR</code></a> ·
+  <a href="docs/OPERATOR-GUIDE.md#tools-and-profiles"><code>Threat Hunting</code></a> ·
+  <a href="docs/INTEGRATION-ROADMAP.md"><code>Detection Engineering</code></a> ·
+  <a href="docs/CYSTRAT-SOC-SUITE.md"><code>Skills &amp; MCP</code></a> ·
+  <a href="SECURITY.md"><code>Human Approval</code></a>
+</p>
+
 > [!IMPORTANT]
 > **Private development preview · v0.1.2.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
+
+## Explore the project
+
+| Evaluate | Operate | Build |
+|---|---|---|
+| [Current capabilities](#what-you-can-use-today) | [Offline quickstart](#start-with-evidence-not-credentials) | [Architecture](docs/ARCHITECTURE.md) |
+| [Integration roadmap](#one-agent-your-wider-security-stack) | [Operator guide](docs/OPERATOR-GUIDE.md) | [Contributing](CONTRIBUTING.md) |
+| [Companies and expertise](#different-strengths-one-mission) | [Security model](SECURITY.md) | [Validation and test limits](docs/VALIDATION.md) |
 
 ## Your environment. Our expertise.
 
@@ -91,13 +126,25 @@ Read the [integration roadmap and acceptance gates](docs/INTEGRATION-ROADMAP.md)
 
 | Contributor | Role in this project | Delivery boundary |
 |---|---|---|
-| **CyStrat Services GmbH** | SOC and incident-response experience translated into skills, profiles and workflows | Defense-focused project development with Nextron Systems |
-| **Nextron Systems** | THOR and forensic-assessment expertise within the joint project | THOR software, signatures and licenses are acquired separately |
-| **exploit labs** | Planned developer and contributor of the Offensive Security part, led by Managing Director Johannes Schönborn | Skeleton and gated preview only; no operational offensive implementation is claimed |
+| [CyStrat Services GmbH](https://www.cystrat-services.com/) | SOC and incident-response experience translated into skills, profiles and workflows | Defense-focused project development with Nextron Systems |
+| [Nextron Systems](https://www.nextron-systems.com/) | THOR and forensic-assessment expertise within the joint project | THOR software, signatures and licenses are acquired separately |
+| [exploit labs](https://xplt.com/) | Planned developer and contributor of the Offensive Security part, led by Managing Director Johannes Schönborn | Skeleton and gated preview only; no operational offensive implementation is claimed |
 
 The [Offensive Security preview](docs/GATED-PREVIEW.md) is disabled by default. Operator opt-in and a valid declared scope are both required; current outputs are plans, never exploitation or interaction with a target.
 
 Logos identify the named contributors and remain their respective owners' marks. See [brand provenance and usage boundaries](assets/brand/README.md).
+
+### Official websites and resources
+
+| Resource | Official destination |
+|---|---|
+| CyStrat Services | [Company website](https://www.cystrat-services.com/) |
+| Nextron Systems | [Company website](https://www.nextron-systems.com/) · [THOR Lite acquisition and license information](https://www.nextron-systems.com/thor-lite/) |
+| exploit labs | [Company website](https://xplt.com/) · [Contribution and preview boundary](docs/GATED-PREVIEW.md) |
+| Hermes | [Native plugin documentation](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins) |
+| CyStrat SOC Suite | [Integration scope and proposed MCP contract](docs/CYSTRAT-SOC-SUITE.md) |
+
+Company links lead to the respective official websites. The Hermes resource documents the underlying host API; it does not imply endorsement or catalog admission.
 
 ## Your team stays in control
 
@@ -142,3 +189,14 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for host integration checks, generated-as
 - [ ] **Release-blocking TODO:** Obtain final approval and update `LICENSE`, `NOTICE` and `plugin.yaml` together before any open-source release.
 
 This repository remains private. Changes to visibility, public video/source publication and catalog or hackathon submission require renewed explicit approval; this documentation does not authorize them.
+
+---
+
+<p align="center">
+  <strong>Your environment. Our expertise. Stronger together.</strong>
+</p>
+<p align="center">
+  <a href="docs/README.md">Read the documentation</a> ·
+  <a href="docs/GETTING-STARTED.md">Run the offline demo</a> ·
+  <a href="docs/INTEGRATION-ROADMAP.md">Explore planned integrations</a>
+</p>

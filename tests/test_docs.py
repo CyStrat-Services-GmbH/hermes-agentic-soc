@@ -2,6 +2,8 @@
 
 from pathlib import Path
 import runpy
+import re
+import xml.etree.ElementTree as ET
 
 import pytest
 
@@ -62,3 +64,29 @@ def test_url_encoded_file_target(documentation):
         "[Encoded](with%20space.md)\n", encoding="utf-8"
     )
     assert run_check(documentation) == 0
+
+
+@pytest.mark.parametrize(
+    "name", ["version", "python", "hermes", "preview", "integrations", "license"]
+)
+def test_badges_are_self_contained_accessible_svg(name):
+    path = CHECK.parents[1] / f"assets/badges/{name}.svg"
+    root = ET.parse(path).getroot()
+    ns = "{http://www.w3.org/2000/svg}"
+    assert root.tag == f"{ns}svg"
+    assert root.attrib["role"] == "img"
+    assert root.find(f"{ns}title").text
+    assert root.attrib["height"] == "28"
+    for element in root.iter():
+        assert element.tag in {f"{ns}{tag}" for tag in ("svg", "title", "rect", "path", "g", "text")}
+        assert not any(key.startswith("on") for key in element.attrib)
+        assert not any("href" in key for key in element.attrib)
+
+
+def test_version_badge_matches_manifest():
+    repository = CHECK.parents[1]
+    manifest = (repository / "plugin.yaml").read_text(encoding="utf-8")
+    version = re.search(r'^version:\s*"([^"]+)"', manifest, re.MULTILINE).group(1)
+    root = ET.parse(repository / "assets/badges/version.svg").getroot()
+    labels = [item.text for item in root.iter("{http://www.w3.org/2000/svg}text")]
+    assert version in labels

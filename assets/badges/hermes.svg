@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="158" height="28" viewBox="0 0 158 28" role="img" aria-labelledby="title">
+  <title id="title">Hermes: 0.23.1 or newer</title>
+  <rect width="158" height="28" rx="5" fill="#151923"/>
+  <path d="M76 0h77a5 5 0 0 1 5 5v18a5 5 0 0 1-5 5H76z" fill="#0055FF"/>
+  <g fill="#fff" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11" text-anchor="middle">
+    <text x="38" y="18">HERMES</text><text x="117" y="18">0.23.1+</text>
+  </g>
+</svg>
