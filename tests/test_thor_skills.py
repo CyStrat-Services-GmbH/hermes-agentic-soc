@@ -40,7 +40,7 @@ def frontmatter(name):
 def test_suite_is_complete_and_registered():
     assert len(THOR_SKILLS) == 9
     assert set(THOR_SKILLS) <= ALL_SKILLS
-    assert len(ALL_SKILLS) == 40
+    assert len(ALL_SKILLS) == 39
 
 
 @pytest.mark.parametrize("name", THOR_SKILLS)
@@ -133,11 +133,8 @@ def test_soul_contract(name):
         assert tool in TOOLS or tool in SETTINGS
     for phrase in ("untrusted data", "Confirmed", "not a sandbox", "LM/NTLM", "request, not consent"):
         assert phrase in soul
-    if PROFILES[name][0] == "scaffold":
-        assert "offensive_preview_enabled" in soul and "soc_research_plan" in soul
-        assert "exploit labs" in soul and "built by CyStrat Services × Nextron Systems" not in soul
-    else:
-        assert "built by CyStrat Services × Nextron Systems" in soul and "exploit labs" not in soul
+    assert "built by CyStrat Services × Nextron Systems" in soul
+    assert "offensive_preview_enabled" not in soul and "soc_research_plan" not in soul
 
 
 def test_dfir_profile_ships_the_whole_thor_suite():

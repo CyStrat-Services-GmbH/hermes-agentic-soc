@@ -1,31 +1,23 @@
 Hermes Agentic SOC
-Built by CyStrat Services GmbH × Nextron Systems GmbH
-2026
+Copyright 2026 CyStrat Services GmbH and Nextron Systems GmbH
 
-The project sponsor has confirmed permission for joint public presentation
-and publication. This is not an additional license grant for THOR or other
-vendor components.
+Licensed under the Apache License, Version 2.0 (see LICENSE).
 
-Hermes Agent / Nous Research and THOR / Nextron names identify the relevant
-products. No Nous endorsement or catalog admission is claimed.
+This project is developed jointly by CyStrat Services GmbH and Nextron
+Systems GmbH. THOR and Nextron Systems are products and marks of Nextron
+Systems GmbH; Hermes Agent is a product of Nous Research. The Apache-2.0
+license above covers the source code and documentation in this repository.
 
-The implementation and all supplied detections/example events are original
-or synthetic. No THOR binary, Nextron signature, private rule or license is
-redistributed. Vendor and project documentation is linked, not vendored.
+Not covered by that license:
 
-Proposed code license: Apache-2.0; final approval pending. See LICENSE.
+- THOR executables, signatures, private rule sets, license files and any
+  other Nextron software. THOR is acquired and licensed separately from
+  Nextron; nothing of it is bundled, downloaded or redistributed here.
+- Company names, logos and brand assets under assets/brand/, which remain
+  the property of their respective owners. See assets/brand/README.md for
+  the permitted documentation use.
+- Third-party documentation, which is linked, never vendored.
 
-The owner's later instruction keeps this repository private. Earlier joint
-presentation permission is not current authorization to publish this repository,
-its documentation or video, or to submit it to a public catalog.
-
-CyStrat, Nextron Systems and exploit labs logos are included at the owner's
-request solely for the contributor presentation in this documentation.
-The marks remain with their respective owners; no general trademark license
-or right to modify them is granted. See assets/brand/README.md for provenance.
-
-exploit labs, led by Managing Director Johannes Schönborn, is the planned
-developer and contributor of the Offensive Security part. Current inclusion
-is limited to planning scaffolds, gated-preview metadata and attribution;
-no operational offensive contribution or additional code-license grant is
-claimed.
+The implementation, the shipped skills, the profile personas and every
+example event or detection in this repository are original work or
+synthetic test data. No customer evidence is included.

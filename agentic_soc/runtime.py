@@ -111,10 +111,9 @@ class Runtime:
         if name == "soc_capabilities":
             return capabilities.inventory(self.root, self.get_config, p.get("technology"))
         if name == "soc_template_list":
-            return templates.list_templates(self.get_config("offensive_preview_enabled", False) is True)
+            return templates.list_templates()
         if name == "soc_template_install":
-            return templates.install(self.root, **p, profile_home=self.data().parents[1],
-                                     preview_enabled=self.get_config("offensive_preview_enabled", False) is True)
+            return templates.install(self.root, **p, profile_home=self.data().parents[1])
         if name == "thor_lite_scan":
             return thor.scan(self.get_config("thor_path", ""), p["target"],
                              [Path(x) for x in self.get_config("scan_roots", [])],
@@ -146,10 +145,6 @@ class Runtime:
             return result
         if name == "soc_alert_triage":
             return triage.triage(p["alert"], self.redactor())
-        if name == "soc_research_plan":
-            if self.get_config("offensive_preview_enabled", False) is not True:
-                raise BoundaryError("Offensive Security is a disabled gated preview. Ask the operator to review the preview settings; no target execution is available.")
-            return triage.research_plan(p["scope"], p["target"], self.redactor())
         raise BoundaryError("Unknown tool.")
 
     @staticmethod

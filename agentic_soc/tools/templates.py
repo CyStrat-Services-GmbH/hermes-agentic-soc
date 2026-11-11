@@ -7,7 +7,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from ..security import BoundaryError, check_scope
+from ..security import BoundaryError
 from .thor import subprocess_env
 
 PROFILES = {
@@ -17,31 +17,20 @@ PROFILES = {
     "dfir-compromise-assessment": ("mvp", "THOR evidence and compromise-assessment triage", "compromise-assessment"),
     "detection-engineer": ("mvp", "Draft and test Sigma/YARA detections without deployment", "threat-hunt"),
     "vulnerability-manager": ("mvp", "Prioritize supplied vulnerability evidence", "alert-triage"),
-    "red-team-planner": ("scaffold", "Authorized research planning only", "purple-team"),
-    "adversary-emulation": ("scaffold", "Lab emulation plans only, no execution", "purple-team"),
-    "purple-team-validator": ("scaffold", "Compare planned lab signals with supplied detections", "purple-team"),
 }
 
 
-def list_templates(preview_enabled: bool = False) -> dict:
-    return {"profiles": [{"id": k, "status": v[0], "description": v[1], "workflow": v[2],
-                          "scope_required": v[0] == "scaffold",
-                          "availability": ("preview_enabled" if preview_enabled else "gated_preview") if v[0] == "scaffold" else "available",
-                          "contributor": "exploit labs" if v[0] == "scaffold" else "CyStrat Services / Nextron Systems",
-                          "contribution_status": "planned_external_contribution" if v[0] == "scaffold" else "implemented"}
-                         for k, v in PROFILES.items()],
+def list_templates() -> dict:
+    """Every shipped profile is a defense role. Planned offensive research is not part of this release."""
+    return {"profiles": [{"id": key, "status": status, "description": desc, "workflow": wf}
+                         for key, (status, desc, wf) in PROFILES.items()],
             "note": "Technology connectors are opt-in scaffolds, not live integrations."}
 
 
 def install(root: Path, template: str, name: str, execute: bool = False,
-            scope: dict | None = None, target: str = "", *, profile_home: Path | None = None,
-            preview_enabled: bool = False) -> dict:
+            *, profile_home: Path | None = None) -> dict:
     if template not in PROFILES or not re.fullmatch(r"soc-[a-z0-9][a-z0-9-]{0,42}", name):
-        raise BoundaryError("Select a known template and a new soc-prefixed profile name.")
-    if PROFILES[template][0] == "scaffold":
-        if preview_enabled is not True:
-            raise BoundaryError("Offensive Security is a disabled gated preview. Operator opt-in is required; no operational contribution is shipped.")
-        check_scope(scope, target)
+        raise BoundaryError("Select a known defense template and a new soc-prefixed profile name.")
     argv = ["hermes", "profile", "create", name, "--no-credentials", "--no-skills", "--no-alias",
             "--description", PROFILES[template][1]]
     if not execute:
@@ -54,7 +43,6 @@ def install(root: Path, template: str, name: str, execute: bool = False,
     hermes = shutil.which("hermes")
     if not hermes:
         raise BoundaryError("Hermes CLI is required for profile creation.")
-    # Discover and verify the new profile's path through the documented public command.
     proc = subprocess.run([hermes, *argv[1:]], env=env,
                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                           stdin=subprocess.DEVNULL, timeout=60, check=False)
@@ -66,8 +54,6 @@ def install(root: Path, template: str, name: str, execute: bool = False,
         return {"ok": False, "profile_created": True,
                 "error": "Profile created without credentials, but structured path discovery failed. Install persona manually; no path guessed."}
     try:
-        # `profile show` has no --json in Hermes 0.23.1. Parse only its labelled
-        # public CLI Path line, and fail closed if the output format changes.
         matches = re.findall(r"^Path:\s+(.+)$", show.stdout.decode("utf-8"), re.MULTILINE)
         if len(matches) != 1:
             raise ValueError
@@ -84,8 +70,6 @@ def install(root: Path, template: str, name: str, execute: bool = False,
         to = destination / filename
         if to.is_symlink():
             raise BoundaryError("Refusing a symlinked persona destination.")
-        # Only this newly-created profile is touched. Preserve Hermes's fresh
-        # default persona, never an existing profile's custom persona.
         if to.exists():
             to.rename(destination / "SOUL.hermes-default.md")
         with to.open("x", encoding="utf-8") as out:

@@ -1,2 +1,0 @@
-agentic-soc:authorized-research
-agentic-soc:detection-engineering

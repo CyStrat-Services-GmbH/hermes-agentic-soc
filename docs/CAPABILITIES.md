@@ -15,7 +15,6 @@ The native entrypoint is `plugin.yaml` plus `register(ctx)` in `__init__.py`. Th
 | `thor_parse` | Import allowed local structured evidence and count/group observations | Supported JSON v1/v2 only; strict limits and input checks |
 | `thor_first_assessment` | Produce deterministic case JSON and a nine-section German report | Provisional first assessment, not forensic certainty |
 | `soc_alert_triage` | Triage supplied alert evidence | No remote enrichment |
-| `soc_research_plan` | Validate declared scope structure and draft a research plan | Preview opt-in and scope required; no target interaction |
 
 The single `pre_tool_call` hook requests host-owned approval for sensitive execution. An argument supplied by a model cannot authorize itself, and direct library calls are not a protected execution boundary.
 
@@ -40,16 +39,13 @@ The single `pre_tool_call` hook requests host-owned approval for sensitive execu
 | `dfir-compromise-assessment` | Evidence-led compromise assessment | Defense profile |
 | `detection-engineer` | Detection logic and validation guidance | Defense profile |
 | `vulnerability-manager` | Vulnerability context and prioritization | Defense profile |
-| `red-team-planner` | Authorized research planning | Gated scaffold |
-| `adversary-emulation` | Scoped emulation planning | Gated scaffold |
-| `purple-team-validator` | Detection-validation planning | Gated scaffold |
 
-Profiles and skills guide behavior; they are not a sandbox for unrelated host tools. See the [research preview](GATED-PREVIEW.md) and [security model](../SECURITY.md) before provisioning a research persona.
+Profiles and skills guide behavior; they are not a sandbox for unrelated host tools. See the [research preview](PLANNED-OFFENSIVE-RESEARCH.md) and [security model](../SECURITY.md) before provisioning a research persona.
 
 ## Skills, workflows and integrations
 
-- **40 skills:** Nine THOR analysis skills (see [THOR analysis suite](THOR-ANALYSIS.md)), six domain/workflow skills and 25 technology-specific scaffolds. Skill availability is not proof of a live integration.
-- **4 workflow references:** Declarative YAML guidance, not an executable orchestration engine.
+- **39 skills:** Nine THOR analysis skills (see [THOR analysis suite](THOR-ANALYSIS.md)), six domain/workflow skills and 25 technology-specific scaffolds. Skill availability is not proof of a live integration.
+- **3 workflow references:** Declarative YAML guidance, not an executable orchestration engine.
 - **25 technology entries:** Each has a planning skill and inactive MCP descriptor. The verified live remote connector count is zero.
 - **CyStrat SOC Suite:** Dedicated skill, inactive descriptor and proposed read-only contract; no invented live endpoint.
 

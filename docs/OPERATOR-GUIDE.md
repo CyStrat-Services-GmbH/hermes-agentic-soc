@@ -10,7 +10,7 @@ This guide is the detailed operational reference for Hermes Agentic SOC v0.1.6. 
 
 Version 0.1.6 targets Hermes >=0.23.0 and Python >=3.11 for the standalone engine; Hermes itself may require a newer Python version. Use [capabilities](CAPABILITIES.md) for the supported scope, [validation](VALIDATION.md) for executed tests and the [0.1.2 review](REVIEW-0.1.2.md) for detailed findings.
 
-The repository remains private and the code license is pending. The [integration roadmap](INTEGRATION-ROADMAP.md) and [Offensive Security preview](GATED-PREVIEW.md) are not live production integrations or operational exploitation features.
+The code is licensed under Apache-2.0. The [integration roadmap](INTEGRATION-ROADMAP.md) describes planned, not live, integrations; [offensive research](PLANNED-OFFENSIVE-RESEARCH.md) is planned for a later release and is not part of this version.
 
 No THOR executable, rules, signatures or license files are included or downloaded by the plugin. Obtain THOR separately from the [official Nextron THOR Lite page](https://www.nextron-systems.com/thor-lite/) and confirm your specific license with Nextron before using customer systems.
 
@@ -85,7 +85,7 @@ The launcher runs `--help` first and verifies exact options. It limits the MVP t
 
 The live scan request uses `execute:true` only to request execution. The `pre_tool_call` hook returns Hermes's `approve` directive, which escalates to the host human-approval gate; the plugin does not approve itself ([Hermes hook API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)). Do not run sensitive actions in an unattended/auto-approved host configuration.
 
-Offensive Research is an operator-controlled gated preview: `offensive_preview_enabled` defaults to `false`. Disabled previews refuse research-plan calls and offensive-profile installation even with a valid declared scope. Opting in exposes planning only; it does not bypass the scope checker, confer legal authorization or add exploitation/target interaction.
+Offensive research is not part of this version. There is no research profile, no research-planning tool and no `offensive_preview_enabled` switch; nothing can be enabled to obtain one. See [the plan](PLANNED-OFFENSIVE-RESEARCH.md).
 
 `/thor-scan` is deliberately preview-only. The inspected host's low-level `ctx.dispatch_tool` path calls the registry directly, so this package does not use it for scan execution. Request actual execution as a normal agent tool call through the host approval pipeline; other fully trusted plugins and direct library calls are outside this authorization boundary.
 
@@ -100,9 +100,8 @@ Offensive Research is an operator-controlled gated preview: `offensive_preview_e
 | `thor_parse` | Strict allowed-root import, exact event inventory and artifact grouping |
 | `thor_first_assessment` | Deterministic first assessment and nine-section German case report |
 | `soc_alert_triage` | Supplied-evidence triage, no remote enrichment |
-| `soc_research_plan` | Structurally validate declared authorization scope and draft a lab/research plan |
 
-Defense roles: `soc-l1-triage`, `soc-l2-incident-responder`, `threat-hunter`, `dfir-compromise-assessment`, `detection-engineer`, `vulnerability-manager`. Research scaffolds: `red-team-planner`, `adversary-emulation`, `purple-team-validator`.
+Shipped roles: `soc-l1-triage`, `soc-l2-incident-responder`, `threat-hunter`, `dfir-compromise-assessment`, `detection-engineer`, `vulnerability-manager`. Offensive/research roles are not shipped in this version.
 
 Profile installation uses only documented CLI commands, never private profile-store imports. A successful new-profile create is followed by path discovery from the labelled `profile show` output; the plugin fails closed if that public CLI format changes. It replaces only the newly seeded default persona, preserving it as `SOUL.hermes-default.md`, and copies shipped skills. Existing profiles are never overwritten.
 

@@ -13,14 +13,14 @@ Hermes Agentic SOC turns supplied evidence into a conservative first assessment 
 | Analysing THOR results | [THOR analysis suite](THOR-ANALYSIS.md) → [Operator guide](OPERATOR-GUIDE.md#assessment-policy) |
 | Reviewing architecture | [Architecture](ARCHITECTURE.md) → [Security model](../SECURITY.md) → [Validation](VALIDATION.md) |
 | Building an integration | [Roadmap and acceptance gates](INTEGRATION-ROADMAP.md) → [SOC Suite contract](CYSTRAT-SOC-SUITE.md) → [Contributing](../CONTRIBUTING.md) |
-| Reviewing Offensive Security | [Gated preview](GATED-PREVIEW.md) → [Scope and host boundaries](../SECURITY.md) |
+| Reviewing the offensive-research plan | [Planned, not shipped](PLANNED-OFFENSIVE-RESEARCH.md) → [Security model](../SECURITY.md) |
 | Reading in German | [Deutsche Projektübersicht](../README.de.md) |
 
 ## Reading status labels
 
 - **Implemented:** Code exists for the stated local function. Any environment-specific test limitations remain in the validation record.
 - **Scaffold / planned:** Skills, descriptors or design material exist, but they are not verified live connections.
-- **Gated preview:** Operator-disabled planning functions requiring opt-in and declared authorization scope. No operational offensive capability is shipped.
+- **Planned, not shipped:** A capability that a later release will add. Nothing of it exists in this version — no profile, skill, workflow, tool or switch.
 - **Not supported:** Do not rely on the plugin for the stated operation.
 
 A configured path or endpoint is not evidence of a working integration. Check the local `soc_capabilities` inventory and the [validation record](VALIDATION.md) rather than assuming readiness from a template.

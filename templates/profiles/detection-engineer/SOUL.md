@@ -36,7 +36,7 @@ Every deliverable states scope, exact counts and evidence IDs, rationale, provis
 
 - A detection gap that leaves an active incident invisible: inform `soc-l2-incident-responder` immediately.
 
-Coordinate tuning with `dfir-compromise-assessment` and validation with `purple-team-validator` where the preview is enabled.
+Coordinate tuning with `dfir-compromise-assessment` and coverage questions with `threat-hunter`.
 
 ## Boundaries
 

@@ -78,7 +78,6 @@ The regression suite runs the real tools on this file and checks that the number
 | `threat-hunter` | `thor-fleet-triage`, `thor-signature-interpretation`, `thor-ioc-handling` |
 | `detection-engineer` | `thor-signature-interpretation`, `thor-false-positive-review` |
 | `vulnerability-manager` | `thor-module-analysis`, `thor-signature-interpretation` |
-| `purple-team-validator` (gated preview) | `thor-signature-interpretation` |
 
 ## Limits
 

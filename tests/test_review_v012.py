@@ -153,18 +153,15 @@ def test_error_exports_do_not_get_low_criticality(tmp_path, level):
 def test_capabilities_separates_roadmap_from_current_functions(tmp_path):
     result = runtime(tmp_path).call("soc_capabilities", {})
     assert result["ok"] and result["network_calls"] == 0
-    assert result["summary"] == {"profiles": 9, "skills": 40, "technology_templates": 25, "live_remote_connectors": 0}
+    assert result["summary"] == {"profiles": 6, "skills": 39, "technology_templates": 25, "live_remote_connectors": 0}
     assert len(result["planned_integrations"]) == 25
     assert all(x["integration_state"] == "planned" and not x["live_verified"] for x in result["planned_integrations"])
-    assert not result["offensive_preview"]["enabled"]
 
 
 def test_capabilities_configuration_is_not_verification(tmp_path):
-    result = runtime(tmp_path, {"thor_path": "/secret/operator/path", "scan_roots": ["/private/scope"],
-                                "offensive_preview_enabled": "true"}).call("soc_capabilities", {})
+    result = runtime(tmp_path, {"thor_path": "/secret/operator/path", "scan_roots": ["/private/scope"]}).call("soc_capabilities", {})
     assert result["local_configuration"]["thor_path_configured"]
     assert result["local_configuration"]["scanner_probed"] is False
-    assert not result["offensive_preview"]["enabled"]
     assert "/secret" not in json.dumps(result) and "/private" not in json.dumps(result)
 
 

@@ -11,8 +11,8 @@ Cybersecurity from Germany. For the world. Our product vision is to turn operati
 
 - **Evidence-led analysis:** Local THOR JSON v1/v2 import, exact event counts, conservative observation grouping and traceable first assessments.
 - **Specialist roles:** Six defense profiles spanning L1 triage, incident response, threat hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable knowledge:** 36 skills, comprising a nine-skill THOR analysis suite, six domain/workflow skills and 25 technology-specific scaffolds. Four declarative workflow references guide analysis; they are not a workflow execution engine.
-- **Native tooling:** Eight registered tools and four slash commands, including `/soc-capabilities` to inspect actual scope without contacting a vendor or revealing credentials.
+- **Reusable knowledge:** 39 skills, comprising a nine-skill THOR analysis suite, six domain/workflow skills and 25 technology-specific scaffolds. Four declarative workflow references guide analysis; they are not a workflow execution engine.
+- **Native tooling:** Seven registered tools and four slash commands, including `/soc-capabilities` to inspect actual scope without contacting a vendor or revealing credentials.
 - **Controlled local scanning:** A launcher for an independently acquired THOR executable, subject to host approval. No actual licensed vendor scan has been validated in this build.
 
 ## Integration roadmap
@@ -39,11 +39,11 @@ The 25 entries describe breadth, not launch dates or production readiness. Vendo
 - **Acceptance tests:** Test success paths, unauthorized tenants, expired credentials, denied writes, pagination, rate limits and untrusted instructions in responses.
 - **Status promotion:** Change the registry only after tests against an authorized real deployment. Configuration presence alone never means “connected.”
 
-## Partner expertise and gated preview
+## Partner expertise
 
-- **CyStrat Services × Nextron Systems:** Defense, forensics and evidence-led SOC workflows in the current project.
-- **exploit labs:** Planned developer and contributor of the Offensive Security part, led by managing director Johannes Schönborn. Present only as a skeleton, marketing credit and gated preview in this version.
-- **Research boundary:** The preview is off by default. Operator opt-in and a valid declared scope are both required, and the current implementation only produces research/emulation/detection plans. No operational exploitation capability is shipped.
+- **CyStrat Services GmbH:** SOC, DFIR and incident-response practice translated into profiles, skills and workflows.
+- **Nextron Systems GmbH:** THOR and forensic-assessment expertise. Support and cooperation for this plugin are confirmed by Florian Roth and managing director Mark. THOR software, signatures and licenses remain separate; nothing of it is bundled.
+- **exploit labs:** planned contributor of a future offensive-research release, led by managing director Johannes Schönborn. Nothing of it is in this version; see [the plan](PLANNED-OFFENSIVE-RESEARCH.md).
 
 ## Your team stays in control
 

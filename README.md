@@ -16,7 +16,7 @@
 <p align="center">
   <a href="#license-and-release-status"><img src="assets/badges/preview.svg" alt="Private development preview"></a>
   <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="25 planned integrations, not live connectors"></a>
-  <a href="LICENSE"><img src="assets/badges/license.svg" alt="License approval pending; Apache-2.0 proposed only"></a>
+  <a href="LICENSE"><img src="assets/badges/license.svg" alt="Apache-2.0"></a>
 </p>
 
 <p align="center">
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.1.6.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
+> **Private development preview · v0.1.6.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive research is **planned for a later release and not part of this version** — no profile, skill, workflow, tool or switch exists for it. Licensed under Apache-2.0.
 
 ## Explore the project
 
@@ -65,7 +65,7 @@ The goal is not to replace your security stack. It is to give Hermes a disciplin
 
 - **Evidence before conclusions:** Exact event inventories, conservative same-artifact grouping and traceable first assessments instead of model-invented incident narratives.
 - **Specialists for the task:** Six defense personas cover triage, incident response, hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable operational knowledge:** 40 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), six domain/workflow skills and 25 technology-specific planning scaffolds.
+- **Reusable operational knowledge:** 39 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), six domain/workflow skills and 25 technology-specific planning scaffolds.
 - **Control by design:** Local evidence boundaries, metadata-only audit records and Hermes-owned approval for sensitive execution. No plugin telemetry, self-updater or hidden LLM calls.
 
 The assessment engine is deterministic. Hermes may use its configured model to interpret tool output, but the plugin does not call a model to calculate severity.
@@ -74,12 +74,12 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 
 | Area | Delivered in v0.1.6 | Boundary |
 |---|---|---|
-| Native Hermes plugin | 8 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
+| Native Hermes plugin | 7 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
 | Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
 | First assessment | Exact counts, observation groups, German case JSON/Markdown | Provisional triage, not proof of compromise |
 | THOR analysis suite | 9 skills: module and signature interpretation, false-positive review, correlation and timeline, fleet triage, safe IOC handling, SIEM-export intake | Analyst guidance on top of the deterministic tools; [details](docs/THOR-ANALYSIS.md) |
 | Local THOR launcher | Fixed-argument FileScan preparation and execution path | External licensed binary and human approval required; real vendor scan not validated here |
-| Specialist profiles | 6 defense profiles; 3 research-planning scaffolds | Research preview off by default; no target interaction |
+| Specialist profiles | 6 defense profiles | Offensive/research roles are planned for a later release and not shipped |
 | Workflow references | 4 declarative workflow definitions | Not an executable workflow engine |
 | Technology coverage | 25 skills and inactive MCP descriptors | **0 verified live remote connectors** |
 
@@ -129,10 +129,10 @@ Read the [integration roadmap and acceptance gates](docs/INTEGRATION-ROADMAP.md)
 | Contributor | Role in this project | Delivery boundary |
 |---|---|---|
 | [CyStrat Services GmbH](https://www.cystrat-services.com/) | SOC and incident-response experience translated into skills, profiles and workflows | Defense-focused project development with Nextron Systems |
-| [Nextron Systems](https://www.nextron-systems.com/) | THOR and forensic-assessment expertise within the joint project | THOR software, signatures and licenses are acquired separately |
-| [exploit labs](https://xplt.com/) | Planned developer and contributor of the Offensive Security part, led by Managing Director Johannes Schönborn | Skeleton and gated preview only; no operational offensive implementation is claimed |
+| [Nextron Systems](https://www.nextron-systems.com/) | THOR and forensic-assessment expertise within the joint project; support and cooperation confirmed by Florian Roth and managing director Mark | THOR software, signatures and licenses are acquired separately |
+| [exploit labs](https://xplt.com/) | Planned developer and contributor of the future offensive-research part, led by Managing Director Johannes Schönborn | Nothing shipped in this version; see [the plan](docs/PLANNED-OFFENSIVE-RESEARCH.md) |
 
-The [Offensive Security preview](docs/GATED-PREVIEW.md) is disabled by default. Operator opt-in and a valid declared scope are both required; current outputs are plans, never exploitation or interaction with a target.
+Offensive research is [planned for a later release](docs/PLANNED-OFFENSIVE-RESEARCH.md) and is not shipped: no profile, skill, workflow, tool or configuration switch for it exists in this version.
 
 Logos identify the named contributors and remain their respective owners' marks. See [brand provenance and usage boundaries](assets/brand/README.md).
 
@@ -142,7 +142,7 @@ Logos identify the named contributors and remain their respective owners' marks.
 |---|---|
 | CyStrat Services | [Company website](https://www.cystrat-services.com/) |
 | Nextron Systems | [Company website](https://www.nextron-systems.com/) · [THOR Lite acquisition and license information](https://www.nextron-systems.com/thor-lite/) |
-| exploit labs | [Company website](https://xplt.com/) · [Contribution and preview boundary](docs/GATED-PREVIEW.md) |
+| exploit labs | [Company website](https://xplt.com/) · [Contribution and preview boundary](docs/PLANNED-OFFENSIVE-RESEARCH.md) |
 | Hermes | [Native plugin documentation](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins) |
 | CyStrat SOC Suite | [Integration scope and proposed MCP contract](docs/CYSTRAT-SOC-SUITE.md) |
 
@@ -187,11 +187,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for host integration checks, generated-as
 
 ## License and release status
 
-**Apache-2.0 is proposed only. Final rights-holder approval is pending.** The current [LICENSE](LICENSE) is a placeholder, not a provisional open-source grant; [NOTICE](NOTICE) records the accompanying restrictions.
+**Apache-2.0.** The full license text is in [LICENSE](LICENSE); [NOTICE](NOTICE) records the copyright holders and what the license does not cover.
 
-- [ ] **Release-blocking TODO:** Obtain final approval and update `LICENSE`, `NOTICE` and `plugin.yaml` together before any open-source release.
+Apache-2.0 was chosen because it fits both sides of this project: it grants the patent and trademark-safe use a security product needs, it is compatible with Hermes Agent's own open-source licensing, and it lets a company evaluate or embed the plugin without a legal review of a non-standard license. It covers the source code and documentation only — THOR, its signatures and Nextron's brand assets stay under Nextron's terms, and the vendor documentation stays linked rather than vendored.
 
-This repository remains private. Changes to visibility, public video/source publication and catalog or hackathon submission require renewed explicit approval; this documentation does not authorize them.
+Joint development with Nextron Systems is confirmed: **Florian Roth** and managing director **Mark** have agreed to support and cooperate on this plugin. That cooperation covers the project collaboration; it is not a grant of rights to THOR, its signatures or Nextron marks.
+
+This repository is currently private. Changing its visibility, publishing the source or the video, or submitting it to the Hermes plugin catalog or the hackathon requires the owner's explicit approval; this documentation does not authorize them.
 
 ---
 
