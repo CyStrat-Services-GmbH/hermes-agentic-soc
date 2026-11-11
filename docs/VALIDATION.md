@@ -114,7 +114,7 @@ The third review introduces a local capability inventory and hardens evidence im
 
 Both `validate --install-deps` attempts printed `dependency preparation failed: Dependency inputs changed while preparing publication; retry.`, then ran successful plugin validation and exited zero. The inspected host catches preparation exceptions and continues with its existing environment. Therefore the successful capability/security checks do not establish a successful fresh dependency-preparation step. No host internals were patched to hide or bypass the warning.
 
-Logs are prefixed `review-v012-` in `docs/validation/`. Python 3.12/3.13 and Windows/macOS were not locally executed for this review; GitHub Actions results are recorded separately when available.
+Logs are prefixed `review-v012-` in `docs/validation/`. Python 3.12/3.13 and Windows/macOS were not locally executed for this review. No hosted CI is used in this repository, so there are no runner results to compare against.
 
 ## Review release 0.1.1 (historical)
 
@@ -152,7 +152,7 @@ Validation date: 2026-11-11. The following results were executed in the build sa
 | Scan-launcher tests | CLI capability probe, fixed FileScan argv, dry-run, no-output exit and timeout tested with mocks |
 | Slash-command execution restriction | `execute:true` refused by `/thor-scan`; normal tool pipeline required |
 
-The source and test logs are stored under `docs/validation/`. The repository's GitHub Actions workflow declares Python 3.11–3.14; only the two versions listed above are claimed as locally executed.
+The source and test logs are stored under `docs/validation/`. The project targets Python 3.11–3.14; only the two versions listed above are claimed as locally executed, and no hosted CI exists to cover the others.
 
 ## Inspected host and environment
 

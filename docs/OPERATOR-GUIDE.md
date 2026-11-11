@@ -166,7 +166,7 @@ hermes plugins doctor . --ci
 hermes plugins validate . --install-deps
 ```
 
-Runtime dependencies are Python standard library only. Optional test/build dependencies have upper bounds; CI matrix results must be distinguished from locally executed tests. See the [validation record](VALIDATION.md) for the actual results and test environment of this build.
+Runtime dependencies are Python standard library only. Optional test/build dependencies have upper bounds. All checks run locally — this repository uses no hosted CI — so only locally executed results are claimed. See the [validation record](VALIDATION.md) for the actual results and test environment of this build.
 
 ## Roadmap and contribution
 
