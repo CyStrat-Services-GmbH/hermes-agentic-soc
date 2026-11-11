@@ -1,3 +1,5 @@
+[Project overview](../README.md) / [Documentation](README.md) / Security
+
 # Security guide
 
-See the root [SECURITY.md](../SECURITY.md) for executable trust, allowed evidence roots, privacy, approvals, scope gates and the limits of profile-based behavioral guidance. This reference is retained for the requested documentation layout.
+The canonical [security model and disclosure policy](../SECURITY.md) covers executable trust, allowed evidence roots, privacy, approvals, scope gates and the limits of profile-based guidance. Review it before processing customer evidence or enabling any execution path.

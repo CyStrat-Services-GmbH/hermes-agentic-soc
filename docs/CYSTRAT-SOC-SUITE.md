@@ -1,4 +1,11 @@
-# CyStrat SOC Suite integration scaffold
+[Project overview](../README.md) / [Documentation](README.md) / CyStrat SOC Suite
+
+# CyStrat SOC Suite
+
+<p><img src="../assets/brand/cystrat.png" width="260" alt="CyStrat Services GmbH"></p>
+
+> [!NOTE]
+> **Integration design / scaffold.** Dedicated skill and proposed read-only MCP contract; no verified live connection.
 
 CyStrat SOC Suite is included as a first-class entry in the plugin's technology inventory. It has a dedicated skill and MCP preparation files, but is not represented as a working live connector.
 

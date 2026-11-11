@@ -1,3 +1,5 @@
+[Project overview](../README.md) / [Documentation](README.md) / Contributing
+
 # Contribution guide
 
-See the root [CONTRIBUTING.md](../CONTRIBUTING.md) for template authoring, evidence standards, validation and license constraints. This reference is retained for the requested documentation layout.
+The canonical [contributor guide](../CONTRIBUTING.md) covers environment setup, template authoring, documentation standards and required validation. Read the pending-license constraints before proposing code or third-party content.

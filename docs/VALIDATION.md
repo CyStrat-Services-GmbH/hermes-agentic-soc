@@ -1,5 +1,22 @@
 # Validation record
 
+## Documentation refresh
+
+The documentation refresh leaves the plugin at v0.1.2 and adds six documentation-check tests to the previous 145-test suite. Runtime behavior, registrations and generated skills/templates are unchanged.
+
+| Check | Executed result |
+|---|---|
+| Python 3.14.8 regression suite | 151 passed |
+| Python 3.11.17 regression suite | 151 passed |
+| Offline documentation checker | Local Markdown/HTML file targets and three PNG signatures passed; external URLs and renderer-specific heading anchors are not checked |
+| GitHub Markdown API | README rendered with three logo images and the status callout; architecture Mermaid block recognized |
+| Original logo panels | Visually inspected together on their fixed dark backgrounds |
+| Synthetic demo from documented CLI | 4 source events, 3 observation groups, provisional P2 and complete report paths |
+| Generated assets | Re-running `scripts/build_assets.py` produced no changes to skills, templates, workflows or schemas |
+| Whitespace validation | `git diff --check` passed |
+
+This is documentation and regression verification, not a fresh vendor-scanner or live-tenant acceptance test. Earlier host-validation limitations below remain applicable.
+
 ## Review release 0.1.2
 
 The third review introduces a local capability inventory and hardens evidence imports, report publication and audit failure responses. The following checks were executed against the changed source; no live remote connector or licensed THOR scan is implied.

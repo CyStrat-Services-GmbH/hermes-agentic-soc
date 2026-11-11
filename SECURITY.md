@@ -2,6 +2,19 @@
 
 This package is defensive SOC tooling with research-planning scaffolds, not an exploitation framework. It has no target-interaction research tool or production containment/ticket-write connector.
 
+## Deployment review
+
+| Before you… | Confirm |
+|---|---|
+| Import customer evidence | Approved narrow roots, safe staging and retention policy |
+| Use a model provider | Permission for minimized tool outputs to enter that provider's context |
+| Execute THOR | Appropriate license, trusted executable, approved target and host-owned human approval |
+| Provision a profile | Correct Hermes root and independently verified account isolation requirements |
+| Enable research planning | Operator opt-in, valid declared scope and restricted lab tools |
+| Design a remote connector | Server-side read-only RBAC, tenant boundaries and negative acceptance tests |
+
+Use the [operator guide](docs/OPERATOR-GUIDE.md) for configuration and the [validation record](docs/VALIDATION.md) for test coverage. The controls below are application boundaries, not a guarantee that the entire Hermes host is sandboxed.
+
 ## Boundaries
 
 Evidence imports resolve symlinks and must remain inside explicit operator-approved roots. Common credential stores/files are refused. The shipped synthetic demo directory and the plugin's private data directory are also accepted roots. Imports are capped at 50 MiB and 100,000 structured records.

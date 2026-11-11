@@ -1,6 +1,11 @@
-# Your security stack. Cybersecurity expertise inside Hermes.
+[Project overview](../README.md) / [Documentation](README.md) / Integration roadmap
+
+# Integration roadmap
 
 Cybersecurity from Germany. For the world. Our product vision is to turn operational experience into reusable skills, tools, workflows and specialist profiles, so Hermes can work with your tools, your data and your components through explicitly approved connections.
+
+> [!NOTE]
+> **21 technology templates. Zero verified live remote connectors.** The matrix below describes intended coverage and acceptance goals, not deployed integrations or committed delivery dates.
 
 ## Available in the MVP
 

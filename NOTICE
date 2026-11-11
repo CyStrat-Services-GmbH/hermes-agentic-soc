@@ -14,3 +14,18 @@ or synthetic. No THOR binary, Nextron signature, private rule or license is
 redistributed. Vendor and project documentation is linked, not vendored.
 
 Proposed code license: Apache-2.0; final approval pending. See LICENSE.
+
+The owner's later instruction keeps this repository private. Earlier joint
+presentation permission is not current authorization to publish this repository,
+its documentation or video, or to submit it to a public catalog.
+
+CyStrat, Nextron Systems and exploit labs logos are included at the owner's
+request solely for the contributor presentation in this documentation.
+The marks remain with their respective owners; no general trademark license
+or right to modify them is granted. See assets/brand/README.md for provenance.
+
+exploit labs, led by Managing Director Johannes Schönborn, is the planned
+developer and contributor of the Offensive Security part. Current inclusion
+is limited to planning scaffolds, gated-preview metadata and attribution;
+no operational offensive contribution or additional code-license grant is
+claimed.

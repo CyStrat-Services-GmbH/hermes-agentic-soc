@@ -1,23 +1,51 @@
+[Project overview](../README.md) / [Documentation](README.md) / Architecture
+
 # Architecture
 
 The native Hermes entrypoint registers eight tools, one `pre_tool_call` hook, four slash commands and the shipped namespaced skills. It performs no network or data-directory I/O at registration. It uses only documented `ctx` operations and the public `plugins.plugin_storage.plugin_data_dir` helper ([Hermes plugin API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)).
 
 ## Data flow
 
-```text
-Hermes tool / slash command
-  -> strict finite JSON-schema argument validation
-  -> host pre_tool_call approval for scan/profile execution
-  -> lazy profile-scoped Runtime + minimised audit
-  -> allowed-root input resolution / fixed-argv local THOR FileScan
-  -> strict v1/v2 JSON/NDJSON adapter
-  -> exact event inventory + artifact observation grouping
-  -> deterministic conservative policy
-  -> private normalized.json + case.json + German report.md
-  -> minimised preview + report paths + draft-only ticket
+```mermaid
+flowchart TD
+    A["Hermes tool or slash command"] --> B["Strict argument validation"]
+    B --> C{"Sensitive execution?"}
+    C -->|"Yes: scan or profile creation"| D["Hermes-owned human approval"]
+    C -->|"No: local evidence analysis"| E["Lazy profile-scoped runtime"]
+    D --> E
+    E --> F["Allowed-root evidence import"]
+    E --> G["Fixed-argv local THOR FileScan"]
+    F --> H["Strict JSON v1/v2 or NDJSON adapter"]
+    G --> H
+    H --> I["Exact event inventory and observation groups"]
+    I --> J["Deterministic conservative policy"]
+    J --> K["Private normalized.json, case.json and report.md"]
+    K --> L["Minimized preview and report paths"]
+    E -.-> M["Metadata-only local audit"]
+    K -.-> M
+    classDef host fill:#0055FF,color:#fff,stroke:#00C2FF
+    classDef evidence fill:#102530,color:#fff,stroke:#00C2FF
+    classDef control fill:#302510,color:#fff,stroke:#FFD600
+    class A,B host
+    class C,D control
+    class E,F,G,H,I,J,K,L,M evidence
 ```
 
+The diagram describes the normal host-mediated path, not an authorization guarantee for direct Python calls. `/thor-scan` is preview-only; scan execution must enter through the normal tool pipeline.
+
 No LLM decides severity. No external connector is active by default. Workflow YAML files guide agents and reviewers but are not advertised as an executable runner. Root portable `plugin.json`/`mcp.json` files are omitted to avoid accidental MCP launches or duplicate skill namespaces.
+
+## Trust boundaries
+
+| Boundary | Control | Limitation |
+|---|---|---|
+| Hermes → plugin | Public registration API, strict schema and host approval | Fully trusted plugins and direct library calls are outside the approval boundary |
+| Filesystem → evidence engine | Canonical allowed roots, credential-file refusal and bounded imports | Not an OS sandbox or a complete acquisition/custody system |
+| Plugin → THOR | Operator-selected executable, fixed argv, minimal environment and timeout | No vendor-binary sandbox or real licensed scan validation in this build |
+| Reports → model context | Minimized preview and private output paths | Hermes may send tool output to its configured provider |
+| Future remote integrations | Proposed server-side read-only RBAC and tenant isolation | No verified live remote connector exists yet |
+
+Read [SECURITY.md](../SECURITY.md) for the full threat boundary and the [operator guide](OPERATOR-GUIDE.md) for deployment controls.
 
 ## Module ownership
 

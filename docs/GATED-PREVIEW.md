@@ -1,4 +1,11 @@
-# Offensive Security: Gated Preview
+[Project overview](../README.md) / [Documentation](README.md) / Offensive Security preview
+
+# Offensive Security: gated preview
+
+<p><img src="../assets/brand/exploit-labs.png" width="260" alt="exploit labs"></p>
+
+> [!IMPORTANT]
+> **Planning only · disabled by default.** No operational offensive implementation from exploit labs is delivered in this release.
 
 The project sponsor has specified **exploit labs**, led by managing director **Johannes Schönborn**, as the planned developer and contributor of the Offensive Security part. Attribution is limited to this skeleton, marketing and preview materials. The existing code license/copyright and defense implementation authorship are not changed.
 

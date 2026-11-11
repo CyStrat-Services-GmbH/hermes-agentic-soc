@@ -1,4 +1,6 @@
-# Hermes Agentic SOC
+[Project overview](../README.md) / [Documentation](README.md) / Messaging
+
+# Product messaging
 
 When agentic AI goes on the offensive, the world needs a new kind of defense. Hermes Agentic SOC brings cybersecurity expertise into the agent workflow, with human responsibility at its center.
 
@@ -19,7 +21,13 @@ Cybersecurity from Germany. For the world. Your tools, your data and your securi
 
 The English trailer opens with a cinematic illustrative network globe and a short threat/defense narrative. It then shows the current MVP, the named integration roadmap, contributor roles and human control before returning to the international tagline.
 
-Voice-over, screen typography and subtitles are English. Report excerpts and sample counts are derived from the executed synthetic fixture, not a real customer incident; no vendor UI or logo is fabricated.
+Voice-over and screen typography are English; any future subtitles should use the same language. Report excerpts and sample counts are derived from the synthetic fixture, not a real customer incident; no vendor UI or logo is fabricated.
+
+## Approved attribution boundaries
+
+Use the [original contributor logos](../assets/brand/README.md) without recoloring or distortion. In copy, distinguish the current CyStrat × Nextron defense project from the planned exploit labs Offensive Security contribution led by Managing Director Johannes Schönborn.
+
+Avoid “21 connected platforms,” “fully autonomous SOC,” “confirmed compromise” from an ALERT alone, “GDPR compliant by default” and “Apache-2.0 open source” before license approval. Prefer precise descriptions of the implemented scope and explicit roadmap labels.
 
 ## Publication gate
 

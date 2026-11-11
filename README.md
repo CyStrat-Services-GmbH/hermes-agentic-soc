@@ -1,215 +1,144 @@
+<p align="center">
+  <a href="https://www.cystrat-services.com/"><img src="assets/brand/cystrat.png" width="30%" alt="CyStrat Services GmbH"></a>
+  <a href="https://www.nextron-systems.com/"><img src="assets/brand/nextron.png" width="30%" alt="Nextron Systems"></a>
+  <a href="https://xplt.com/"><img src="assets/brand/exploit-labs.png" width="30%" alt="exploit labs"></a>
+</p>
+
 # Hermes Agentic SOC
 
 **Cybersecurity from Germany. For the world.**
 
-Your tools. Your data. Your security stack. Hermes Agentic SOC brings cybersecurity experience into Hermes as specialized skills, native tools, workflows and expert profiles, built by **CyStrat Services × Nextron Systems**.
+When agentic AI goes on the offensive, defenders need more than another chatbot. They need cybersecurity expertise that can work with their evidence, their tools and their operational boundaries.
 
-Today, the MVP analyzes supplied evidence and local THOR exports. The integration roadmap prepares Hermes to work directly with your wider environment through approved, read-only connections. Technology templates are shipped; live remote integrations are not. Explore the [full integration roadmap](docs/INTEGRATION-ROADMAP.md).
+Hermes Agentic SOC brings that expertise into Hermes through specialist profiles, reusable skills, native tools and structured workflow references. Developed in the CyStrat Services × Nextron Systems project, it starts with evidence-led triage and deterministic THOR assessment. The roadmap extends that foundation toward approved, read-only access to your wider security stack.
 
-**Offensive Security / Gated Preview:** exploit labs, led by managing director Johannes Schönborn, is the planned developer and contributor of the Offensive Security part. In this release that partnership appears only in the research skeleton, preview metadata and marketing. No delivered exploit labs operational implementation or additional copyright/license grant is claimed.
+<p align="center">
+  <a href="docs/README.md">Documentation</a> ·
+  <a href="docs/GETTING-STARTED.md">Quickstart</a> ·
+  <a href="docs/INTEGRATION-ROADMAP.md">Integration roadmap</a> ·
+  <a href="SECURITY.md">Security</a> ·
+  <a href="README.de.md">Deutsch</a>
+</p>
 
-Version 0.1.2 targets Hermes >=0.23.1 and Python >=3.11 for the standalone engine. Hermes itself may require a newer Python version. This is an MVP, not an autonomous incident commander or a replacement for a forensic investigation.
+> [!IMPORTANT]
+> **Private development preview · v0.1.2.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
 
-**Private development repository.** The owner has made this repository private. Do not change visibility, publish the source/video or submit a catalog PR without new explicit approval. Existing installation links require authorized GitHub access.
+## Your environment. Our expertise.
 
-## Review release 0.1.2
+The goal is not to replace your security stack. It is to give Hermes a disciplined way to work with it: understand the evidence, apply specialist knowledge, make uncertainty visible and leave consequential decisions with your team.
 
-The third-pass review adds `/soc-capabilities`: an honest, local inventory of current functionality, planned integrations and configuration presence. It never mistakes a configured path for a working connection. Report bundles are published only when complete, evidence imports reject mid-read changes and numeric overflow, malformed identity fields cannot establish correlation, and post-operation audit failures warn against automatic retries. See [review findings](docs/REVIEW-0.1.2.md) and [executed validation](docs/VALIDATION.md).
+- **Evidence before conclusions:** Exact event inventories, conservative same-artifact grouping and traceable first assessments instead of model-invented incident narratives.
+- **Specialists for the task:** Six defense personas cover triage, incident response, hunting, DFIR, detection engineering and vulnerability management.
+- **Reusable operational knowledge:** 29 shipped skills combine eight domain/workflow skills with 21 technology-specific planning scaffolds.
+- **Control by design:** Local evidence boundaries, metadata-only audit records and Hermes-owned approval for sensitive execution. No plugin telemetry, self-updater or hidden LLM calls.
 
-## License status
+The assessment engine is deterministic. Hermes may use its configured model to interpret tool output, but the plugin does not call a model to calculate severity.
 
-**Proposed license: Apache-2.0. Final approval is pending.** `LICENSE` deliberately grants no provisional open-source rights. Public source visibility is not a license grant. Do not label this release Apache-2.0 or OSI-open-source until the rights holders approve and replace `LICENSE`, `plugin.yaml` and `NOTICE` together. This is a release blocker, not a hidden TODO.
+## What you can use today
 
-- [ ] **Release-blocking TODO:** Obtain final rights-holder approval and replace the license placeholder before any open-source release.
+| Area | Delivered in v0.1.2 | Boundary |
+|---|---|---|
+| Native Hermes plugin | 8 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
+| Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
+| First assessment | Exact counts, observation groups, German case JSON/Markdown | Provisional triage, not proof of compromise |
+| Local THOR launcher | Fixed-argument FileScan preparation and execution path | External licensed binary and human approval required; real vendor scan not validated here |
+| Specialist profiles | 6 defense profiles; 3 research-planning scaffolds | Research preview off by default; no target interaction |
+| Workflow references | 4 declarative workflow definitions | Not an executable workflow engine |
+| Technology coverage | 21 skills and inactive MCP descriptors | **0 verified live remote connectors** |
 
-The partners' joint-publication permission has been confirmed by the project sponsor. That does not grant redistribution rights for THOR executables, signatures, licenses, private rules or third-party content.
+The [validation record](docs/VALIDATION.md) distinguishes executed tests from untested scenarios. The [operator guide](docs/OPERATOR-GUIDE.md) documents the detailed approval, privacy and host-isolation limitations.
 
-## What works and what does not
+## Start with evidence, not credentials
 
-| Component | Status |
-|---|---|
-| Eight native Hermes tools, four slash commands, approval policy hook | Implemented |
-| Local capability and roadmap inventory | Implemented; no network access or credential disclosure |
-| THOR JSON v1/v2, JSON arrays, event wrapper and NDJSON import | Implemented, synthetic-fixture tested |
-| Counts, same-artifact observation grouping, German case JSON/Markdown | Implemented, deterministic |
-| THOR launcher | Implemented; separately installed local executable required, actual vendor-binary scan not tested here |
-| Six defense personas and eight workflow/domain skills | Shipped |
-| Three offensive/purple-team personas | Planning scaffolds; scope-gated, no target interaction |
-| Twenty-one technology-specific skills and MCP descriptors, including CyStrat SOC Suite | Scaffolds, no live SIEM/SOAR/EDR/TI integration |
-| Four workflow references | Declarative YAML references, not an executable workflow engine |
-| Containment, blocking, rule deployment, ticket posting | Not implemented; draft-only |
-| THOR v3, legacy text/CSV, full forensic correlation | Not supported in 0.1.2 |
-
-No THOR executable, rules, signatures or license files are included or downloaded by the plugin. Obtain THOR separately from the [official Nextron THOR Lite page](https://www.nextron-systems.com/thor-lite/). That page currently reserves third-party networks and paid engagements for THOR Enterprise; confirm your specific partner license with Nextron before using customer systems ([Nextron licensing information](https://www.nextron-systems.com/thor-lite/)).
-
-## Install
-
-Install the repository at a reviewed full commit SHA, then enable it explicitly. Hermes supports a full-SHA pin and separate enablement through the [plugin system](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins).
-
-```bash
-hermes plugins install CyStrat-Services-GmbH/hermes-agentic-soc --no-enable
-hermes plugins enable agentic-soc
-hermes plugins doctor agentic-soc --ci
-```
-
-For a pinned install, add `--ref` followed by the 40-character SHA published with the release. `/plugins` and the tool picker in a new Hermes session should show `agentic_soc` tools once enabled; a full interactive provider-backed chat is not part of the offline test.
-
-The package is a native `plugin.yaml` / `register(ctx)` plugin. It deliberately has no root `plugin.json` or root `mcp.json`: no portable package or MCP process is auto-started, and native skills must not be registered twice.
-
-## Quick offline demonstration
+Run the synthetic demonstration with Python 3.11 or newer. It requires no THOR installation, provider key or remote connection.
 
 ```bash
 git clone https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc.git
 cd hermes-agentic-soc
-python examples/demo/run_demo.py --output /tmp/hermes-agentic-soc-demo
+python -m agentic_soc demo --output /tmp/hermes-agentic-soc-demo
 ```
 
-The review release also includes a standard-library-only CLI:
+The repository is private, so cloning requires authorized GitHub access. The fixture contains no malware and produces exactly **4 source events → 3 observation groups**, not three proven incidents.
+
+Inspect the delivered scope without contacting a vendor:
 
 ```bash
-python -m agentic_soc profiles
 python -m agentic_soc capabilities
 python -m agentic_soc capabilities --technology cystrat-soc-suite
-python -m agentic_soc demo --output /tmp/hermes-agentic-soc-demo
-python -m agentic_soc assess /absolute/evidence/thor.json --output /tmp/soc-case
+python -m agentic_soc profiles
 ```
 
-These commands never execute THOR, install profiles or post anything externally. The explicit input file authorizes its parent only for this offline invocation; output still uses private files and structured redaction.
+For native installation, evidence-root configuration and approval boundaries, follow the [quickstart](docs/GETTING-STARTED.md). For real evidence, use the [operator guide](docs/OPERATOR-GUIDE.md) and your organization's handling policy.
 
-The supplied fixture is synthetic, contains no malware and produces exactly **4 source events and 3 correlated observation groups**. One group combines two observations about the same artifact; one is process context and one is an informational record. These are observation groups, not three proven security incidents.
+## One agent. Your wider security stack.
 
-In a Hermes session, use absolute paths:
+The planned integration layer is designed to bring approved security context into Hermes without silently granting write access. Every technology below has a shipped planning skill and inactive MCP descriptor; none is a production connector in this release.
 
-```text
-/soc-templates
-/soc-capabilities
-/thor-assess /absolute/path/hermes-agentic-soc/examples/demo/thor.json
-/thor-scan {"target":"/absolute/operator-approved/directory","execute":false}
-```
+| Domain | Planned technology coverage | Intended value |
+|---|---|---|
+| SIEM | Microsoft Sentinel, Splunk, Elastic Security, IBM QRadar, Google SecOps, Wazuh, Graylog | Bounded alert and log investigation |
+| SOAR / cases | TheHive / Cortex, Shuffle, Cortex XSOAR, Sentinel Playbooks | Case context and draft handoffs |
+| EDR / XDR | Defender XDR, CrowdStrike, SentinelOne, Velociraptor | Existing detections and endpoint evidence |
+| Threat intelligence | MISP, OpenCTI, VirusTotal | Authorized indicator context, no automatic public uploads |
+| Detection engineering | Sigma, YARA | Original detection drafts and controlled fixture testing |
+| SOC platform | CyStrat SOC Suite | Proposed tenant- and case-scoped read-only integration |
 
-`/thor-assess` returns a minimised report preview and private report paths. No source evidence is uploaded by this plugin, but any tool output may enter the active Hermes model's conversation; use an appropriate local or approved provider.
+Sigma and YARA are detection toolchains, not remote SOC services. Future containment, blocking, ticket posting or rule deployment requires a separately reviewed implementation and explicit human approval.
 
-## Operator configuration
+Read the [integration roadmap and acceptance gates](docs/INTEGRATION-ROADMAP.md) or the [CyStrat SOC Suite integration design](docs/CYSTRAT-SOC-SUITE.md). Vendor names describe intended compatibility, not endorsements.
 
-Merge only these settings into the intended profile's `config.yaml`. Replace example absolute paths with your installation and evidence directories; keep evidence roots narrow.
+## Different strengths. One mission.
 
-```yaml
-plugins:
-  entries:
-    agentic-soc:
-      enabled: true
-      settings:
-        thor_path: /opt/nextron/thor-lite/thor-lite-linux
-        evidence_roots:
-          - /srv/ir/case-2026-001
-        scan_roots:
-          - /srv/ir/lab
-        scan_timeout: 900
-```
+| Contributor | Role in this project | Delivery boundary |
+|---|---|---|
+| **CyStrat Services GmbH** | SOC and incident-response experience translated into skills, profiles and workflows | Defense-focused project development with Nextron Systems |
+| **Nextron Systems** | THOR and forensic-assessment expertise within the joint project | THOR software, signatures and licenses are acquired separately |
+| **exploit labs** | Planned developer and contributor of the Offensive Security part, led by Managing Director Johannes Schönborn | Skeleton and gated preview only; no operational offensive implementation is claimed |
 
-The binary path is operator-supplied, not an assumed vendor filename. On Windows use absolute Windows paths. With no `thor_path`, the scan tool provides the official acquisition URL; with no `scan_roots`, scan preparation/execution is refused.
+The [Offensive Security preview](docs/GATED-PREVIEW.md) is disabled by default. Operator opt-in and a valid declared scope are both required; current outputs are plans, never exploitation or interaction with a target.
 
-The launcher runs `--help` first and verifies exact options. It limits the MVP to `--module FileScan`, a specific `--path`, JSON v2 output and private run-local outputs, with `--suppresspi --nolog --nocsv`. `--path` alone is not a module boundary, so it must not be used to imply process-scan containment ([THOR flags](https://thor-manual.nextron-systems.com/en/latest/usage/flags.html)).
+Logos identify the named contributors and remain their respective owners' marks. See [brand provenance and usage boundaries](assets/brand/README.md).
 
-The live scan request uses `execute:true` only to request execution. The `pre_tool_call` hook returns Hermes's `approve` directive, which escalates to the host human-approval gate; the plugin does not approve itself ([Hermes hook API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)). Do not run sensitive actions in an unattended/auto-approved host configuration.
+## Your team stays in control
 
-Offensive Research is an operator-controlled gated preview: `offensive_preview_enabled` defaults to `false`. Disabled previews refuse research-plan calls and offensive-profile installation even with a valid declared scope. Opting in exposes planning only; it does not bypass the scope checker, confer legal authorization or add exploitation/target interaction.
+- **No bundled scanner:** No THOR binary, signatures, Nextron rules or license files are included or automatically downloaded. Obtain THOR separately through [Nextron](https://www.nextron-systems.com/thor-lite/) and verify the license for your engagement.
+- **Approval belongs to Hermes:** Sensitive execution uses the host approval pipeline. `/thor-scan` is preview-only, and an `execute:true` argument is not approval.
+- **Read-only integration intent:** No remote connector is active. The planned layer requires server-enforced least privilege; a prompt or MCP trust label is not an authorization control.
+- **Privacy has limits:** Output is minimized and identifiers are pseudonymized, not guaranteed anonymous. Tool output can enter the configured Hermes model's context.
+- **Audit is local:** Metadata is recorded under `plugin_data_dir("agentic-soc")`. Local JSONL is not tamper-proof or a chain-of-custody certificate.
 
-`/thor-scan` is deliberately preview-only. The inspected host's low-level `ctx.dispatch_tool` path calls the registry directly, so this package does not use it for scan execution. Request actual execution as a normal agent tool call through the host approval pipeline; other fully trusted plugins and direct library calls are outside this authorization boundary.
+Read [SECURITY.md](SECURITY.md) before handling customer evidence or enabling any execution path. A synthetic test suite is not an independent security audit.
 
-## Tools and profiles
+## Documentation
 
-| Tool | Purpose |
+| If you want to… | Start here |
 |---|---|
-| `soc_template_list` | List all nine role templates, status and workflow |
-| `soc_capabilities` | Distinguish implemented functions, planned integrations and configuration presence; optional technology filter |
-| `soc_template_install` | Preview or create a new `soc-` profile via `hermes profile create --no-credentials` |
-| `thor_lite_scan` | Probe local THOR capabilities, or request a human-approved FileScan |
-| `thor_parse` | Strict allowed-root import, exact event inventory and artifact grouping |
-| `thor_first_assessment` | Deterministic first assessment and nine-section German case report |
-| `soc_alert_triage` | Supplied-evidence triage, no remote enrichment |
-| `soc_research_plan` | Structurally validate declared authorization scope and draft a lab/research plan |
+| Run a safe demo or install the plugin | [Getting started](docs/GETTING-STARTED.md) |
+| Configure evidence roots, scanning and specialist profiles | [Operator guide](docs/OPERATOR-GUIDE.md) |
+| Understand components and trust boundaries | [Architecture](docs/ARCHITECTURE.md) |
+| See tools, commands and specialist roles | [Capability reference](docs/CAPABILITIES.md) |
+| Plan an integration or review CyStrat SOC Suite | [Integration roadmap](docs/INTEGRATION-ROADMAP.md) · [SOC Suite](docs/CYSTRAT-SOC-SUITE.md) |
+| Review tests, limits and prior findings | [Validation](docs/VALIDATION.md) · [Review 0.1.2](docs/REVIEW-0.1.2.md) |
+| Extend the project safely | [Contributing](CONTRIBUTING.md) · [Open work](TODO.md) |
+| Read the overview in German | [Deutsche Projektübersicht](README.de.md) |
 
-Defense roles: `soc-l1-triage`, `soc-l2-incident-responder`, `threat-hunter`, `dfir-compromise-assessment`, `detection-engineer`, `vulnerability-manager`. Research scaffolds: `red-team-planner`, `adversary-emulation`, `purple-team-validator`.
+## Development
 
-Profile installation uses only documented CLI commands, never private profile-store imports. A successful new-profile create is followed by path discovery from the labelled `profile show` output; the plugin fails closed if that public CLI format changes. It replaces only the newly seeded default persona, preserving it as `SOUL.hermes-default.md`, and copies shipped skills. Existing profiles are never overwritten.
-
-Configure model/auth and enable the plugin in the new profile explicitly. The plugin itself does not read or write `.env`, `auth.json`, CLI token stores or OAuth credentials; Hermes owns profile creation and credential semantics ([profile documentation](https://hermes-agent.nousresearch.com/docs/user-guide/profiles)).
-
-Important integration finding: `--no-credentials` prevents copying keys/model, but the inspected Hermes implementation still permits default-root subscription-auth fallback. Do not treat it as credential isolation. The plugin therefore reports `credential_isolation:false`, disables bundled-skill seeding/alias creation, and explicitly passes the active host-derived `HERMES_HOME` to CLI children rather than relying on process-global multiplexed state. Use an independently isolated Hermes root/OS runtime when strict account separation is required.
-
-## Assessment policy
-
-- **Counts:** Every imported structured event is counted, including INFO and unknown scores. Correlation requires explicit host and scan plus file path/hash, event ID/record ID/channel, or process PID/start time; missing identifiers remain independent. Duplicate observation and score/level disagreement counters expose data-quality limits.
-- **Scores:** Default bands are NOTICE >=40, WARNING >=60 and ALERT >=81, but an explicit source level takes precedence because THOR permits custom thresholds. Individual reason scores are never summed to fabricate the object's final score ([THOR CLI](https://thor-manual.nextron-systems.com/en/latest/usage/flags.html)).
-- **Evidence:** Confirmed means a scanner observation exists in the supplied export. A suspicious interpretation remains a Strong Indicator; execution, initial access, attribution, lateral movement and successful remediation are Not Derivable without other evidence.
-- **Verdicts:** ALERT leads to provisional P2/HIGH triage, not an automatic confirmed compromise. WARNING/NOTICE leads to P3/MEDIUM; informational-only input is Inconclusive, never clean-host assurance.
-- **Time:** Detection timestamps are not attack timestamps. Timezone-aware ISO artifact timestamps are ordered in UTC; invalid or timezone-free values remain in normalized data but are omitted from the timeline with an explicit count.
-- **ATT&CK:** No automatic mapping from arbitrary rule text or IDs. Analyst-supported mapping is intentionally deferred.
-
-JSON v2 is open-ended, and THOR 11 introduces a different v3 object model; this release refuses v3 instead of silently misparsing it ([Nextron JSON definitions](https://github.com/NextronSystems/jsonlog)).
-
-## Technology and MCP expansion
-
-`templates/registry.yaml` contains twenty-one technology entries, including **CyStrat SOC Suite**. Each has its own skill with a query starter or structured query plan, an inactive MCP descriptor and explicit scaffold status.
-
-| Planned coverage | Technology templates |
-|---|---|
-| SIEM | Microsoft Sentinel, Splunk, Elastic Security, IBM QRadar, Google SecOps, Wazuh, Graylog |
-| SOAR and case management | TheHive / Cortex, Shuffle, Cortex XSOAR, Sentinel Playbooks |
-| EDR, XDR and endpoint investigation | Defender XDR, CrowdStrike, SentinelOne, Velociraptor |
-| Threat intelligence | MISP, OpenCTI, VirusTotal |
-| Detection engineering | Sigma, YARA |
-| SOC platform | CyStrat SOC Suite |
-
-This is a planned technology and workflow ecosystem, not 21 production connectors. Sigma/YARA are detection toolchains rather than remote SOC services. Live tenant compatibility, endpoints, authorization and data-sharing controls must be verified separately for each integration.
-
-The CyStrat SOC Suite entry includes a dedicated tenant-/case-scoped skill and an explicitly proposed read-only MCP contract. The inspected Suite V2 routes contain no implemented application endpoints; no live MCP endpoint is invented. Integration status remains scaffold until the deployed API, authorization and tenant-isolation tests are available.
-
-Splunk and Elastic have vendor-documented MCP offerings; no credentials, tenant endpoint or automatic connection is bundled ([Splunk MCP setup](https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/2.0/connecting-to-the-mcp-server-and-settings), [Elastic Agent Builder MCP](https://www.elastic.co/docs/explore-analyze/ai-features/agent-builder/mcp-server)). For all other entries, official MCP status is recorded as not verified, not asserted absent.
-
-An opt-in native Hermes MCP configuration must use `trust: untrusted`, a narrow tool allowlist and server-side read-only RBAC. Trust is not a complete read-only control; Hermes may permit tools marked `readOnlyHint:true`, so audit annotations and privileges ([Hermes MCP trust semantics](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)). A template, prompt or SOUL cannot enforce authorization across unrelated tools.
-
-Elastic's Nextron integration is a separate THOR Cloud API ingestion path supporting unencrypted v2 `thor.json` logs, not a bundled arbitrary-local-file importer ([Nextron THOR Cloud integration](https://www.elastic.co/docs/reference/integrations/nextron_thor_apt_scanner)).
-
-## Security disclosure
-
-- **Network:** No direct network calls, telemetry, self-updater or hidden LLM calls. Profile CLI operations may perform Hermes-owned initialization; independently enabled MCP servers are outside this package.
-- **File reads:** Explicit input evidence under operator-approved roots; symlink escapes and common credential files/stores are refused. Evidence limit 50 MiB / 100,000 events. Local THOR reads the explicitly authorized FileScan target.
-- **Subprocesses:** Configured executable `--help`, then optionally its fixed-argv scan; `hermes profile create/show` for approved profile creation. No shell command strings, sudo or inherited provider tokens.
-- **State:** Normalized events, case reports, scanner output, a pseudonym salt and metadata-only audit JSONL under profile-scoped `plugin_data_dir("agentic-soc")`. No stored external credentials.
-- **Privacy:** Structured data minimisation and HMAC host pseudonyms are best effort, not guaranteed anonymisation or automatic GDPR compliance. Review all outputs and raw scan data before sharing. Directory permissions depend on the host OS and filesystem.
-- **Approvals:** Host-owned approval for execution/profile creation. No write-capable remote connectors or external ticket writer. Do not bypass host guards using direct Python calls.
-- **Audit:** Started/completed/rejected metadata, generated IDs and error classes only; raw arguments and evidence are not logged. Local JSONL is not tamper-proof or a legal chain-of-custody system.
-
-See [SECURITY.md](SECURITY.md), [architecture](docs/ARCHITECTURE.md) and [open issues](TODO.md).
-
-## Development and validation
+The runtime uses the Python standard library only. Optional build/test dependencies have upper bounds.
 
 ```bash
 python -m pip install 'pytest>=8,<10' 'jsonschema>=4.18,<5' 'PyYAML>=6,<7'
 python scripts/build_assets.py
 python -m pytest -q
-hermes plugins doctor . --ci
-hermes plugins validate . --install-deps
+python scripts/check_docs.py
 ```
 
-Runtime dependencies are Python standard library only. Optional test/build dependencies have upper bounds; CI matrix results must be distinguished from locally executed tests. See `docs/VALIDATION.md` for the actual results and test environment of this build.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for host integration checks, generated-asset rules and the definition of a verified integration.
 
-## Roadmap and contribution
+## License and release status
 
-License approval and a real separately licensed THOR smoke test come first. Next are fixture-backed v3 support, stronger event-log correlation, evidence-retention controls, independently validated live read-only connectors and host-tested write approval flows. Do not promote a scaffold to `mvp` without tests and an accurate disclosure.
+**Apache-2.0 is proposed only. Final rights-holder approval is pending.** The current [LICENSE](LICENSE) is a placeholder, not a provisional open-source grant; [NOTICE](NOTICE) records the accompanying restrictions.
 
-Add profiles, workflows, connector descriptors and skills through `scripts/build_assets.py`, regenerate, test and open a focused PR. See [CONTRIBUTING.md](CONTRIBUTING.md). Do not commit customer logs or vendor assets.
+- [ ] **Release-blocking TODO:** Obtain final approval and update `LICENSE`, `NOTICE` and `plugin.yaml` together before any open-source release.
 
-## Deutsch
-
-Hermes Agentic SOC wird gemeinsam von CyStrat Services GmbH und Nextron Systems GmbH entwickelt. Der Schwerpunkt dieses MVP liegt auf nachvollziehbarer SOC-Triage, Spezialisten-Profilen, Skills und einer regelbasierten Erstbewertung von THOR-JSON-Exporten.
-
-THOR Lite wird separat von Nextron bezogen und lokal konfiguriert. Scanner, Signaturen, private Regeln und Lizenzdateien sind weder Bestandteil des Plugins noch werden sie automatisch heruntergeladen. Die Erlaubnis zur gemeinsamen Veröffentlichung ersetzt keine Freigabe zur Weitergabe dieser Komponenten.
-
-Die sechs Defense-Profile sind ausgearbeitet; drei Research-Profile und alle einundzwanzig Technologieanbindungen einschließlich CyStrat SOC Suite sind klar gekennzeichnete Vorlagen. Das Plugin greift damit noch nicht live auf Kundensysteme zu. Es erstellt Berichte und Entwürfe, aber führt keine Isolation, Blockierung oder Ticketveröffentlichung aus.
-
-Die Code-Lizenz bleibt bis zur finalen Freigabe offen. Apache-2.0 ist nur vorgeschlagen. Ein öffentlicher Quellcode ist ohne Lizenzfreigabe noch keine abgeschlossene Open-Source-Veröffentlichung.
-
-Das Repository ist aktuell privat. Auch das erste Produktvideo ist ein interner Entwurf; weder Sichtbarkeit noch Hackathon-Einreichung werden ohne neue Freigabe geändert.
+This repository remains private. Changes to visibility, public video/source publication and catalog or hackathon submission require renewed explicit approval; this documentation does not authorize them.

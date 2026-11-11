@@ -19,3 +19,4 @@ jobs:
       - run: python scripts/build_assets.py
       - run: git diff --exit-code
       - run: python -m pytest -q
+      - run: python scripts/check_docs.py
