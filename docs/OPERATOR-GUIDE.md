@@ -123,7 +123,7 @@ JSON v2 is open-ended, and THOR 11 introduces a different v3 object model; this 
 
 ## Technology and MCP expansion
 
-`templates/registry.yaml` contains twenty-one technology entries, including **CyStrat SOC Suite**. Each has its own skill with a query starter or structured query plan, an inactive MCP descriptor and explicit scaffold status.
+`templates/registry.yaml` contains twenty-five technology entries. Six domains carry twenty-four templates; **CyStrat SOC Suite** is listed separately because it spans all of them. Each has its own skill with a query starter or structured query plan, an inactive MCP descriptor and explicit scaffold status.
 
 | Planned coverage | Technology templates |
 |---|---|
@@ -132,9 +132,10 @@ JSON v2 is open-ended, and THOR 11 introduces a different v3 object model; this 
 | EDR, XDR and endpoint investigation | Defender XDR, CrowdStrike, SentinelOne, Velociraptor |
 | Threat intelligence | MISP, OpenCTI, VirusTotal |
 | Detection engineering | Sigma, YARA |
-| SOC platform | CyStrat SOC Suite |
+| Vulnerability management | Tenable Vulnerability Management, Qualys VMDR, Rapid7 InsightVM, Greenbone / OpenVAS |
+| Cross-domain platform | CyStrat SOC Suite — spans the six domains above instead of forming one of them |
 
-This is a planned technology and workflow ecosystem, not 21 production connectors. Sigma/YARA are detection toolchains rather than remote SOC services. Live tenant compatibility, endpoints, authorization and data-sharing controls must be verified separately for each integration.
+This is a planned technology and workflow ecosystem, not 25 production connectors. Sigma/YARA are detection toolchains rather than remote SOC services. Live tenant compatibility, endpoints, authorization and data-sharing controls must be verified separately for each integration.
 
 The CyStrat SOC Suite entry includes a dedicated tenant-/case-scoped skill and an explicitly proposed read-only MCP contract. The inspected Suite V2 routes contain no implemented application endpoints; no live MCP endpoint is invented. Integration status remains scaffold until the deployed API, authorization and tenant-isolation tests are available.
 

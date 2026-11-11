@@ -48,9 +48,9 @@ Profiles and skills guide behavior; they are not a sandbox for unrelated host to
 
 ## Skills, workflows and integrations
 
-- **36 skills:** Nine THOR analysis skills (see [THOR analysis suite](THOR-ANALYSIS.md)), six domain/workflow skills and 21 technology-specific scaffolds. Skill availability is not proof of a live integration.
+- **40 skills:** Nine THOR analysis skills (see [THOR analysis suite](THOR-ANALYSIS.md)), six domain/workflow skills and 25 technology-specific scaffolds. Skill availability is not proof of a live integration.
 - **4 workflow references:** Declarative YAML guidance, not an executable orchestration engine.
-- **21 technology entries:** Each has a planning skill and inactive MCP descriptor. The verified live remote connector count is zero.
+- **25 technology entries:** Each has a planning skill and inactive MCP descriptor. The verified live remote connector count is zero.
 - **CyStrat SOC Suite:** Dedicated skill, inactive descriptor and proposed read-only contract; no invented live endpoint.
 
 See the [integration roadmap](INTEGRATION-ROADMAP.md) for technology coverage and promotion gates. The [operator guide](OPERATOR-GUIDE.md) explains assessment policy, evidence handling and profile-isolation limits.

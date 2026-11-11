@@ -5,13 +5,13 @@
 Cybersecurity from Germany. For the world. Our product vision is to turn operational experience into reusable skills, tools, workflows and specialist profiles, so Hermes can work with your tools, your data and your components through explicitly approved connections.
 
 > [!NOTE]
-> **21 technology templates. Zero verified live remote connectors.** The matrix below describes intended coverage and acceptance goals, not deployed integrations or committed delivery dates.
+> **25 technology templates. Zero verified live remote connectors.** The matrix below describes intended coverage and acceptance goals, not deployed integrations or committed delivery dates.
 
 ## Available in the MVP
 
 - **Evidence-led analysis:** Local THOR JSON v1/v2 import, exact event counts, conservative observation grouping and traceable first assessments.
 - **Specialist roles:** Six defense profiles spanning L1 triage, incident response, threat hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable knowledge:** 36 skills, comprising a nine-skill THOR analysis suite, six domain/workflow skills and 21 technology-specific scaffolds. Four declarative workflow references guide analysis; they are not a workflow execution engine.
+- **Reusable knowledge:** 36 skills, comprising a nine-skill THOR analysis suite, six domain/workflow skills and 25 technology-specific scaffolds. Four declarative workflow references guide analysis; they are not a workflow execution engine.
 - **Native tooling:** Eight registered tools and four slash commands, including `/soc-capabilities` to inspect actual scope without contacting a vendor or revealing credentials.
 - **Controlled local scanning:** A launcher for an independently acquired THOR executable, subject to host approval. No actual licensed vendor scan has been validated in this build.
 
@@ -26,9 +26,10 @@ All technology rows below are **planned integration scope**. Each has a shipped 
 | EDR / XDR / endpoint investigation | Defender XDR; CrowdStrike; SentinelOne; Velociraptor | Review existing detections and endpoint evidence. No live response, isolation or remote collection without a separately reviewed implementation and human approval. |
 | Threat intelligence | MISP; OpenCTI; VirusTotal | Enrich approved indicators from authorized sources. No public uploads or indicator disclosure without explicit permission. |
 | Detection engineering | Sigma; YARA | Draft original detections and test controlled fixtures. These are detection toolchains, not remote SOC connectors. No automatic deployment. |
-| SOC platform | CyStrat SOC Suite | Tenant- and case-scoped analysis with source provenance from the underlying telemetry stores. Proposed read-only MCP contract; live API and tenant-isolation verification still required. |
+| Vulnerability management | Tenable Vulnerability Management; Qualys VMDR; Rapid7 InsightVM; Greenbone / OpenVAS | Read existing findings, affected assets and remediation state in an approved scope. No scan launch, schedule, rescan, exception change or ticket write. |
+| Cross-domain platform | CyStrat SOC Suite | Tenant- and case-scoped analysis with source provenance from the underlying telemetry stores. Proposed read-only MCP contract; live API and tenant-isolation verification still required. The Suite is listed above the six domains rather than as a seventh, because its modules cover all of them. |
 
-The 21 entries describe breadth, not launch dates or production readiness. Vendor names identify intended compatibility; they do not imply endorsements or partnerships beyond the contributors identified below.
+The 25 entries describe breadth, not launch dates or production readiness. Vendor names identify intended compatibility; they do not imply endorsements or partnerships beyond the contributors identified below.
 
 ## How an integration becomes available
 

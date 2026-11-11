@@ -153,8 +153,8 @@ def test_error_exports_do_not_get_low_criticality(tmp_path, level):
 def test_capabilities_separates_roadmap_from_current_functions(tmp_path):
     result = runtime(tmp_path).call("soc_capabilities", {})
     assert result["ok"] and result["network_calls"] == 0
-    assert result["summary"] == {"profiles": 9, "skills": 36, "technology_templates": 21, "live_remote_connectors": 0}
-    assert len(result["planned_integrations"]) == 21
+    assert result["summary"] == {"profiles": 9, "skills": 40, "technology_templates": 25, "live_remote_connectors": 0}
+    assert len(result["planned_integrations"]) == 25
     assert all(x["integration_state"] == "planned" and not x["live_verified"] for x in result["planned_integrations"])
     assert not result["offensive_preview"]["enabled"]
 

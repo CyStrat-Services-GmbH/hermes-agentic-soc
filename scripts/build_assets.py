@@ -123,6 +123,14 @@ TECHS = [
     ("virustotal", "VirusTotal", "threat-intelligence", "query-plan", "Hash reputation lookup only after approval to disclose that indicator; never upload a file."),
     ("sigma", "Sigma", "detection", "rule-plan", "Draft a rule from a supplied event schema and test fixtures; do not deploy."),
     ("yara", "YARA", "detection", "rule-plan", "Draft an original rule and validate with benign/positive synthetic lab fixtures."),
+    ("tenable", "Tenable Vulnerability Management", "vulnerability-management", "query-plan",
+     "Export assets and findings for an approved tag or folder scope; never launch, schedule or resume a scan."),
+    ("qualys", "Qualys VMDR", "vulnerability-management", "QQL",
+     "vulnerabilities: (severity>3) and (status:Active)"),
+    ("rapid7-insightvm", "Rapid7 InsightVM", "vulnerability-management", "query-plan",
+     "List affected assets for a supplied vulnerability ID within an approved site scope."),
+    ("greenbone", "Greenbone / OpenVAS", "vulnerability-management", "query-plan",
+     "Read the result set of an existing completed task; do not start, stop or rescan anything."),
 ]
 
 OFFICIAL = {
@@ -155,7 +163,10 @@ def main():
     registry = []
     for slug, name, typ, language, query in TECHS:
         source = OFFICIAL.get(slug)
-        registry.append({"id": slug, "name": name, "type": typ, "status": "scaffold",
+        registry.append({"id": slug, "name": name, "type": typ,
+                         # The Suite sits above the domains instead of beside them.
+                         "scope": "all-domains" if typ == "soc-platform" else "single-domain",
+                         "status": "scaffold",
                          "mcp": {"status": "vendor_documented_not_configured" if source else "not_verified",
                                  "source": source, "template": f"mcp/{slug}.example.json"},
                          "skills": [f"agentic-soc:tech-{slug}"], "live_connector": False})

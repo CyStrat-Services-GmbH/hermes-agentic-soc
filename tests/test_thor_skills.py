@@ -40,7 +40,7 @@ def frontmatter(name):
 def test_suite_is_complete_and_registered():
     assert len(THOR_SKILLS) == 9
     assert set(THOR_SKILLS) <= ALL_SKILLS
-    assert len(ALL_SKILLS) == 36
+    assert len(ALL_SKILLS) == 40
 
 
 @pytest.mark.parametrize("name", THOR_SKILLS)

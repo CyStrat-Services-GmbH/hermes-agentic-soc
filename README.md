@@ -15,7 +15,7 @@
 </p>
 <p align="center">
   <a href="#license-and-release-status"><img src="assets/badges/preview.svg" alt="Private development preview"></a>
-  <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="21 planned integrations, not live connectors"></a>
+  <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="25 planned integrations, not live connectors"></a>
   <a href="LICENSE"><img src="assets/badges/license.svg" alt="License approval pending; Apache-2.0 proposed only"></a>
 </p>
 
@@ -48,7 +48,7 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 </p>
 
 > [!IMPORTANT]
-> **Private development preview · v0.1.6.** Local evidence analysis is implemented; the 21 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
+> **Private development preview · v0.1.6.** Local evidence analysis is implemented; the 25 technology integrations are planning scaffolds, not live connectors. Offensive Security is a gated planning preview with a planned contribution from exploit labs. Apache-2.0 is proposed, not granted.
 
 ## Explore the project
 
@@ -65,7 +65,7 @@ The goal is not to replace your security stack. It is to give Hermes a disciplin
 
 - **Evidence before conclusions:** Exact event inventories, conservative same-artifact grouping and traceable first assessments instead of model-invented incident narratives.
 - **Specialists for the task:** Six defense personas cover triage, incident response, hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable operational knowledge:** 36 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), six domain/workflow skills and 21 technology-specific planning scaffolds.
+- **Reusable operational knowledge:** 40 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), six domain/workflow skills and 25 technology-specific planning scaffolds.
 - **Control by design:** Local evidence boundaries, metadata-only audit records and Hermes-owned approval for sensitive execution. No plugin telemetry, self-updater or hidden LLM calls.
 
 The assessment engine is deterministic. Hermes may use its configured model to interpret tool output, but the plugin does not call a model to calculate severity.
@@ -81,7 +81,7 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 | Local THOR launcher | Fixed-argument FileScan preparation and execution path | External licensed binary and human approval required; real vendor scan not validated here |
 | Specialist profiles | 6 defense profiles; 3 research-planning scaffolds | Research preview off by default; no target interaction |
 | Workflow references | 4 declarative workflow definitions | Not an executable workflow engine |
-| Technology coverage | 21 skills and inactive MCP descriptors | **0 verified live remote connectors** |
+| Technology coverage | 25 skills and inactive MCP descriptors | **0 verified live remote connectors** |
 
 The [validation record](docs/VALIDATION.md) distinguishes executed tests from untested scenarios. The [operator guide](docs/OPERATOR-GUIDE.md) documents the detailed approval, privacy and host-isolation limitations.
 

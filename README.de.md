@@ -15,7 +15,7 @@
 </p>
 <p align="center">
   <a href="#lizenz-und-veröffentlichungsstatus"><img src="assets/badges/preview.svg" alt="Private Entwicklungsvorschau"></a>
-  <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="21 geplante, nicht aktive Anbindungen"></a>
+  <a href="docs/INTEGRATION-ROADMAP.md"><img src="assets/badges/integrations.svg" alt="25 geplante, nicht aktive Anbindungen"></a>
   <a href="LICENSE"><img src="assets/badges/license.svg" alt="Lizenzfreigabe offen; Apache-2.0 nur vorgeschlagen"></a>
 </p>
 <p align="center">
@@ -40,7 +40,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Private Entwicklungsvorschau · v0.1.6.** Die lokale Evidenzanalyse ist implementiert. Die 21 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren; Offensive Security ist eine deaktivierte Planungsvorschau. Apache-2.0 ist lediglich vorgeschlagen.
+> **Private Entwicklungsvorschau · v0.1.6.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren; Offensive Security ist eine deaktivierte Planungsvorschau. Apache-2.0 ist lediglich vorgeschlagen.
 
 ## Was heute enthalten ist
 
@@ -49,9 +49,9 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 | Hermes-Erweiterung | 8 native Tools, 4 Slash-Kommandos, 1 Approval-Hook | Öffentliche Plugin-Schnittstellen |
 | Evidenzanalyse | THOR JSON v1/v2 und NDJSON, exakte Zählung und konservative Beobachtungsgruppen | Keine Unterstützung für v3 oder Legacy-CSV/Text |
 | Erstbewertung | Deterministische Bewertung, JSON und deutscher Neun-Abschnitte-Bericht | Vorläufige Triage, kein automatischer Kompromittierungsnachweis |
-| Fachwissen | 6 Defense-Profile, 3 Research-Skelette, 36 Skills | 9 Skills für die THOR-Ergebnisanalyse, 6 Domain-Skills, 21 technologiebezogene Planungsvorlagen |
+| Fachwissen | 6 Defense-Profile, 3 Research-Skelette, 40 Skills | 9 Skills für die THOR-Ergebnisanalyse, 6 Domain-Skills, 25 technologiebezogene Planungsvorlagen |
 | Workflows | 4 deklarative Referenzen | Keine ausführbare Workflow-Engine |
-| Anbindungen | 21 geplante Technologien einschließlich CyStrat SOC Suite | 0 verifiziert aktive Remote-Connectoren |
+| Anbindungen | 25 geplante Technologien; CyStrat SOC Suite domänenübergreifend | 0 verifiziert aktive Remote-Connectoren |
 | Lokaler Scan | Wrapper für separat bezogenes THOR | Menschliche Freigabe nötig; echter Herstellerscan hier nicht validiert |
 
 Die [THOR-Analyse-Suite](docs/THOR-ANALYSIS.md) bündelt neun Skills für die Auswertung von THOR-Ergebnissen: Modul- und Signaturinterpretation, False-Positive-Prüfung, Korrelation und Timeline, Flottenanalyse, sicherer Umgang mit IOCs und die Übernahme von SIEM-Exporten. Die Zählung bleibt bei den deterministischen Tools; die Skills sorgen für die fachlich saubere Bewertung.
