@@ -23,17 +23,24 @@ PROFILES = {
 }
 
 
-def list_templates() -> dict:
+def list_templates(preview_enabled: bool = False) -> dict:
     return {"profiles": [{"id": k, "status": v[0], "description": v[1], "workflow": v[2],
-                          "scope_required": v[0] == "scaffold"} for k, v in PROFILES.items()],
+                          "scope_required": v[0] == "scaffold",
+                          "availability": ("preview_enabled" if preview_enabled else "gated_preview") if v[0] == "scaffold" else "available",
+                          "contributor": "exploit labs" if v[0] == "scaffold" else "CyStrat Services / Nextron Systems",
+                          "contribution_status": "planned_external_contribution" if v[0] == "scaffold" else "implemented"}
+                         for k, v in PROFILES.items()],
             "note": "Technology connectors are opt-in scaffolds, not live integrations."}
 
 
 def install(root: Path, template: str, name: str, execute: bool = False,
-            scope: dict | None = None, target: str = "", *, profile_home: Path | None = None) -> dict:
+            scope: dict | None = None, target: str = "", *, profile_home: Path | None = None,
+            preview_enabled: bool = False) -> dict:
     if template not in PROFILES or not re.fullmatch(r"soc-[a-z0-9][a-z0-9-]{0,42}", name):
         raise BoundaryError("Select a known template and a new soc-prefixed profile name.")
     if PROFILES[template][0] == "scaffold":
+        if preview_enabled is not True:
+            raise BoundaryError("Offensive Security is a disabled gated preview. Operator opt-in is required; no operational contribution is shipped.")
         check_scope(scope, target)
     argv = ["hermes", "profile", "create", name, "--no-credentials", "--no-skills", "--no-alias",
             "--description", PROFILES[template][1]]

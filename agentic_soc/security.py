@@ -6,7 +6,9 @@ import hashlib
 import hmac
 import ipaddress
 import json
+import os
 import re
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -15,7 +17,22 @@ class BoundaryError(ValueError):
     """Rejected input; error messages deliberately contain no evidence values."""
 
 
+def private_directory(parent: Path, name: str) -> Path:
+    """Create one owned child, refusing an existing symlink or non-directory."""
+    if Path(name).name != name or name in {"", ".", ".."}:
+        raise BoundaryError("Invalid private-directory component.")
+    path = parent / name
+    if path.is_symlink() or (path.exists() and not path.is_dir()):
+        raise BoundaryError("Private output directory is not a trusted directory.")
+    path.mkdir(mode=0o700, parents=False, exist_ok=True)
+    if os.name == "posix":
+        path.chmod(0o700)
+    return path
+
+
 def contained(path: str | Path, roots: list[Path], *, file: bool = True) -> Path:
+    if not roots or any(not isinstance(r, Path) or not r.is_absolute() for r in roots):
+        raise BoundaryError("Allowed roots must be explicit absolute directories.")
     p = Path(path).expanduser()
     if not p.is_absolute():
         raise BoundaryError("Use an absolute path; relative evidence paths are not accepted.")
@@ -26,7 +43,7 @@ def contained(path: str | Path, roots: list[Path], *, file: bool = True) -> Path
         raise BoundaryError("Evidence must be a regular file no larger than 50 MiB.")
     if any(x.lower() in {".ssh", ".aws", ".config", ".git"} for x in p.parts):
         raise BoundaryError("Credential/configuration stores cannot be imported.")
-    if p.name.lower() in {".env", "auth.json", "credentials", "config.yaml"}:
+    if p.name.lower() in {".env", "auth.json", "credentials", "config.yaml", "pseudonym.salt", "audit.jsonl"}:
         raise BoundaryError("Credential/configuration files cannot be imported.")
     return p
 
@@ -43,6 +60,11 @@ class Redactor:
 
     def text(self, value: object) -> str:
         text = str(value)
+        # Remove ANSI, terminal controls and bidi/zero-width spoofing characters.
+        text = re.sub(r"\x1b(?:\[[0-?]*[ -/]*[@-~]|\][^\x07]*(?:\x07|\x1b\\))", "", text)
+        text = "".join(c for c in text if c in "\n\t" or not unicodedata.category(c).startswith("C"))
+        text = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "[bearer-redacted]", text)
+        text = re.sub(r"(?i)(https?://)[^/\s:@]+:[^/\s@]+@", r"\1[credentials-redacted]@", text)
         text = re.sub(r"(?i)\b(?:password|passwd|token|secret|authorization|ntlm|lmhash)\s*[:=]\s*\S+",
                       "[credential-redacted]", text)
         # Opaque hash strings in prose may be credentials. Keep malware hashes only
@@ -87,7 +109,10 @@ def check_scope(scope: dict, target: str, now: datetime | None = None) -> dict:
     needed = {"targets", "authorization_ref", "valid_from", "valid_until", "rules_of_engagement", "allowed_activities"}
     if not needed <= scope.keys():
         raise BoundaryError("Scope is incomplete.")
-    if not isinstance(scope["targets"], list) or target not in scope["targets"]:
+    if (not isinstance(target, str) or not target.strip() or any(c in target for c in "*?[]\r\n")
+            or not isinstance(scope["targets"], list)
+            or not all(isinstance(t, str) and t.strip() and not any(c in t for c in "*?[]\r\n") for t in scope["targets"])
+            or target not in scope["targets"]):
         raise BoundaryError("Target must exactly match a declared scope target; no wildcards.")
     if not isinstance(scope["authorization_ref"], str) or len(scope["authorization_ref"].strip()) < 8:
         raise BoundaryError("An operator-reviewable authorization reference is required.")

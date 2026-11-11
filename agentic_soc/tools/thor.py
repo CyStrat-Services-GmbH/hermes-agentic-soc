@@ -19,11 +19,16 @@ import uuid
 from collections import Counter
 from pathlib import Path
 
-from ..security import BoundaryError, Redactor, canonical, contained
+from ..security import BoundaryError, Redactor, canonical, contained, private_directory
+
+MAX_BYTES = 50 * 1024 * 1024
+MAX_EVENTS = 100000
 
 
 def lowerkeys(value):
     if isinstance(value, dict):
+        if len({str(k).lower() for k in value}) != len(value):
+            raise BoundaryError("Ambiguous case-colliding field names; no assessment produced.")
         return {str(k).lower(): lowerkeys(v) for k, v in value.items()}
     if isinstance(value, list):
         return [lowerkeys(v) for v in value]
@@ -50,24 +55,50 @@ def events_from_text(text: str) -> list[dict]:
     """Strict JSON array, single event, events/findings wrapper, or NDJSON."""
     if not text.strip():
         raise BoundaryError("Empty evidence is not a clean scan.")
+    def pairs(items):
+        obj = {}
+        for key, value in items:
+            if key in obj:
+                raise BoundaryError("Duplicate JSON keys are ambiguous; input refused.")
+            obj[key] = value
+        return obj
+
+    def reject_constant(value):
+        raise BoundaryError("Non-finite JSON constants are not supported.")
+
+    def loads(value):
+        try:
+            return json.loads(value, object_pairs_hook=pairs, parse_constant=reject_constant)
+        except RecursionError:
+            raise BoundaryError("JSON nesting exceeds supported limits.") from None
     try:
-        data = json.loads(text)
+        data = loads(text)
     except json.JSONDecodeError:
         try:
-            data = [json.loads(line) for line in text.splitlines() if line.strip()]
+            data = []
+            for line in text.splitlines():
+                if line.strip():
+                    if len(data) >= MAX_EVENTS:
+                        raise BoundaryError("Import is limited to 100000 events.")
+                    data.append(loads(line))
         except json.JSONDecodeError:
             raise BoundaryError("Malformed JSON/NDJSON; no partial assessment produced.") from None
     if isinstance(data, dict):
+        if "events" in data and "findings" in data:
+            raise BoundaryError("Ambiguous events/findings wrapper; choose one explicit event collection.")
         data = data.get("events", data.get("findings", [data]))
     if not isinstance(data, list) or not data or not all(isinstance(x, dict) for x in data):
         raise BoundaryError("Expected one or more structured THOR JSON events.")
-    if len(data) > 100000:
+    if len(data) > MAX_EVENTS:
         raise BoundaryError("Import is limited to 100000 events; split the source explicitly.")
     return data
 
 
 def parse(path: Path, redactor: Redactor) -> dict:
-    raw = path.read_bytes()
+    with path.open("rb") as stream:
+        raw = stream.read(MAX_BYTES + 1)
+    if len(raw) > MAX_BYTES:
+        raise BoundaryError("Evidence exceeds the 50 MiB import limit.")
     try:
         records = events_from_text(raw.decode("utf-8-sig"))
     except UnicodeDecodeError:
@@ -77,7 +108,7 @@ def parse(path: Path, redactor: Redactor) -> dict:
     for index, raw_event in enumerate(records):
         e = lowerkeys(raw_event)
         version = str(e.get("log_version", e.get("version", ""))).lstrip("v")
-        if version.startswith("3") or str(e.get("type", "")).startswith("THOR "):
+        if (version and not re.fullmatch(r"[12](?:\.\d+){0,2}", version)) or str(e.get("type", "")).startswith("THOR "):
             unsupported.append(index + 1)
             continue
         if not any(k in e for k in ("level", "module", "message", "score")):
@@ -134,7 +165,13 @@ def parse(path: Path, redactor: Redactor) -> dict:
         identity = [host, e.get("scanid", ""), path_value, hashes,
                     process.get("pid"), obj.get("eventid"), obj.get("recordid"),
                     obj.get("detectionid")]
-        if not any([path_value, process.get("pid"), obj.get("recordid"), obj.get("detectionid")]):
+        # Missing host/scan, unhashed paths and reused PIDs cannot establish identity.
+        stable_host_scan = host not in {"", "unknown"} and bool(e.get("scanid"))
+        stable_file = bool(path_value and hashes)
+        stable_record = bool(obj.get("recordid") and obj.get("eventid") and obj.get("channel"))
+        stable_process = bool(process.get("pid") and process.get("start_time"))
+        identity.extend([obj.get("channel"), process.get("start_time")])
+        if not stable_host_scan or not (stable_file or stable_record or stable_process):
             identity.extend([module, index])
         key = hmac.new(redactor.salt, canonical(identity).encode(), hashlib.sha256).hexdigest()[:20]
         event = {
@@ -142,10 +179,10 @@ def parse(path: Path, redactor: Redactor) -> dict:
             "host": redactor.token(host, "host"), "module": module,
             "scan_id": redactor.token(str(e.get("scanid", "unknown")), "scan"),
             "score": score, "level": severity, "source_level": source_level,
-            "score_band": band(score), "message": obj.get("message", ""),
+            "score_band": band(score), "message": str(obj.get("message", "")),
             "file": path_value, "process": {"name": process.get("name", ""), "pid": process.get("pid")},
             "hashes": hashes, "reasons": normalized_reasons,
-            "detection_time": e.get("time", e.get("timestamp")),
+            "detection_time": str(e.get("time", e.get("timestamp"))) if e.get("time", e.get("timestamp")) is not None else None,
             "artifact_times": artifact_times,
             "evidence_strength": "Confirmed",
             "evidence_claim": "The supplied export contains this scanner observation, not proof of execution or malicious intent.",
@@ -165,11 +202,14 @@ def parse(path: Path, redactor: Redactor) -> dict:
         "unique_hashes": len({(k, v) for e in events for k, v in e["hashes"].items()}),
         "unknown_score_count": sum(e["score"] is None for e in events),
         "coverage_verified": False,
+        "duplicate_observation_count": len(events) - len({e["finding_id"] for e in events}),
+        "score_level_disagreement_count": sum(e["score"] is not None and e["source_level"] != "UNKNOWN"
+                                              and e["source_level"] != e["score_band"] for e in events),
     }
     return {"schema_version": "1.0", "source_sha256": hashlib.sha256(raw).hexdigest(),
             "inventory": inventory, "events": events,
             "limitations": ["Input may be filtered or incomplete; no clean-host assurance.",
-                            "Correlation groups same-host, same-scan artifact observations; does not prove causal links.",
+                            "Only stable same-host/same-scan artifact identities are grouped; missing identifiers remain independent.",
                             "THOR JSON v3, legacy text and CSV are not supported in this MVP.",
                             "Personal-data minimisation is best effort; review outputs before sharing."]}
 
@@ -196,7 +236,9 @@ def scan(thor_path: str, target: str, scan_roots: list[Path], data_root: Path,
     p = contained(target, scan_roots, file=False)
     if not p.is_dir():
         raise BoundaryError("The MVP scans an explicitly allowed directory only.")
-    if ":" in p.name or "\n" in str(p):
+    path_text = str(p)
+    # Colon after the drive is THOR special syntax, including in parent components.
+    if ":" in path_text[len(p.drive):] or any(ord(c) < 32 for c in path_text):
         raise BoundaryError("Special THOR path syntax is not supported.")
     data_root.mkdir(parents=True, exist_ok=True, mode=0o700)
     with tempfile.TemporaryDirectory(prefix="thor-help-", dir=data_root) as help_dir:
@@ -216,7 +258,8 @@ def scan(thor_path: str, target: str, scan_roots: list[Path], data_root: Path,
         return {"ok": True, "dry_run": True, "platform": platform.system(),
                 "verified_flags": sorted(required), "requires_human_approval": True,
                 "note": "No scan executed; CLI help only. Run execute=true through Hermes to request approval."}
-    run_dir.mkdir(parents=True, mode=0o700)
+    private_directory(data_root, "scans")
+    private_directory(data_root / "scans", run_id)
     timeout = max(10, min(int(timeout), 3600))
     # stdout can contain sensitive evidence; discard it. THOR writes its log into the private run dir.
     try:

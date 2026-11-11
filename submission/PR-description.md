@@ -2,13 +2,13 @@
 
 ## Status
 
-Prepared submission text, not a claim that this PR is open or admitted. License approval remains a release blocker. Pin the catalog entry to the real public code commit and re-run validation on that exact tree before submission.
+Prepared submission text, not a claim that this PR is open or admitted. The repository is PRIVATE by owner decision. Renewed publication approval and license approval remain release blockers. Pin the catalog entry to the actual approved public code commit and re-run validation on that exact tree before submission.
 
 ## Functionality and public Hermes surfaces
 
 Hermes Agentic SOC provides seven native tools, three slash commands, one pre-tool approval policy and namespaced skills. It imports supplied THOR JSON v1/v2 evidence, counts all events exactly, groups matching artifact observations and produces deterministic bounded first-assessment JSON/Markdown. It can invoke an independently installed local THOR Lite FileScan and provision a fresh no-credential specialist profile through the public Hermes CLI.
 
-Six defense personas are fully authored; three research personas and twenty technology integrations remain clearly labelled scaffolds. Four YAML workflow references are declarative guidance, not an executable engine. No UI, screenshots or automatic MCP startup are claimed.
+Six defense personas are fully authored; three research personas and twenty-one technology integrations, including CyStrat SOC Suite, remain clearly labelled scaffolds. Four YAML workflow references are declarative guidance, not an executable engine. No UI or automatic MCP startup is claimed. Offensive Security is a planned contribution by exploit labs and managing director Johannes Schönborn, currently only skeleton/marketing metadata and an operator-disabled gated preview.
 
 ## Rule 13 disclosure
 

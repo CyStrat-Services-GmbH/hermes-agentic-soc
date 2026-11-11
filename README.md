@@ -2,7 +2,15 @@
 
 Evidence-first cybersecurity specialists for Hermes Agent, built by **CyStrat Services × Nextron Systems**. The MVP provides native tools, deterministic THOR export assessment, reviewable research plans, reusable personas and explicitly labelled technology scaffolds.
 
-Version 0.1.0 targets Hermes >=0.23.1 and Python >=3.11 for the standalone engine. Hermes itself may require a newer Python version. This is an MVP, not an autonomous incident commander or a replacement for a forensic investigation.
+**Offensive Security / Gated Preview:** exploit labs, led by managing director Johannes Schönborn, is the planned developer and contributor of the Offensive Security part. In this release that partnership appears only in the research skeleton, preview metadata and marketing. No delivered exploit labs operational implementation or additional copyright/license grant is claimed.
+
+Version 0.1.1 targets Hermes >=0.23.1 and Python >=3.11 for the standalone engine. Hermes itself may require a newer Python version. This is an MVP, not an autonomous incident commander or a replacement for a forensic investigation.
+
+**Private development repository.** The owner has made this repository private. Do not change visibility, publish the source/video or submit a catalog PR without new explicit approval. Existing installation links require authorized GitHub access.
+
+## Review release 0.1.1
+
+The second-pass review adds argument-specific approval fingerprints, strict unknown-version/duplicate-key refusal, conservative correlation when host/scan/hash/process-start identity is missing, private output permissions, symlink guards and UTC-ordered timelines. Reports now quote case-specific observations as inert Markdown rather than repeating only generic assessment prose. See `docs/REVIEW-0.1.1.md` for findings and regression coverage.
 
 ## License status
 
@@ -20,10 +28,10 @@ The partners' joint-publication permission has been confirmed by the project spo
 | THOR launcher | Implemented; separately installed local executable required, actual vendor-binary scan not tested here |
 | Six defense personas and eight workflow/domain skills | Shipped |
 | Three offensive/purple-team personas | Planning scaffolds; scope-gated, no target interaction |
-| Twenty technology-specific skills and MCP descriptors | Scaffolds, no live SIEM/SOAR/EDR/TI integration |
+| Twenty-one technology-specific skills and MCP descriptors, including CyStrat SOC Suite | Scaffolds, no live SIEM/SOAR/EDR/TI integration |
 | Four workflow references | Declarative YAML references, not an executable workflow engine |
 | Containment, blocking, rule deployment, ticket posting | Not implemented; draft-only |
-| THOR v3, legacy text/CSV, full forensic correlation | Not supported in 0.1.0 |
+| THOR v3, legacy text/CSV, full forensic correlation | Not supported in 0.1.1 |
 
 No THOR executable, rules, signatures or license files are included or downloaded by the plugin. Obtain THOR separately from the [official Nextron THOR Lite page](https://www.nextron-systems.com/thor-lite/). That page currently reserves third-party networks and paid engagements for THOR Enterprise; confirm your specific partner license with Nextron before using customer systems ([Nextron licensing information](https://www.nextron-systems.com/thor-lite/)).
 
@@ -48,6 +56,16 @@ git clone https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc.git
 cd hermes-agentic-soc
 python examples/demo/run_demo.py --output /tmp/hermes-agentic-soc-demo
 ```
+
+The review release also includes a standard-library-only CLI:
+
+```bash
+python -m agentic_soc profiles
+python -m agentic_soc demo --output /tmp/hermes-agentic-soc-demo
+python -m agentic_soc assess /absolute/evidence/thor.json --output /tmp/soc-case
+```
+
+These commands never execute THOR, install profiles or post anything externally. The explicit input file authorizes its parent only for this offline invocation; output still uses private files and structured redaction.
 
 The supplied fixture is synthetic, contains no malware and produces exactly **4 source events and 3 correlated observation groups**. One group combines two observations about the same artifact; one is process context and one is an informational record. These are observation groups, not three proven security incidents.
 
@@ -85,6 +103,8 @@ The launcher runs `--help` first and verifies exact options. It limits the MVP t
 
 The live scan request uses `execute:true` only to request execution. The `pre_tool_call` hook returns Hermes's `approve` directive, which escalates to the host human-approval gate; the plugin does not approve itself ([Hermes hook API](https://hermes-agent.nousresearch.com/docs/developer-guide/plugins)). Do not run sensitive actions in an unattended/auto-approved host configuration.
 
+Offensive Research is an operator-controlled gated preview: `offensive_preview_enabled` defaults to `false`. Disabled previews refuse research-plan calls and offensive-profile installation even with a valid declared scope. Opting in exposes planning only; it does not bypass the scope checker, confer legal authorization or add exploitation/target interaction.
+
 `/thor-scan` is deliberately preview-only. The inspected host's low-level `ctx.dispatch_tool` path calls the registry directly, so this package does not use it for scan execution. Request actual execution as a normal agent tool call through the host approval pipeline; other fully trusted plugins and direct library calls are outside this authorization boundary.
 
 ## Tools and profiles
@@ -109,18 +129,20 @@ Important integration finding: `--no-credentials` prevents copying keys/model, b
 
 ## Assessment policy
 
-- **Counts:** Every imported structured event is counted, including INFO and unknown scores. Observation groups use host, scan and typed artifact context; records without a reliable artifact key remain independent.
+- **Counts:** Every imported structured event is counted, including INFO and unknown scores. Correlation requires explicit host and scan plus file path/hash, event ID/record ID/channel, or process PID/start time; missing identifiers remain independent. Duplicate observation and score/level disagreement counters expose data-quality limits.
 - **Scores:** Default bands are NOTICE >=40, WARNING >=60 and ALERT >=81, but an explicit source level takes precedence because THOR permits custom thresholds. Individual reason scores are never summed to fabricate the object's final score ([THOR CLI](https://thor-manual.nextron-systems.com/en/latest/usage/flags.html)).
 - **Evidence:** Confirmed means a scanner observation exists in the supplied export. A suspicious interpretation remains a Strong Indicator; execution, initial access, attribution, lateral movement and successful remediation are Not Derivable without other evidence.
 - **Verdicts:** ALERT leads to provisional P2/HIGH triage, not an automatic confirmed compromise. WARNING/NOTICE leads to P3/MEDIUM; informational-only input is Inconclusive, never clean-host assurance.
-- **Time:** Detection timestamps are not attack timestamps. Artifact metadata is separately labelled, never treated as proof of execution.
+- **Time:** Detection timestamps are not attack timestamps. Timezone-aware ISO artifact timestamps are ordered in UTC; invalid or timezone-free values remain in normalized data but are omitted from the timeline with an explicit count.
 - **ATT&CK:** No automatic mapping from arbitrary rule text or IDs. Analyst-supported mapping is intentionally deferred.
 
 JSON v2 is open-ended, and THOR 11 introduces a different v3 object model; this release refuses v3 instead of silently misparsing it ([Nextron JSON definitions](https://github.com/NextronSystems/jsonlog)).
 
 ## Technology and MCP expansion
 
-`templates/registry.yaml` contains all twenty requested technology entries. Each has its own skill with a query starter or structured query plan, an inactive MCP descriptor and explicit scaffold status.
+`templates/registry.yaml` contains twenty-one technology entries, including **CyStrat SOC Suite**. Each has its own skill with a query starter or structured query plan, an inactive MCP descriptor and explicit scaffold status.
+
+The CyStrat SOC Suite entry includes a dedicated tenant-/case-scoped skill and an explicitly proposed read-only MCP contract. The inspected Suite V2 routes contain no implemented application endpoints; no live MCP endpoint is invented. Integration status remains scaffold until the deployed API, authorization and tenant-isolation tests are available.
 
 Splunk and Elastic have vendor-documented MCP offerings; no credentials, tenant endpoint or automatic connection is bundled ([Splunk MCP setup](https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/2.0/connecting-to-the-mcp-server-and-settings), [Elastic Agent Builder MCP](https://www.elastic.co/docs/explore-analyze/ai-features/agent-builder/mcp-server)). For all other entries, official MCP status is recorded as not verified, not asserted absent.
 
@@ -164,6 +186,8 @@ Hermes Agentic SOC wird gemeinsam von CyStrat Services GmbH und Nextron Systems 
 
 THOR Lite wird separat von Nextron bezogen und lokal konfiguriert. Scanner, Signaturen, private Regeln und Lizenzdateien sind weder Bestandteil des Plugins noch werden sie automatisch heruntergeladen. Die Erlaubnis zur gemeinsamen Veröffentlichung ersetzt keine Freigabe zur Weitergabe dieser Komponenten.
 
-Die sechs Defense-Profile sind ausgearbeitet; drei Research-Profile und alle zwanzig Technologieanbindungen sind klar gekennzeichnete Vorlagen. Das Plugin greift damit noch nicht live auf Kundensysteme zu. Es erstellt Berichte und Entwürfe, aber führt keine Isolation, Blockierung oder Ticketveröffentlichung aus.
+Die sechs Defense-Profile sind ausgearbeitet; drei Research-Profile und alle einundzwanzig Technologieanbindungen einschließlich CyStrat SOC Suite sind klar gekennzeichnete Vorlagen. Das Plugin greift damit noch nicht live auf Kundensysteme zu. Es erstellt Berichte und Entwürfe, aber führt keine Isolation, Blockierung oder Ticketveröffentlichung aus.
 
 Die Code-Lizenz bleibt bis zur finalen Freigabe offen. Apache-2.0 ist nur vorgeschlagen. Ein öffentlicher Quellcode ist ohne Lizenzfreigabe noch keine abgeschlossene Open-Source-Veröffentlichung.
+
+Das Repository ist aktuell privat. Auch das erste Produktvideo ist ein interner Entwurf; weder Sichtbarkeit noch Hackathon-Einreichung werden ohne neue Freigabe geändert.

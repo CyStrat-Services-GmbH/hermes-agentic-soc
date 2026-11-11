@@ -1,0 +1,27 @@
+Preparing the isolated Hermes runtime…
+  → Installing Python dependencies…
+  ✓ Installing Python dependencies
+  → Resolving Python dependencies…
+  ✓ Resolving Python dependencies
+  → Installing Python dependencies…
+  ✓ Installing Python dependencies
+dependency preparation failed: Dependency inputs changed while preparing publication; retry.
+
+✓ manifest — plugin.yaml parses
+✓ manifest fields — name, version, description present
+✓ requires_hermes — spec '>=0.23.1' parses
+✓ config schema — shape valid
+✓ requires_env — all entries UPPER_SNAKE
+✓ oauth — not declared
+✓ loadable — entry: __init__.py
+✓ python dependencies — none declared
+✓ capability probe — register() ran in isolation
+✓ declared tools — matches registrations
+✓ declared hooks — matches registrations
+✓ declared middleware — matches registrations
+✓ built-in tool collisions — no collisions
+✓ security scan — safe
+✓ no core override — no runtime rebinds of Hermes core
+◆ Isolation — runs in the plugin host (plugins.isolation: host)
+
+Validation passed.

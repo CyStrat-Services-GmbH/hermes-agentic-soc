@@ -1,5 +1,24 @@
 # Validation record
 
+## Review release 0.1.1
+
+The repository is now **private by owner decision**. Review changes and test logs supersede the original MVP snapshot below. The reviewed version adds stronger input/approval/storage boundaries, an operator-disabled exploit labs research preview and CyStrat SOC Suite as the 21st integration scaffold, for 29 total skills.
+
+Current detailed findings are in `REVIEW-0.1.1.md`; review-specific validation logs are prefixed `review-`. No new THOR vendor-binary or live-tenant validation is claimed.
+
+| Review check | Executed result |
+|---|---|
+| Python 3.14 regression suite | 115 passed |
+| Python 3.11 regression suite | 115 passed |
+| Agent Skills validation | 29 valid skill directories |
+| Plugin Doctor, independent scratch Hermes home | Passed, 7 tools and 1 hook |
+| Catalog validation with `--install-deps`, independent scratch home | Passed, security scan safe, no core override |
+| Offline CLI | 4 exact events / 3 observation groups, no real scan |
+| Preview defaults | Offensive planning and persona installation fail closed until operator opt-in |
+| CyStrat SOC Suite | Dedicated skill + disabled MCP descriptor + proposed contract; no live connection claimed |
+
+## Original 0.1.0 snapshot (historical)
+
 Validation date: 2026-11-11. The following results were executed in the build sandbox, not inferred from CI configuration.
 
 ## Executed successfully
@@ -40,4 +59,4 @@ The authorization-scope checker validates a declaration, not legal authority. Pr
 
 ## Release state
 
-The public source repository is the delivery target. A catalog-entry generator pins a clean Git commit after it is created; that generated file is deliberately excluded from the plugin's source commit to avoid a self-referential SHA. Opening a catalog PR and calling the release Open Source remain blocked by the pending final code license.
+The original delivery used a public repository; the owner subsequently made it private. A catalog-entry generator pins a clean Git commit after it is created; that generated file is deliberately excluded from the plugin's source commit to avoid a self-referential SHA. Opening a catalog PR now requires both renewed public-visibility authorization and final code-license approval.

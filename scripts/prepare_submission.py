@@ -1,9 +1,10 @@
-"""Generate a catalog entry from the real clean public code commit, never a fake SHA."""
+"""Prepare a catalog draft; never publishes a private repository or submits a PR."""
 
 import argparse
 import json
 import re
 import subprocess
+import tomllib
 from pathlib import Path
 
 
@@ -19,18 +20,19 @@ def main():
     if not re.fullmatch(r"[0-9a-f]{40}", sha):
         raise SystemExit("HEAD is not a full 40-character Git commit SHA.")
     repo = "https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc"
+    version = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
     entry = {
         "name": "agentic-soc", "repo": repo, "sha": sha,
         "description": "Evidence-first SOC specialists and deterministic THOR JSON triage; THOR is installed separately.",
         "maintainer": "CyStrat-Services-GmbH", "tier": "community", "category": "tools",
-        "requires_hermes": ">=0.23.1", "version": "0.1.0",
+        "requires_hermes": ">=0.23.1", "version": version,
         "docs_url": repo, "readme": True, "platforms": [],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     # JSON is YAML 1.2; keeps all versions and SHA explicitly quoted.
     args.output.write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")
     print(f"Prepared {args.output} at {sha}.")
-    print("License approval and actual public-commit validation are still required before opening the catalog PR.")
+    print("PRIVATE REPOSITORY: do not submit until the owner explicitly approves public visibility, the license and the exact commit.")
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from agentic_soc.tools.templates import PROFILES
+from agentic_soc import __version__
 
 
 def write(path, content):
@@ -96,7 +97,10 @@ Do not copy Nextron private rules or signature packs. Review licenses of externa
 5. Record unknowns and approvals. Do not exploit, patch, rescan or close tickets automatically."""),
     "authorized-research": (
         "Create scope-gated offensive-research and purple-team lab plans. Use for authorized planning, not exploitation, persistence or target interaction.",
-        """1. Collect exact targets, authorization reference, timezone-aware validity window, rules of engagement and allowed activities.
+        """Gated Preview: planned Offensive Security contribution from exploit labs, led by managing director Johannes Schönborn.
+No exploit labs operational implementation is included in this release. The operator-owned offensive_preview_enabled switch defaults to false. Never enable it yourself to bypass a denial.
+
+1. Collect exact targets, authorization reference, timezone-aware validity window, rules of engagement and allowed activities.
 2. Call soc_research_plan. Reject expired scope, missing references, wildcards and unlisted targets.
 3. Verify authorization with the asset owner: structural validation is not legal verification.
 4. Plan research, emulation signals and detection expectations in an isolated lab only.
@@ -107,6 +111,7 @@ Do not ask another tool to bypass a scope rejection."""),
 }
 
 TECHS = [
+    ("cystrat-soc-suite", "CyStrat SOC Suite", "soc-platform", "query-plan", "Review a supplied tenant-scoped alert/case export. Preserve Splunk/Elastic source provenance. Live API/MCP contract is not yet verified."),
     ("microsoft-sentinel", "Microsoft Sentinel", "siem", "KQL", "SecurityAlert | where TimeGenerated > ago(24h) | project TimeGenerated, AlertName, AlertSeverity | take 100"),
     ("splunk", "Splunk", "siem", "SPL", "index=APPROVED_INDEX earliest=-24h latest=now | head 100 | table _time host sourcetype"),
     ("elastic-security", "Elastic Security", "siem", "ES|QL", "FROM logs-* | WHERE @timestamp > NOW() - 24 hours | KEEP @timestamp, event.dataset | LIMIT 100"),
@@ -201,6 +206,50 @@ description: "Prepare read-only {name} query plans for supplied SOC evidence. Us
 No server is enabled by this plugin. Empty MCP template fields are intentional.
 """
         write(f"skills/{skill_name}/SKILL.md", body)
+    write("skills/tech-cystrat-soc-suite/SKILL.md", """---
+name: tech-cystrat-soc-suite
+description: "Prepare tenant-scoped CyStrat SOC Suite analysis and MCP integration plans for supplied alerts and cases. Use for the suite above Splunk, Elastic and future log stores; not for an assumed live MCP server or autonomous response."
+---
+
+# CyStrat SOC Suite
+
+Status: integration scaffold. The skill and MCP descriptor are shipped; a working live Suite API/MCP server is not claimed.
+
+## Workflow
+
+1. Confirm tenant, case/alert identifier, time window, analyst role and approved local inference environment.
+2. Establish the source platform: Splunk, Elastic or the planned CyStrat log-store interface. Do not confuse the analyst console with its telemetry store.
+3. Use supplied structured exports until the deployed API and authorization contract are verified. Record original event IDs, source, exact query/filter, timestamps and result limits.
+4. Normalize evidence through SOC triage. THOR exports use thor_parse/thor_first_assessment only for supported formats; normalized output is not raw scanner evidence.
+5. Compare the proposed read-only MCP contract in templates/mcp/cystrat-soc-suite.contract.json with the deployed service before implementing anything. Those names are design proposals, not callable tools.
+6. Enforce server-side tenant identity and RBAC. Never trust a model-provided tenant_id as authorization. Use Hermes-owned secret scope and no embedded tokens.
+7. Keep case writes, containment, rule deployment and agent activation out of the MVP connector. Prepare drafts only.
+8. Report evidence, gaps and next steps. Preserve local-model intent; do not send customer logs or indicators to an online service without separate authorization.
+
+## MCP boundary
+
+The descriptor has enabled:false and mcp_servers:{}.
+There is no guessed hostname, executable, token or endpoint. Configure only after a reviewed service contract, negative tenant-isolation tests, rate limits and read-only RBAC validation.
+
+## Completion
+
+Deliver a scoped analysis draft or integration gap list, not a successful connection claim.
+Example: supplied case export -> source-labelled evidence inventory -> analyst assessment -> draft handoff.
+""")
+    js("templates/mcp/cystrat-soc-suite.contract.json", {
+        "status": "proposed_contract_not_implemented", "product": "CyStrat SOC Suite",
+        "transport": "to_be_verified", "endpoint": None, "enabled": False,
+        "authorization": {"tenant_identity": "server-derived from authenticated principal",
+                          "rbac": "least-privilege read-only", "credentials": "Hermes secret scope", "host_trust": "untrusted"},
+        "proposed_tools": [
+            {"name": "soc_suite_list_alerts", "read_only": True, "required_scope": ["start_utc", "end_utc"], "max_results": 100},
+            {"name": "soc_suite_get_case", "read_only": True, "required_scope": ["case_id"]},
+            {"name": "soc_suite_get_evidence", "read_only": True, "required_scope": ["case_id", "evidence_id"]}],
+        "forbidden_in_mvp": ["case_write", "containment", "rule_deploy", "agent_activation", "cross_tenant_search"],
+        "acceptance_tests": ["unauthorized tenant denied", "expired credentials denied", "writes denied",
+                             "bounded pagination", "source provenance retained", "prompt injection treated as data"],
+        "note": "Design names only, not tools registered by this plugin or a confirmed remote service."
+    })
     # JSON is a YAML 1.2 subset: parsable without a runtime YAML dependency.
     js("templates/registry.yaml", {"schema_version": "1.0", "technologies": registry})
     role_specific = {
@@ -218,7 +267,9 @@ No server is enabled by this plugin. Empty MCP template fields are intentional.
     }
     for name, (status, description, workflow) in PROFILES.items():
         skills = role_skills.get(name, ["authorized-research", "detection-engineering"])
-        scope_rule = ("Require soc_research_plan with an exact, time-valid authorization scope before planning. Never interact with targets."
+        scope_rule = ("Gated Preview, disabled by default. Planned external contribution: exploit labs, managing director Johannes Schönborn. "
+                      "No operative exploit labs capability is included. The operator must explicitly enable offensive_preview_enabled. "
+                      "Require soc_research_plan with an exact, time-valid authorization scope before planning. Never interact with targets."
                       if status == "scaffold" else "Use only operator-authorized evidence and read-only connectors.")
         soul = f"""# {name}
 
@@ -255,7 +306,9 @@ MCP is disabled until independently configured and reviewed by the operator.
         write(f"{base}/skills.txt", "\n".join("agentic-soc:" + x for x in skills) + "\n")
         write(f"{base}/config.example.yaml", "# Review and merge manually; do not copy credentials between profiles.\nmcp_servers: {}\n")
         js(f"{base}/mcp.example.json", {"mcpServers": {}})
-        write(f"{base}/README.md", f"# {name}\n\nStatus: {status}. {description}.\n\nUse soc_template_install in dry-run mode, then approve creation through Hermes. Existing profiles are not overwritten. Model/auth setup and plugin enablement are explicit operator steps. Offline skills are copied to the new profile; no MCP server is auto-enabled.\n\nThe persona does not sandbox other Hermes tools. See root SECURITY.md. Workflow: ../../workflows/{workflow}.yaml.\n")
+        contribution = ("\n\n## Gated Preview / planned contribution\n\nOffensive Security is planned to be developed and contributed by exploit labs, led by managing director Johannes Schönborn. This release contains only the skeleton and planning gate, not their operational implementation. Operator opt-in is required and defaults to disabled. No endorsement beyond the project sponsor's description, company legal form, delivered code authorship or license grant is inferred.\n"
+                        if status == "scaffold" else "")
+        write(f"{base}/README.md", f"# {name}\n\nStatus: {status}. {description}.{contribution}\n\nUse soc_template_install in dry-run mode, then approve creation through Hermes. Existing profiles are not overwritten. Model/auth setup and plugin enablement are explicit operator steps. Offline skills are copied to the new profile; no MCP server is auto-enabled.\n\nThe persona does not sandbox other Hermes tools. See root SECURITY.md. Workflow: ../../workflows/{workflow}.yaml.\n")
     workflows = {
         "compromise-assessment": [
             {"id": "scope", "type": "human", "require": "authorized evidence and allowed scan roots"},
@@ -280,7 +333,7 @@ MCP is disabled until independently configured and reviewed by the operator.
             {"id": "gaps", "type": "supplied_lab_evidence_only"}],
     }
     for name, steps in workflows.items():
-        js(f"templates/workflows/{name}.yaml", {"name": name, "version": "0.1.0",
+        js(f"templates/workflows/{name}.yaml", {"name": name, "version": __version__,
             "execution": "declarative_reference_not_workflow_engine", "steps": steps})
     # Normalized output schemas are intentionally stricter than open-ended THOR input.
     event_properties = {
@@ -310,7 +363,10 @@ MCP is disabled until independently configured and reviewed by the operator.
     js("agentic_soc/schemas/profile-template.json", {"$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": "Profile template", "type": "object", "required": ["id", "status", "description", "workflow", "scope_required"],
         "properties": {"id": {"type": "string"}, "status": {"enum": ["mvp", "scaffold"]},
-                       "description": {"type": "string"}, "workflow": {"type": "string"}, "scope_required": {"type": "boolean"}},
+                       "description": {"type": "string"}, "workflow": {"type": "string"}, "scope_required": {"type": "boolean"},
+                       "availability": {"enum": ["available", "gated_preview", "preview_enabled"]},
+                       "contributor": {"type": "string"},
+                       "contribution_status": {"enum": ["implemented", "planned_external_contribution"]}},
         "additionalProperties": False})
     print(f"Generated {len(PROFILES)} profiles, {len(SKILLS) + len(TECHS)} skills, {len(TECHS)} technology scaffolds, 4 workflows and 3 schemas.")
 

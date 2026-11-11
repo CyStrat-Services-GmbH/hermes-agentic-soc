@@ -1,0 +1,4 @@
+Plugin Doctor: /home/user/workspace/hermes-agentic-soc
+  manifest: agentic-soc 0.1.1 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 7 tool(s), 1 hook(s)

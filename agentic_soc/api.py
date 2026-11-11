@@ -1,6 +1,8 @@
 """Model-facing schemas, strict argument validation and host policy hook."""
 
-from .security import BoundaryError
+import hashlib
+
+from .security import BoundaryError, canonical
 
 SCOPE = {"type": "object", "description": "Declared authorization scope; operator must verify evidence.",
          "properties": {
@@ -74,8 +76,13 @@ def policy(tool_name: str, args: dict, **kwargs):
     try:
         validate(args, BY_NAME[tool_name]["parameters"])
         if tool_name in {"thor_lite_scan", "soc_template_install"} and args.get("execute") is True:
+            payload = canonical(args)
+            fingerprint = hashlib.sha256((tool_name + payload).encode()).hexdigest()
             return {"action": "approve",
-                    "message": "Human approval required: local THOR scan or creation of a new Hermes profile. Review exact arguments."}
+                    "rule_key": f"agentic-soc:{tool_name}:{fingerprint}",
+                    "message": f"Human approval required for {tool_name}.\n"
+                               f"Exact requested arguments (JSON):\n{payload}\n"
+                               "Approval is scoped to this argument fingerprint, not every call to the tool."}
         return None
     except Exception:
         return {"action": "block", "message": "Agentic SOC rejected invalid or unsafe tool arguments."}

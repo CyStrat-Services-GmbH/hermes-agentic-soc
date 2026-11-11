@@ -1,5 +1,7 @@
 # Submission checklist
 
+**Paused: repository is private by owner decision.** Do not open a public catalog PR, publish video or change visibility without explicit renewed approval. The checklist below is preparation only.
+
 The announcement's deadline is November 11, 2026 at 5 PM EST, which is 23:00 Europe/Berlin that day. Submit a public catalog PR and an X demo shorter than 90 seconds, tagging @NousResearch, through the [official form](https://form.typeform.com/to/FwJLvOln) ([announcement](https://x.com/NousResearch/status/2118094256438936062)).
 
 - [ ] Final license approved and applied; do not present pending-license source as fully Open Source.

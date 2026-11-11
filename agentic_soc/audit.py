@@ -22,8 +22,16 @@ class Audit:
         # Caller passes only numeric counters, generated IDs and exception classes.
         data = (json.dumps(record, ensure_ascii=False) + "\n").encode()
         with _LOCK:
-            fd = os.open(self.root / "audit.jsonl", os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+            path = self.root / "audit.jsonl"
+            if path.is_symlink() or (path.exists() and not path.is_file()):
+                raise OSError("Audit file must be a regular non-symlink file.")
+            fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_NOFOLLOW", 0), 0o600)
             try:
-                os.write(fd, data)
+                view = memoryview(data)
+                while view:
+                    written = os.write(fd, view)
+                    if written <= 0:
+                        raise OSError("Audit append did not complete.")
+                    view = view[written:]
             finally:
                 os.close(fd)

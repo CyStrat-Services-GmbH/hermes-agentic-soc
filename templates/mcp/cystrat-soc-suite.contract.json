@@ -1,0 +1,55 @@
+{
+  "status": "proposed_contract_not_implemented",
+  "product": "CyStrat SOC Suite",
+  "transport": "to_be_verified",
+  "endpoint": null,
+  "enabled": false,
+  "authorization": {
+    "tenant_identity": "server-derived from authenticated principal",
+    "rbac": "least-privilege read-only",
+    "credentials": "Hermes secret scope",
+    "host_trust": "untrusted"
+  },
+  "proposed_tools": [
+    {
+      "name": "soc_suite_list_alerts",
+      "read_only": true,
+      "required_scope": [
+        "start_utc",
+        "end_utc"
+      ],
+      "max_results": 100
+    },
+    {
+      "name": "soc_suite_get_case",
+      "read_only": true,
+      "required_scope": [
+        "case_id"
+      ]
+    },
+    {
+      "name": "soc_suite_get_evidence",
+      "read_only": true,
+      "required_scope": [
+        "case_id",
+        "evidence_id"
+      ]
+    }
+  ],
+  "forbidden_in_mvp": [
+    "case_write",
+    "containment",
+    "rule_deploy",
+    "agent_activation",
+    "cross_tenant_search"
+  ],
+  "acceptance_tests": [
+    "unauthorized tenant denied",
+    "expired credentials denied",
+    "writes denied",
+    "bounded pagination",
+    "source provenance retained",
+    "prompt injection treated as data"
+  ],
+  "note": "Design names only, not tools registered by this plugin or a confirmed remote service."
+}

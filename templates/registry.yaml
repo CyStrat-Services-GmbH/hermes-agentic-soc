@@ -2,6 +2,21 @@
   "schema_version": "1.0",
   "technologies": [
     {
+      "id": "cystrat-soc-suite",
+      "name": "CyStrat SOC Suite",
+      "type": "soc-platform",
+      "status": "scaffold",
+      "mcp": {
+        "status": "not_verified",
+        "source": null,
+        "template": "mcp/cystrat-soc-suite.example.json"
+      },
+      "skills": [
+        "agentic-soc:tech-cystrat-soc-suite"
+      ],
+      "live_connector": false
+    },
+    {
       "id": "microsoft-sentinel",
       "name": "Microsoft Sentinel",
       "type": "siem",

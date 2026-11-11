@@ -31,6 +31,17 @@ def register(ctx):
     for spec in TOOLS:
         ctx.register_tool(name=spec["name"], toolset="agentic_soc", schema=spec, handler=make_handler(spec))
     def audited_policy(tool_name, args, **kwargs):
+        try:
+            from .agentic_soc.tools.templates import PROFILES
+            offensive = tool_name == "soc_research_plan" or (
+                tool_name == "soc_template_install" and isinstance(args, dict)
+                and PROFILES.get(args.get("template"), ("",))[0] == "scaffold")
+            if offensive and ctx.get_config("offensive_preview_enabled", False) is not True:
+                from .agentic_soc.audit import Audit
+                Audit(runtime.data()).write(tool_name, "preview_gate_blocked")
+                return {"action": "block", "message": "Offensive Security preview is disabled. Only the operator may opt in; this does not enable target execution."}
+        except Exception:
+            return {"action": "block", "message": "Agentic SOC could not verify the preview gate; action refused."}
         decision = policy(tool_name, args, **kwargs)
         if decision is not None:
             try:

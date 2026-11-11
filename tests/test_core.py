@@ -231,7 +231,7 @@ def test_profile_create_fixed_cli_and_profile_context(tmp_path):
         assert run.call_args_list[0].kwargs["env"]["HERMES_HOME"] == str(home)
         assert (destination / "SOUL.hermes-default.md").read_text() == "Hermes fresh default"
         assert "dfir-compromise-assessment" in (destination / "SOUL.md").read_text()
-        assert len(list((destination / "skills/agentic-soc").glob("*/SKILL.md"))) == 28
+        assert len(list((destination / "skills/agentic-soc").glob("*/SKILL.md"))) == 29
 
 
 def test_runtime_audit_and_report_files(tmp_path):
@@ -309,7 +309,7 @@ def test_every_template_skill_and_registry_complete():
         for name in (folder / "skills.txt").read_text().splitlines():
             assert (ROOT / "skills" / name.split(":")[1] / "SKILL.md").is_file()
     registry = yaml.safe_load((ROOT / "templates/registry.yaml").read_text())
-    assert len(registry["technologies"]) == 20
+    assert len(registry["technologies"]) == 21
     for tech in registry["technologies"]:
         assert tech["status"] == "scaffold" and tech["live_connector"] is False
         mcp = json.loads((ROOT / "templates" / tech["mcp"]["template"]).read_text())
@@ -345,7 +345,7 @@ def test_manifest_matches_actual_registration():
     manifest = yaml.safe_load((ROOT / "plugin.yaml").read_text())
     assert set(context.tools) == set(manifest["provides_tools"])
     assert set(context.hooks) == set(manifest["provides_hooks"])
-    assert len(context.skills) == 28
+    assert len(context.skills) == 29
     assert set(context.commands) == {"soc-templates", "thor-scan", "thor-assess"}
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":true}')
     assert "preview-only" in context.commands["thor-scan"]('{"target":"/tmp","execute":"false"}')
