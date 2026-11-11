@@ -1,0 +1,68 @@
+name: Bug report
+description: Something in the plugin behaves differently from what the documentation says.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not paste customer evidence, THOR scans, hostnames, credentials or exploit details.**
+        Security problems belong in a private advisory, not in this form — see
+        [SECURITY.md](https://github.com/CyStrat-Services-GmbH/hermes-agentic-soc/blob/main/SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version and commit
+      description: From `plugin.yaml` (`version`) and `git rev-parse --short HEAD` of your install.
+      placeholder: "0.2.4 @ 76dc9c3"
+    validations:
+      required: true
+  - type: input
+    id: hermes
+    attributes:
+      label: Hermes version
+      description: Output of `hermes --version`.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Tool call (soc_capabilities, thor_parse, thor_first_assessment, …)
+        - Slash command (/thor-scan, /thor-assess, …)
+        - Profile template installation
+        - Skill or persona content
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Include the exact tool output or error, with paths and identifiers redacted.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. hermes plugins install …
+        2. tool call …
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before submitting
+      options:
+        - label: I removed customer data, credentials and hostnames from everything above.
+          required: true
+        - label: This is not a security vulnerability (those go to a private advisory).
+          required: true
