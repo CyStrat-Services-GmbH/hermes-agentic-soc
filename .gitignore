@@ -12,3 +12,8 @@ runtime/
 /thor64*
 /thor-lite*
 /submission/catalog-entry.yaml
+
+# Internal agent instructions - never published
+/AGENTS.md
+/CLAUDE.md
+/.agents/
