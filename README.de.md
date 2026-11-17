@@ -51,8 +51,8 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 | Hermes-Erweiterung | 8 native Tools, 4 Slash-Kommandos, 1 Approval-Hook | Öffentliche Plugin-Schnittstellen |
 | Evidenzanalyse | THOR JSON v2 (THOR 10.7 mit `--jsonv2`) und v3 (THOR 11) sowie NDJSON, exakte Zählung und konservative Beobachtungsgruppen | Keine Unterstützung für THOR JSON v1, Hash-CSV oder Textlog |
 | Erstbewertung | Deterministische Bewertung, JSON und deutscher Neun-Abschnitte-Bericht | Vorläufige Triage, kein automatischer Kompromittierungsnachweis |
-| Fachwissen | 6 Defense-Profile, 39 Skills | 9 Skills für die THOR-Ergebnisanalyse, 6 Domain-Skills, 25 technologiebezogene Planungsvorlagen |
-| Workflows | 4 deklarative Referenzen | Keine ausführbare Workflow-Engine |
+| Fachwissen | 7 Defense-Profile, 44 Skills | 9 Skills für die THOR-Ergebnisanalyse, 10 Domain-Skills, 25 technologiebezogene Planungsvorlagen |
+| Workflows | 7 deklarative Referenzen | Keine ausführbare Workflow-Engine |
 | Anbindungen | 25 geplante Technologien; CyStrat SOC Suite domänenübergreifend | 0 verifiziert aktive Remote-Connectoren |
 | Lokaler Scan | Wrapper für separat bezogenes THOR | Menschliche Freigabe nötig; echter Herstellerscan hier nicht validiert |
 

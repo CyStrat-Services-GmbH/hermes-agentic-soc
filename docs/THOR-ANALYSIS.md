@@ -74,9 +74,10 @@ The regression suite runs the real tools on this file and checks that the number
 
 | Profile | THOR skills |
 |---|---|
-| `dfir-compromise-assessment` | All nine, plus incident response |
+| `dfir-compromise-assessment` | All nine, plus evidence handling and case handoff |
 | `soc-l1-triage` | `thor-assessment`, `thor-false-positive-review`, `thor-siem-export-intake` |
-| `soc-l2-incident-responder` | `thor-assessment`, `thor-timeline-correlation`, `thor-ioc-handling` |
+| `soc-l2-analyst` | `thor-assessment`, `thor-timeline-correlation`, `thor-false-positive-review`, `thor-ioc-handling` |
+| `soc-incident-handler` | `thor-timeline-correlation` |
 | `threat-hunter` | `thor-fleet-triage`, `thor-signature-interpretation`, `thor-ioc-handling` |
 | `detection-engineer` | `thor-signature-interpretation`, `thor-false-positive-review` |
 | `vulnerability-manager` | `thor-module-analysis`, `thor-signature-interpretation` |

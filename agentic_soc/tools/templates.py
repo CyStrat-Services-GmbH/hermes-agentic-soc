@@ -11,12 +11,13 @@ from ..security import BoundaryError
 from .thor import subprocess_env
 
 PROFILES = {
-    "soc-l1-triage": ("mvp", "Triage incoming alerts, evidence and escalation", "alert-triage"),
-    "soc-l2-incident-responder": ("mvp", "Validate incidents and prepare approved response", "alert-triage"),
+    "soc-l1-triage": ("mvp", "Triage incoming alerts, evidence and first-pass escalation", "alert-triage"),
+    "soc-l2-analyst": ("mvp", "Independently validate cases, scope impact and recommend the incident decision", "l2-investigation"),
+    "soc-incident-handler": ("mvp", "Prepare approval-ready incident response, custody and coordination", "incident-handling"),
     "threat-hunter": ("mvp", "Hypothesis-driven, bounded read-only hunting", "threat-hunt"),
     "dfir-compromise-assessment": ("mvp", "THOR evidence and compromise-assessment triage", "compromise-assessment"),
-    "detection-engineer": ("mvp", "Draft and test Sigma/YARA detections without deployment", "threat-hunt"),
-    "vulnerability-manager": ("mvp", "Prioritize supplied vulnerability evidence", "alert-triage"),
+    "detection-engineer": ("mvp", "Draft and test Sigma/YARA detections without deployment", "detection-engineering"),
+    "vulnerability-manager": ("mvp", "Prioritize supplied vulnerability evidence and remediation plans", "vulnerability-management"),
 }
 
 

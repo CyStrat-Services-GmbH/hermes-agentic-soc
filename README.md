@@ -66,8 +66,8 @@ Hermes Agentic SOC brings that expertise into Hermes through specialist profiles
 The goal is not to replace your security stack. It is to give Hermes a disciplined way to work with it: understand the evidence, apply specialist knowledge, make uncertainty visible and leave consequential decisions with your team.
 
 - **Evidence before conclusions:** Exact event inventories, conservative same-artifact grouping and traceable first assessments instead of model-invented incident narratives.
-- **Specialists for the task:** Six defense personas cover triage, incident response, hunting, DFIR, detection engineering and vulnerability management.
-- **Reusable operational knowledge:** 39 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), six domain/workflow skills and 25 technology-specific planning scaffolds.
+- **Specialists for the task:** Seven defense personas cover L1 triage, independent L2 analysis, incident handling, hunting, DFIR, detection engineering and vulnerability management. Analysis and response are separate roles.
+- **Reusable operational knowledge:** 44 shipped skills: a nine-skill [THOR analysis suite](docs/THOR-ANALYSIS.md), ten domain/workflow skills and 25 technology-specific planning scaffolds.
 - **Control by design:** Local evidence boundaries, metadata-only audit records and Hermes-owned approval for sensitive execution. No plugin telemetry, self-updater or hidden LLM calls.
 
 The assessment engine is deterministic. Hermes may use its configured model to interpret tool output, but the plugin does not call a model to calculate severity.

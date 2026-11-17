@@ -18,7 +18,7 @@ def main():
     print("Hermes Agentic SOC | CyStrat Services × Nextron Systems")
     print("OFFLINE SYNTHETIC DEMO. No scanner or target interaction.")
     listing = runtime.call("soc_template_list", {})
-    print(f"Profiles: {len(listing['profiles'])}; six defense MVP templates, three research scaffolds.")
+    print(f"Profiles: {len(listing['profiles'])}; every shipped template is a defense MVP template, no research scaffolds.")
     result = runtime.call("thor_first_assessment", {"path": str(ROOT / "examples/demo/thor.json")})
     print(json.dumps({k: v for k, v in result.items() if k != "preview"}, indent=2, ensure_ascii=False))
     if not result.get("ok"):
