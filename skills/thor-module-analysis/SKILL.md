@@ -32,8 +32,9 @@ Every THOR event comes from a module, and each module observes something differe
 ## Platform and edition notes
 
 - Registry, SHIMCache, AmCache, Mutex, Named Pipes and Eventlog are Windows-specific ([scan modes](https://thor-manual.nextron-systems.com/en/latest/usage/scan-modes.html)).
-- THOR Lite has five modules, centred on file system, process and autoruns checks, and no Registry, Eventlog, SHIMCache or Sigma scanning ([THOR Lite](https://www.nextron-systems.com/thor-lite/)). The plugin's launcher runs only `--module FileScan` on an approved directory.
+- THOR Lite 10.7 runs Filescan, ProcessCheck and Autoruns; Eventlog and Sigma only with the `allowsigma` licence special. THOR Lite 11 adds the Windows Eventlog module and Sigma. Neither has Registry, SHIM cache, Amcache, service or scheduled-task modules ([THOR Lite](https://www.nextron-systems.com/thor-lite/), [Lite feature matrix](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-lite/references/limitations.md)). The plugin's launcher runs only `--module FileScan` on an approved directory.
 - Message enrichment means other modules can emit events carrying full file paths (e.g. SHIMCache, Eventlog). Do not assume every event with a path came from the file system scan.
+- Field names differ per output format. Nextron's `thor-log-analysis` skill, if installed, maps them per module across text, JSON v1/v2 and THOR 11 JSON v3.
 
 ## Output block
 

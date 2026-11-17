@@ -21,7 +21,7 @@ Evidence imports resolve symlinks and must remain inside explicit operator-appro
 
 These are application boundaries, not a sandbox: the Hermes host, an operator-selected executable and the local OS account retain their own authority. A TOCTOU race or a malicious local operator is outside this MVP's security boundary. Do not point the host at untrusted writable evidence directories without an acquisition/staging process.
 
-THOR CLI help and execution use argv lists, no shell interpolation and a minimal environment. Only a configured executable and FileScan in an explicitly configured directory are supported. No custom extra flags, remote scans, process scans, privilege escalation, `action_command` hooks, downloads or vendor updates are supported.
+THOR CLI help and execution use argv lists, no shell interpolation and a minimal environment. Only a configured executable that reports THOR 10.7 or 11, and a Filescan of an explicitly configured directory, are supported. Paths with THOR syntax that would change the scanned path (`:` after the drive, `,`, `<…>`, `$`, `%`) are refused. No custom extra flags, remote scans, process scans, privilege escalation, `action_command` hooks, downloads or vendor updates are supported.
 
 The host pre-tool policy requests human approval for scan/profile execution. Direct library calls are not a protected authorization boundary. The scope checker validates declared fields, exact targets, UTC-aware validity and allowed activities, but cannot verify a legal authorization document. These limitations are visible in tool output.
 
@@ -41,7 +41,7 @@ Audit JSONL records event metadata, not raw tool parameters. It is append-only b
 
 ## Failure behavior
 
-Malformed/unsupported input refuses assessment instead of silently dropping events. Unknown scores stay unknown. Unsupported v3 does not fall back to guessed v2. Empty/INFO-only exports never establish a clean host. Timeouts and absent scanner JSON are incomplete runs, even when the process exit is zero.
+Malformed/unsupported input refuses assessment instead of silently dropping events. Unknown scores stay unknown. JSON v1, and records whose version label and container disagree, are refused instead of guessed. THOR's own status messages never count as findings. Empty/INFO-only exports never establish a clean host. Timeouts and absent scanner JSON are incomplete runs, even when the process exit is zero.
 
 Execution is bounded by a timeout. The configured THOR binary is trusted operator software; the package does not sandbox it, control vendor-internal network behavior, verify its publisher signature or guarantee cleanup of vendor-spawned descendants. Use OS job/container controls for stronger guarantees.
 

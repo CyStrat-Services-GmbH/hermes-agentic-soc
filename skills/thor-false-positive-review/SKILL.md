@@ -32,7 +32,18 @@ For each observation (after `thor-module-analysis` and `thor-signature-interpret
 
 ## Suppression proposals
 
-Recurring false positives should be filtered at the source, not re-analysed every scan. THOR supports regex false-positive filters applied to the full event, and the Analysis Cockpit supports baselines ([configuration](https://thor-manual.nextron-systems.com/en/latest/usage/configuration.html), [analysis](https://thor-manual.nextron-systems.com/en/latest/usage/analysis.html)).
+Recurring false positives should be filtered at the source, not re-analysed every scan. THOR offers several mechanisms; name the one you propose ([configuration](https://thor-manual.nextron-systems.com/en/latest/usage/configuration.html), [analysis](https://thor-manual.nextron-systems.com/en/latest/usage/analysis.html), [common false positives](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/common-fps.md)):
+
+| Mechanism | Effect |
+|---|---|
+| `config/false_positive_filters.cfg` | One case-sensitive Go regular expression per line, matched against the event rendered as `KEY: value` text. THOR 10 checks every event, THOR 11 only assessments. A match drops the event completely: it is neither logged nor counted. |
+| Trusted-hash IOC file | THOR 10 drops all Filescan reasons of the file; THOR 11 adds -100, so the total is 0. |
+| Negative-score IOC or YARA rule | Lowers the combined score; only -100 or lower forces 0. |
+| Path excludes (THOR 10 `config/directory-excludes.cfg`, THOR 11 `--exclude-path` or `config/path-excludes.cfg`) | The path is not scanned at all. Never use it to hide one known-good file. |
+| Signature filters (THOR 10 `--init-filter`, THOR 11 `--signature-exclude`) | Matching rules are not loaded on any host. Last resort. |
+| Analysis Cockpit baseline | Central filter after a first scan. |
+
+Nextron's `thor-custom-signatures` skill, if installed, has the exact file formats.
 
 - Draft the narrowest filter that removes the false positive (exact path plus rule, not the whole rule).
 - State the risk: what a real attack matching the filter would look like.
@@ -47,5 +58,5 @@ Prävalenz: <n Hosts von m> (Quelle: <Inventar/Fleet-Matrix>) – oder „nicht 
 Autorisierung: <bestätigt durch … / nicht bestätigt / nicht geprüft>
 Widersprüche: <…>
 Ergebnis: <Outcome> – Begründung: <…>
-Filtervorschlag (Entwurf, Freigabe erforderlich): <…>
+Filtervorschlag (Entwurf, Freigabe erforderlich): <Mechanismus und Eintrag>
 ```

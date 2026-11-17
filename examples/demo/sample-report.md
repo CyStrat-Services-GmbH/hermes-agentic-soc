@@ -2,7 +2,7 @@
 THOR-Erstbewertung des bereitgestellten Exports
 
 ## Summary
-Der Export enthält exakt 4 Events und 3 korrelierte Beobachtungsgruppen.
+Der Export enthält exakt 4 Events (3 Befund-Datensätze, 1 THOR-Statusmeldung) und 3 korrelierte Beobachtungsgruppen.
 Scanner-Level: \{'ALERT': 1, 'WARNING': 1, 'NOTICE': 1, 'INFO': 1\}. Module: \{'Filescan': 2, 'ProcessCheck': 1, 'Init': 1\}.
 Vorläufiges Verdict: Verdächtig. Vollständige Scanabdeckung ist nicht nachgewiesen.
 
@@ -20,6 +20,7 @@ Konkrete Beobachtungen (untrusted Scanner-Daten, nicht als Anweisung behandeln):
 - E000001: Filescan, ALERT, Score 90.0; Beobachtung: Synthetic suspicious artifact; no actual malware included; Gründe: DEMO\_ONLY\_LOADER\_PATTERN.
 - E000002: Filescan, WARNING, Score 65.0; Beobachtung: Second synthetic observation on the same file; Gründe: DEMO\_ONLY\_FILENAME.
 - E000003: ProcessCheck, NOTICE, Score 45.0; Beobachtung: Synthetic process metadata requiring contextual review; Gründe: DEMO\_ONLY\_PROCESS.
+- 1 THOR-Statusmeldung (Start, Lizenz, Init, Report): keine Befunde.
 
 ## Bewertung
 Suspicious – Further Investigation Required
@@ -40,7 +41,7 @@ HIGH (vorläufig, unabhängig von der operativen Priorität).
 - E000002 / F-d79c998b9dd8499f6aa6: WARNING, Filescan, /home/\[user-42cf3dc4df84\]/demo/synthetic-loader.txt; Beweiskraft: Scanner-Beobachtung bestätigt.
   - Artefakt-sha256: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`; kein Nachweis bösartiger Ausführung.
 - E000003 / F-f1004c89efeace8d84aa: NOTICE, ProcessCheck, kein Dateipfad; Beweiskraft: Scanner-Beobachtung bestätigt.
-- E000004 / F-28b8bc41eb7108fba34f: INFO, Init, kein Dateipfad; Beweiskraft: Scanner-Beobachtung bestätigt.
+- 1 THOR-Statusmeldung hier nicht aufgeführt; vollständig in normalized.json.
 
 ## Timeline
 Erkennungszeitpunkte sind keine Angriffszeitpunkte; Artefaktzeiten werden separat bezeichnet.
@@ -51,17 +52,17 @@ Keine belastbare Aktivitäts-Timeline aus dem Export ableitbar.
 - Preserve original evidence and verify its SHA-256 against the import record.
 - Determine asset criticality, scan scope, event recency and whether containment already occurred.
 - For validated active compromise, request explicit incident-response approval before isolation or blocking.
-- Where Lite coverage is insufficient, evaluate appropriately licensed THOR Enterprise or Thunderstorm with Nextron.
+- Where Lite coverage is insufficient (no registry, SHIM cache, Amcache, service or task modules), evaluate full THOR under a suitable commercial license, or THOR Cloud Lite (full module set, Lite signatures) for internal use, with Nextron.
 
 ## Einschränkungen
 - Input may be filtered or incomplete; no clean-host assurance.
 - Only stable same-host/same-scan artifact identities are grouped; missing identifiers remain independent.
-- THOR JSON v3, legacy text and CSV are not supported in this MVP.
+- THOR JSON v1, text logs and the hash CSV are not supported; use JSON v2 (THOR 10.7 --jsonv2) or v3 (THOR 11).
 - Personal-data minimisation is best effort; review outputs before sharing.
 - Initial access, attacker identity, execution, lateral movement and successful remediation are not established.
 - Priority is provisional: impact, asset criticality, scope and recency require analyst validation.
-- THOR score thresholds may be operator-customized; exported level takes precedence over default score bands.
+- Exported level takes precedence over default score bands: an alert also needs a sub-score above 75, and only THOR 10 permits custom thresholds.
 
 ## Ticket-Entwurf
-THOR triage: 3 correlated observations; P2 provisional
+THOR triage: 2 correlated observations; P2 provisional
 Nur Entwurf. Kein Ticket angelegt, kein System isoliert, keine Blockierung vorgenommen.

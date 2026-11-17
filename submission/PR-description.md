@@ -6,15 +6,15 @@ Prepared submission text, not a claim that this PR is open or admitted. The repo
 
 ## Functionality and public Hermes surfaces
 
-Hermes Agentic SOC provides seven native tools, three slash commands, one pre-tool approval policy and namespaced skills. It imports supplied THOR JSON v1/v2 evidence, counts all events exactly, groups matching artifact observations and produces deterministic bounded first-assessment JSON/Markdown. It can invoke an independently installed local THOR Lite FileScan and provision a fresh no-credential specialist profile through the public Hermes CLI.
+Hermes Agentic SOC provides seven native tools, three slash commands, one pre-tool approval policy and namespaced skills. It imports supplied THOR JSON v2 and v3 evidence, counts all events exactly, groups matching artifact observations and produces deterministic bounded first-assessment JSON/Markdown. It can invoke an independently installed local THOR Lite 10.7 or 11 Filescan and provision a fresh no-credential specialist profile through the public Hermes CLI.
 
 Six defense personas are fully authored; twenty-five technology integrations, including CyStrat SOC Suite as the cross-domain platform, remain clearly labelled scaffolds. Three YAML workflow references are declarative guidance, not an executable engine. No UI or automatic MCP startup is claimed. exploit labs is a confirmed supporter and cooperation partner; the offensive-research part is planned for a later release and is not part of this version.
 
 ## Rule 13 disclosure
 
 - Network: no direct external network/LLM calls, telemetry or self-updater. Hermes-owned profile initialization and separately operator-enabled MCPs remain host responsibilities.
-- Reads: operator-approved evidence roots, shipped demo and profile-scoped plugin data; local scanner reads the approved FileScan target.
-- Commands: fixed argv to configured THOR `--help` and optional FileScan; `hermes profile create --no-credentials` and `hermes profile show` for new profile provisioning. No shell strings or sudo.
+- Reads: operator-approved evidence roots, shipped demo and profile-scoped plugin data; local scanner reads the approved Filescan target.
+- Commands: fixed argv to configured THOR `--version`, full CLI help and optional Filescan; `hermes profile create --no-credentials` and `hermes profile show` for new profile provisioning. No shell strings or sudo.
 - Background processes: none intentionally started. Scanner calls have timeouts; the external executable itself is trusted operator software.
 - Credentials: none stored or read by the plugin. No `.env`/`auth.json`/browser/CLI token access.
 - State/privacy: local pseudonym salt, minimised metadata audit, normalized events and case reports. Minimisation is best effort, not guaranteed anonymisation.

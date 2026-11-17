@@ -18,3 +18,8 @@ Draft an original rule and validate with benign/positive synthetic lab fixtures.
 Official MCP status: not verified in this release. Do not infer that no vendor MCP exists.
 
 No server is enabled by this plugin. Empty MCP template fields are intentional.
+
+Rule authoring and review: load `yara-rule-skill` if the operator installed it
+(https://github.com/YARAHQ/yara-rule-skill). It covers the YARA Style Guide, the YARA Performance
+Guidelines, yaraQA issue IDs and YARA-Forge quality gates, and takes precedence over this scaffold.
+Run its validator only where operator-approved code execution exists.

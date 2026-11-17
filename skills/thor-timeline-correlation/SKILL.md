@@ -43,16 +43,17 @@ Label every timestamp with its type. Read [references/timestamp-semantics.md](re
 
 | Type (German label) | Meaning |
 |---|---|
-| `THOR-Erkennungszeit` | When THOR logged the observation (`time` field). Scan time, never activity time. |
+| `THOR-Erkennungszeit` | When THOR logged the observation (`time` field; THOR 11 JSON: `meta.time`). Scan time, never activity time. |
 | `Artefaktzeit` | A timestamp stored with the artefact (file created/modified/accessed, SHIMCache, AmCache, task last run, account last logon). Meaning depends on the artefact. |
 | `Quell-Eventzeit` | The time recorded by the original log source (event log entry, log line). |
 
 Rules:
 
-- Normalise to UTC and state the source timezone. THOR's default text timestamps have no year unless `--rfc3339` was used; never guess the year.
+- Normalise to UTC and state the source timezone. In a THOR text log only the line header lacks the year. Embedded times carry it, but they are host-local unless the scan used `--utc` (THOR 10) or `--timestamp-utc` (THOR 11) ([log formats](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/log-formats.md)). Never guess the year.
 - The plugin ignores timezone-free or invalid artefact timestamps for its timeline and reports how many. Do the same in your analysis.
 - One timeline entry per distinct activity or state change. Merge entries that share time and fact. Do not create entries for metadata-only repetitions.
 - An event's absence from the timeline is not evidence that nothing happened then.
+- A THOR 11 audit trail (`--audit-trail`, a `.jsonl.zst` file) records assessed elements including clean ones, not only findings ([output flags](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-scan/references/output.md)). Nextron's `thor-lens` skill, if installed, covers loading it into THOR Lens for a timeline. THOR Lite writes no audit trail, and THOR Lens cannot import THOR 10 audit trails.
 
 ## Part 3: Sequence and causality
 

@@ -20,7 +20,7 @@ Host and scan tokens are consistent within the same Hermes profile, so the same 
 
 ### 2. Check coverage before comparing
 
-Hosts are only comparable if they were scanned comparably. From Init, Info and Error events and the scan documentation, record per host: THOR edition and version, scan mode and flags, selected modules, lookback, excludes, start and end, errors and resource-control warnings. A host with no findings and a ten-minute `--quick` scan is not comparable to a host with a full scan.
+Hosts are only comparable if they were scanned comparably. From Init, Info and Error events and the scan documentation, record per host: THOR edition and version, scan mode and flags, selected modules, lookback, excludes, start and end, errors and resource-control warnings. A host with no findings and a ten-minute `--quick` (THOR 11 `--fast`) scan is not comparable to a host with a full scan. THOR Lite runs fewer modules than full THOR, and THOR 10 and THOR 11 write different default outputs; compare like with like.
 
 ### 3. Build prevalence
 
@@ -40,11 +40,13 @@ Prevalence lowers relevance; it does not prove benign. A worm or a mass-deployed
 
 ### 5. Compare scans over time
 
-For repeated scans of the same hosts, separate new, persisting and disappeared findings. New findings after a baseline deserve priority; disappeared findings may mean remediation, file deletion by an attacker or reduced coverage. Do not decide which without other evidence.
+For repeated scans of the same hosts, separate new, persisting and disappeared findings. A THOR delta scan (`--diff` in THOR 10, `--delta` in THOR 11) only reports elements changed since the last completed scan in ThorDB; it needs ThorDB and does not work in lab mode ([scan modes](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-scan/references/scan-modes.md)). New findings after a baseline deserve priority; disappeared findings may mean remediation, file deletion by an attacker or reduced coverage. Do not decide which without other evidence.
 
 ### 6. Scope the case
 
 Turn the outliers into a host list with a reason per host. Use `agentic-soc:thor-assessment` for each host that needs a full case. Say which hosts were **not** in scope; absence from the export is not absence of compromise.
+
+Nextron's companion skills, if installed: `thor-deployment` covers how results from many hosts are collected and named, `thor-db` explains ThorDB and delta state. They do not replace the counting rules above.
 
 ## Output block
 
