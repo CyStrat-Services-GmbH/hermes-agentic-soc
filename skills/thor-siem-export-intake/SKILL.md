@@ -1,6 +1,6 @@
 ---
 name: thor-siem-export-intake
-description: "Prepare THOR results that arrive as SIEM or CSV exports (Splunk, Elastic, other log platforms, THOR's legacy CSV) for analysis: identify the actual format, convert embedded THOR JSON into NDJSON for thor_parse, reconcile row counts, and document filters, truncation and multi-source duplicates. Use before thor-assessment whenever THOR data did not come as a native thor.json; not for estimating counts from unsupported formats."
+description: "Prepare THOR results that arrive as SIEM or CSV exports (Splunk, Elastic, other log platforms, THOR's hash CSV) for analysis: identify the actual format, convert embedded THOR JSON into NDJSON for thor_parse, reconcile row counts, and document filters, truncation and multi-source duplicates. Use before thor-assessment whenever THOR data did not come as a native thor.json; not for estimating counts from unsupported formats."
 ---
 
 # THOR results from SIEM and CSV exports
@@ -13,10 +13,10 @@ Inspect the header and a few rows, without interpreting content yet:
 
 | Format | How to recognise it | Path |
 |---|---|---|
-| A. THOR JSON per row | A raw/message column holds one complete JSON object per row (fields such as `module`, `level`, `message`, `log_version`) | Convert to NDJSON (step 2), then `thor_parse`. |
+| A. THOR JSON per row | A raw/message column holds one complete JSON object per row (fields such as `module`, `level`, `message`, `log_version`) | Convert to NDJSON (step 2), then `thor_parse`. JSON v1 rows (flat `reason_1`, `subscore_1` keys) are refused; ask for an export of a `--jsonv2` log. |
 | B. THOR text or syslog lines | Raw column holds `KEY: value` text (e.g. `MODULE: Filescan MESSAGE: …`) | Not supported by `thor_parse`. See step 4. |
-| C. THOR legacy CSV | Three columns: hash, path, score; Filescan only ([output options](https://thor-manual.nextron-systems.com/en/latest/usage/output-options.html)) | Too limited for an assessment: no level, module or reasons. Request the JSON log or a conversion with `thor-util`. |
-| D. THOR JSON v3 | `type` begins with `THOR `, nested object model | Not supported in this release. Request a v2 export. |
+| C. THOR hash CSV | Three columns, no header: MD5, path, score. THOR 10 and THOR 11 both write it by default (`<host>_files_md5s.csv`) for file findings at or above `--min` ([output options](https://thor-manual.nextron-systems.com/en/latest/usage/output-options.html), [log formats](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/log-formats.md)) | Too limited for an assessment: no level, module or reasons. Request the scan's text or JSON log instead. |
+| D. THOR JSON v3 | `type` begins with `THOR `, nested object model | Convert to NDJSON (step 2), then `thor_parse`, which reads v3. THOR 11 cannot write v2 (`--jsonv2` has no effect there), so do not ask for a v2 export of a THOR 11 scan ([flag map](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor/references/flag-map-v10-v11.md)). Field shapes: [json-v3-shape.md](../thor-assessment/references/json-v3-shape.md). |
 | E. SIEM-normalised fields only | Columns already mapped to the SIEM's schema, no raw event | Analyse as SIEM data, not as THOR output. State the mapping you relied on. |
 
 ## 2. Convert embedded JSON (format A)
@@ -41,6 +41,8 @@ Record in the case and repeat in Summary and Assessment:
 - **Time.** Distinguish the SIEM's index time, THOR's event time and the artefact's time.
 
 Elastic's Nextron THOR integration ingests unencrypted THOR v2 JSON logs through its own pipeline ([Elastic integration](https://www.elastic.co/docs/reference/integrations/nextron_thor_apt_scanner)); exported documents may carry Elastic field names instead of raw THOR fields.
+
+THOR can also forward events itself (`-s host:port:FORMAT:PROTOCOL`, formats such as CEF or JSON). A JSON target fed by THOR 11 receives v3 objects ([log formats](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/log-formats.md)). Nextron's `thor-deployment` skill, if installed, describes these forwarding options; `thor-maintenance` covers `thor-util logconvert`.
 
 ## 4. Unsupported formats (B, C, E)
 

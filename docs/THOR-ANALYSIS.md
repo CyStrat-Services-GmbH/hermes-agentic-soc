@@ -8,12 +8,14 @@ THOR is built to miss nothing, so it reports anomalies and false positives by de
 
 The skills are guidance for the agent, not new tools. Counting, normalisation and the first assessment remain the job of the deterministic plugin tools (`thor_parse`, `thor_first_assessment`), so numbers never depend on the model.
 
+Product facts such as editions, flag names per THOR version, update tooling and custom signatures belong to Nextron's separately maintained thor-skill. The THOR skills name the relevant Nextron skill where it helps; see [Companion skills](OPERATOR-GUIDE.md#companion-skills).
+
 ## The nine skills
 
 | Skill | Purpose | Reference files |
 |---|---|---|
 | `thor-assessment` | Lead skill: end-to-end workflow from intake to nine-section German case, with tool layer and analyst layer kept apart | Case output template, quality gate, worked example |
-| `thor-lite` | Prepare and request a bounded local THOR Lite FileScan through Hermes approval; state Lite's coverage limits | — |
+| `thor-lite` | Prepare and request a bounded local THOR Lite 10.7 or 11 Filescan through Hermes approval; state Lite's coverage limits | — |
 | `thor-siem-export-intake` | Bring Splunk, Elastic or CSV exports into analysable form, reconcile row counts, document filters and duplicates | — |
 | `thor-module-analysis` | Interpret findings per module: what Filescan, ProcessCheck, SHIMCache, AmCache, ServiceCheck, Autoruns, Registry, Eventlog and others actually prove | Module guide, file path checks, hash checks |
 | `thor-signature-interpretation` | Read scores, levels, reasons and rule prefixes (MAL, HKTL, WEBSHELL, EXPL, VULN, SUSP, PUA) at their real weight | — |
@@ -48,7 +50,7 @@ flowchart LR
 
 - **Exact numbers.** Events are counted by tools, never by reading. Events, automatic observation groups and analyst findings are reported separately.
 - **Evidence labels.** Every claim is Confirmed, Strong Indicator or Not Derivable.
-- **Coverage honesty.** THOR Lite has no Registry, Eventlog, SHIMCache or Sigma scanning ([THOR Lite](https://www.nextron-systems.com/thor-lite/)); filters, lookback and scan modes reduce coverage further. Missing findings never prove a clean host.
+- **Coverage honesty.** THOR Lite has no Registry, SHIM cache, Amcache, service or scheduled-task modules. THOR Lite 10.7 also has no Eventlog or Sigma without the `allowsigma` licence special; THOR Lite 11 has both ([THOR Lite](https://www.nextron-systems.com/thor-lite/), [Lite feature matrix](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-lite/references/limitations.md)). Filters, lookback and scan modes reduce coverage further. Missing findings never prove a clean host.
 - **Classic errors blocked.** No execution from SHIMCache alone, no owner-as-executing-user, no detection time as attack time, no AV action name as successful removal, no attribution from a rule name.
 - **Two layers.** The deterministic Tool-Erstbewertung stays visible; the analyst's assessment adds evidence-backed changes on top.
 - **Data protection.** No passwords or credential hashes in any output; pseudonymised identifiers in normalised data; external lookups only with data-sharing approval; no uploads.
@@ -81,6 +83,6 @@ The regression suite runs the real tools on this file and checks that the number
 
 ## Limits
 
-- The skills improve how Hermes reasons about THOR output. They do not add parsing support: THOR JSON v3, text logs and the legacy three-column CSV remain unsupported by the deterministic tools.
-- Behavioural quality depends on the model Hermes runs. The suite has been validated structurally and against the real tools; it has not yet been evaluated against real customer cases or a licensed THOR Enterprise run.
+- The skills improve how Hermes reasons about THOR output. They do not add parsing support: text logs, the three-column hash CSV (`<host>_files_md5s.csv`, still written by default) and THOR JSON v1 remain unsupported by the deterministic tools, which read JSON v2 and v3. THOR 11 writes only JSON v3; `--jsonv2` has no effect there ([flag map](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor/references/flag-map-v10-v11.md)).
+- Behavioural quality depends on the model Hermes runs. The suite has been validated structurally and against the real tools; it has not yet been evaluated against real customer cases or a run of full, commercially licensed THOR.
 - Module guidance follows Nextron's public documentation. Field names vary between THOR versions and output formats; check the actual export.

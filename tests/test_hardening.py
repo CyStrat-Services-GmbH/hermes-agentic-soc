@@ -79,16 +79,16 @@ def test_missing_identity_prevents_overcorrelation(tmp_path, missing):
 
 def test_pid_reuse_is_not_identity(tmp_path):
     event = {"hostname": "A", "scanid": "S", "level": "Warning", "module": "ProcessCheck",
-             "process": {"pid": 42, "name": "test"}}
+             "pid": 42, "process_name": "test"}
     assert parse_events(tmp_path, [event, event])["inventory"]["finding_count"] == 2
-    event["process"]["start_time"] = "2026-11-11T00:00:00Z"
+    event["created"] = "2026-11-11T00:00:00Z"  # THOR 10 JSON v2: process start time
     assert parse_events(tmp_path, [event, event])["inventory"]["finding_count"] == 1
 
 
 def test_record_channels_are_distinct(tmp_path):
     a = {"hostname": "A", "scanid": "S", "level": "Info", "module": "Eventlog",
-         "eventid": 1, "recordid": 10, "channel": "System"}
-    b = {**a, "channel": "Security"}
+         "event_id": 1, "event_channel": "System", "entry": "EventID: 1  EventRecordID: 10  Channel: System"}
+    b = {**a, "event_channel": "Security"}
     assert parse_events(tmp_path, [a, a, b])["inventory"]["finding_count"] == 2
 
 
@@ -113,10 +113,10 @@ def test_markdown_evidence_inert_and_case_specific(tmp_path):
 
 def test_timeline_utc_order_and_invalid_values(tmp_path):
     data = parse_events(tmp_path, [
-        {"level": "Info", "module": "Filescan", "timestamps": {"created": "2026-11-11T08:00:00+02:00"}},
-        {"level": "Info", "module": "Filescan", "timestamps": {"created": "2026-11-11T07:00:00Z"}},
-        {"level": "Info", "module": "Filescan", "timestamps": {"created": "2026-11-11T01:00:00"}},
-        {"level": "Info", "module": "Filescan", "timestamps": {"created": "yesterday"}},
+        {"level": "Info", "module": "Filescan", "file": {"created": "2026-11-11T08:00:00+02:00"}},
+        {"level": "Info", "module": "Filescan", "file": {"created": "2026-11-11T07:00:00Z"}},
+        {"level": "Info", "module": "Filescan", "file": {"created": "2026-11-11T01:00:00"}},
+        {"level": "Info", "module": "Filescan", "file": {"created": "yesterday"}},
     ])
     rows, rejected = timeline_rows(data["events"])
     assert len(rows) == 2 and rejected == 2

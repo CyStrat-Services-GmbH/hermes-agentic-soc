@@ -14,8 +14,8 @@ flowchart TD
     C -->|"No: local evidence analysis"| E["Lazy profile-scoped runtime"]
     D --> E
     E --> F["Allowed-root evidence import"]
-    E --> G["Fixed-argv local THOR FileScan"]
-    F --> H["Strict JSON v1/v2 or NDJSON adapter"]
+    E --> G["Fixed-argv local THOR Filescan"]
+    F --> H["Strict JSON v2/v3 or NDJSON adapter"]
     G --> H
     H --> I["Exact event inventory and observation groups"]
     I --> J["Deterministic conservative policy"]
@@ -51,7 +51,7 @@ Read [SECURITY.md](../SECURITY.md) for the full threat boundary and the [operato
 
 - **api:** Strict finite tool schema subset and host approval directive, with no model-controlled shell flags.
 - **security:** Canonical path containment, best-effort minimisation and structural authorization-scope checks.
-- **tools/thor:** Strict structured import, explicit version rejection, exact counts and verified local FileScan invocation.
+- **tools/thor:** Strict structured import of JSON v2 and v3, explicit version rejection, exact counts and verified local Filescan invocation for THOR 10.7 and 11.
 - **scoring:** Conservative provisional policy, evidence limits and case rendering.
 - **runtime:** Operator configuration, private staged report publication, lazy salt and lifecycle audit with explicit post-operation audit-failure semantics.
 - **tools/capabilities:** Offline inventory separating implemented functions, planned technology coverage and unverified configuration presence.
@@ -59,6 +59,6 @@ Read [SECURITY.md](../SECURITY.md) for the full threat boundary and the [operato
 
 ## Compatibility and deliberate limits
 
-Hermes v0.23.0 is the declared minimum, with integration validation against the inspected upstream revision recorded in VALIDATION.md. The actual vendor scanner is external and version-probed through its own CLI help. JSON v3 is explicitly unsupported because it is structurally distinct ([Nextron JSON versions](https://github.com/NextronSystems/jsonlog)).
+Hermes v0.23.0 is the declared minimum, with integration validation against the inspected upstream revision recorded in VALIDATION.md. The actual vendor scanner is external and probed through `--version` and its full CLI help. JSON v2 and v3 are read through separate field maps because v3 is structurally distinct; JSON v1 is refused because it keeps reasons in flat `reason_N` keys ([Nextron JSON versions](https://github.com/NextronSystems/jsonlog)).
 
 The same-host/scan/file+hash identity is conservative observation grouping, not complete forensic event correlation. Records with no stable artifact key remain separate. Human analysts validate suspicious behavior, potential duplicates, attack time, priority and business impact.

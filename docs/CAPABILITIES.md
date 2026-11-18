@@ -11,8 +11,8 @@ The native entrypoint is `plugin.yaml` plus `register(ctx)` in `__init__.py`. Th
 | `soc_capabilities` | Inventory implemented functions, planned integrations and configuration presence | No remote connectivity test or credential disclosure |
 | `soc_template_list` | List nine specialist role templates | Read-only inventory |
 | `soc_template_install` | Preview or provision a new `soc-` profile | Host approval for creation; existing profiles are not overwritten |
-| `thor_lite_scan` | Probe local CLI capabilities, prepare or request a FileScan | External executable, configured scan root and host approval for execution |
-| `thor_parse` | Import allowed local structured evidence and count/group observations | Supported JSON v1/v2 only; strict limits and input checks |
+| `thor_lite_scan` | Probe local CLI capabilities (THOR 10.7 or 11), prepare or request a Filescan | External executable, configured scan root and host approval for execution |
+| `thor_parse` | Import allowed local structured evidence and count/group observations | Supported JSON v2 and v3 only; strict limits and input checks |
 | `thor_first_assessment` | Produce deterministic case JSON and a nine-section German report | Provisional first assessment, not forensic certainty |
 | `soc_alert_triage` | Triage supplied alert evidence | No remote enrichment |
 

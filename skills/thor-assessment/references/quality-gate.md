@@ -10,7 +10,7 @@ Check every item before handover. Any "no" keeps the case in draft and names the
 - [ ] The per-finding event counts were computed in code and sum exactly to the finding-event count (not added up by eye).
 - [ ] The mapping table states the partition of finding events (how many carry `reasons`, how many are reason-less module observations such as `ProcessIntegrity`), and that partition explains the events-vs-findings gap.
 - [ ] Export origin, THOR edition, known flags/mode, filters and split parts are documented.
-- [ ] Coverage gaps are stated (e.g. THOR Lite: no Registry, Eventlog, SHIMCache or Sigma).
+- [ ] Coverage gaps are stated (e.g. THOR Lite: no Registry, SHIM cache, Amcache, service or task modules; THOR Lite 10.7 also no Eventlog or Sigma without the `allowsigma` licence special).
 
 ## Analysis
 

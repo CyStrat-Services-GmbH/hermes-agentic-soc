@@ -1,5 +1,20 @@
 # Validation record
 
+## Unreleased: THOR 10.7 and 11 launcher and parser
+
+The launcher had not been run against a real THOR before. Against current builds it refused every scan: THOR 10.7.32's `--help` lists only the most important options and omits `--jsonfile`, `--jsonv2` and `--suppresspi`, and THOR 11 lists different flag names and writes JSON v3, which the parser refused. The launcher now reads `--version`, checks `--fullhelp` (10.7) or `--help long` (11) and runs each version with its own flags. The parser reads JSON v2 and v3 with the field names real exports use, and refuses JSON v1.
+
+| Check | Executed result |
+|---|---|
+| THOR Lite 10.7.32, macOS arm64 | Dry run, then Filescan of a scratch folder: exit 0, only `thor.json` (v2) in the run directory. A planted text file named like a hack tool came back as a Warning (Filename IOC, score 60) with reason, kind and hashes |
+| THOR Lite 11.0.0-rc.3, macOS arm64 | Dry run, then Filescan of the same folders: exit 0, only `thor.jsonl` (v3) in the run directory. The same planted file was scanned (`scanned_elements: 2`) but not reported |
+| Clean scan, both versions | Licence, root and Full Disk Access notices are parsed as status messages; the first assessment is R4, not "Verdächtig" |
+| Previous argv on THOR Lite 10.7.32 | THOR repaired `--jsonfile thor.json` and `FileScan` itself; without `--nothordb` a non-root run logged an Error writing `/var/lib/thor/thor10-lite.db` |
+| Real exports: 5 THOR 10 v2, 4 THOR 11 v3, 2 early THOR 11 v2 | All parsed; the derived level matches THOR's exported level on every scored record. On the 9 v2 and v3 exports with level and score (12,603 scored records), the previous `band()` disagreed 387 times. 4 early THOR 11 development logs in JSON v1 were refused with the `--jsonv2` hint |
+| Regression suite | 214 passed; `test_docs` fails on the untracked `submission/catalog-entry.yaml` link, as before this change |
+
+Not established: Windows and Linux runs, a full (non-Lite) THOR run and THOR 11 GA.
+
 ## Release 0.2.4: the repository is public, and the docs said otherwise
 
 The repository became public, but the README a catalog reviewer reads at the pinned commit still called itself a "Private development preview", closed with "This repository is currently private", and told readers that submitting to the catalog "requires the owner's explicit approval" — while the entry was already open. The German README, the integration roadmap and the preview badge said the same.

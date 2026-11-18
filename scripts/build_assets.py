@@ -70,6 +70,8 @@ Do not upload customer indicators to public TI services without explicit data-sh
 4. Map ATT&CK only with a behavior-specific rationale; do not extract technique IDs as proof from arbitrary text.
 5. Produce a reviewed pull-request draft. No live rule deployment in this MVP.
 
+Companion skills, when the operator has installed them: `yara-rule-skill` (YARAHQ) for YARA naming, metadata, string choice, performance, yaraQA issue IDs and YARA-Forge quality gates; `thor-custom-signatures` (Nextron's thor-skill) for THOR IOC files, YARA and Sigma placement and false-positive filters. Their guidance takes precedence over the summary here. See docs/OPERATOR-GUIDE.md, "Companion skills".
+
 Do not copy Nextron private rules or signature packs. Review licenses of external Sigma/YARA rules separately."""),
     "incident-response": (
         "Prepare L2 incident validation, evidence preservation and response drafts. Use for escalation and containment planning, not executing response actions.",
@@ -123,6 +125,16 @@ TECHS = [
 OFFICIAL = {
     "elastic-security": "https://www.elastic.co/docs/explore-analyze/ai-features/agent-builder/mcp-server",
     "splunk": "https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/2.0/connecting-to-the-mcp-server-and-settings",
+}
+
+# Separately maintained skills that own a technology's authoring rules. Referenced, never vendored,
+# so the profile always reads the maintainer's current version (docs/OPERATOR-GUIDE.md, "Companion skills").
+COMPANION = {
+    "yara": """Rule authoring and review: load `yara-rule-skill` if the operator installed it
+(https://github.com/YARAHQ/yara-rule-skill). It covers the YARA Style Guide, the YARA Performance
+Guidelines, yaraQA issue IDs and YARA-Forge quality gates, and takes precedence over this scaffold.
+Run its validator only where operator-approved code execution exists.
+""",
 }
 
 
@@ -212,6 +224,8 @@ description: "Prepare read-only {name} query plans for supplied SOC evidence. Us
 {reference}
 No server is enabled by this plugin. Empty MCP template fields are intentional.
 """
+        if slug in COMPANION:
+            body += "\n" + COMPANION[slug]
         write(f"skills/{skill_name}/SKILL.md", body)
     write("skills/tech-cystrat-soc-suite/SKILL.md", """---
 name: tech-cystrat-soc-suite
@@ -294,6 +308,8 @@ Example: supplied case export -> source-labelled evidence inventory -> analyst a
     # Normalized output schemas are intentionally stricter than open-ended THOR input.
     event_properties = {
         "event_id": {"type": "string"}, "finding_id": {"type": "string"},
+        # THOR's own status output is a message, not a finding; it never drives the verdict.
+        "record_kind": {"enum": ["finding", "message"]},
         "host": {"type": "string"}, "module": {"type": "string"}, "scan_id": {"type": "string"},
         "score": {"type": ["number", "null"]},
         "level": {"enum": ["ALERT", "WARNING", "NOTICE", "INFO", "ERROR", "DEBUG", "UNKNOWN"]},

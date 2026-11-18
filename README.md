@@ -77,10 +77,10 @@ The assessment engine is deterministic. Hermes may use its configured model to i
 | Area | Delivered in v0.2.4 | Boundary |
 |---|---|---|
 | Native Hermes plugin | 7 tools, 4 slash commands, 1 approval-policy hook | Public plugin APIs; no monkey-patching |
-| Evidence analysis | THOR JSON v1/v2, arrays, event wrappers and NDJSON | No v3 or legacy CSV/text support |
+| Evidence analysis | THOR JSON v2 (THOR 10.7 `--jsonv2`) and v3 (THOR 11), arrays, event wrappers and NDJSON | No THOR JSON v1, hash-CSV or text-log support |
 | First assessment | Exact counts, observation groups, German case JSON/Markdown | Provisional triage, not proof of compromise |
 | THOR analysis suite | 9 skills: module and signature interpretation, false-positive review, correlation and timeline, fleet triage, safe IOC handling, SIEM-export intake | Analyst guidance on top of the deterministic tools; [details](docs/THOR-ANALYSIS.md) |
-| Local THOR launcher | Fixed-argument FileScan preparation and execution path | External licensed binary and human approval required; real vendor scan not validated here |
+| Local THOR launcher | Fixed-argument Filescan preparation and execution for THOR and THOR Lite 10.7 and 11 | External licensed binary and human approval required; real scans validated with THOR Lite 10.7.32 and 11.0.0-rc.3 on macOS only |
 | Specialist profiles | 6 defense profiles | Offensive/research roles are planned for a later release and not shipped |
 | Workflow references | 4 declarative workflow definitions | Not an executable workflow engine |
 | Technology coverage | 25 skills and inactive MCP descriptors | **0 verified live remote connectors** |
@@ -169,12 +169,12 @@ What the plugin does on the machine, in the categories a reviewer checks before 
 | Behaviour | What happens |
 |---|---|
 | **Network** | None. No HTTP client, no fetch, no telemetry, no update check. Evidence never leaves the machine through this plugin. |
-| **Commands** | Two subprocesses. `thor_lite_scan` runs the operator's own THOR executable at `thor_path` — separately licensed, never bundled or downloaded — after verifying its `--help` output carries the required flags. `soc_template_install` runs the local `hermes profile create … --no-credentials --no-skills --no-alias` after explicit approval. Both receive a PATH-only environment, so no provider key or proxy secret is inherited. |
+| **Commands** | Two subprocesses. `thor_lite_scan` runs the operator's own THOR executable at `thor_path` — separately licensed, never bundled or downloaded — after reading its version and verifying that its full CLI help (`--fullhelp` on THOR 10.7, `--help long` on THOR 11) lists the required flags. `soc_template_install` runs the local `hermes profile create … --no-credentials --no-skills --no-alias` after explicit approval. Both receive a PATH-only environment (THOR additionally its own `THOR_LICENSE`, if set), so no provider key or proxy secret is inherited. |
 | **Reads outside the plugin** | Evidence files are read only inside the operator-configured `evidence_roots` and `scan_roots`. A path outside them is refused; symlinks are resolved and contained; credential files (`.env`, `auth.json`, key material) are refused by name. |
 | **Writes** | Cases, reports, inventories and a JSONL audit trail go under `plugin_data_dir("agentic-soc")` with mode `0700`. Nothing is written into the scanned evidence. |
 | **Credentials** | None read, stored or forwarded. The plugin declares no `requires_env` and touches no secret store. |
 | **Background activity** | None. No watcher, no scheduler, no daemon; THOR runs with a timeout and its output is read when the call returns. |
-| **Model context** | Parsed events and generated reports enter the session context like any other tool result, so they reach the model provider the user configured. Personal data is minimised best effort (`--suppresspi`); review output before sharing it. |
+| **Model context** | Parsed events and generated reports enter the session context like any other tool result, so they reach the model provider the user configured. Personal data is minimised best effort (`--suppresspi` on THOR 10.7, `--no-personal-data` on THOR 11); review output before sharing it. |
 
 ## Documentation
 

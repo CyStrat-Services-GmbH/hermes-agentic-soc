@@ -49,6 +49,12 @@ def test_default_bands(score, expected):
     assert thor.band(score) == expected
 
 
+@pytest.mark.parametrize("score,top,expected", [
+    (90, 75, "WARNING"), (90, 76, "ALERT"), (81, 80, "ALERT"), (85, None, "ALERT"), (70, 90, "WARNING")])
+def test_alert_band_needs_subscore_above_75(score, top, expected):
+    assert thor.band(score, top) == expected
+
+
 @pytest.mark.parametrize("value", [True, False, "NaN", float("inf"), -1, "invalid", [], {}])
 def test_invalid_scores_unknown(value):
     assert thor.score_number(value) is None
@@ -257,14 +263,23 @@ def test_no_shell_or_secret_inheritance():
         assert not {"OPENAI_API_KEY", "HERMES_YOLO", "PYTHONPATH"} & env.keys()
 
 
+V10_VERSION = b"THOR 10.7.32\nBuild 1cabaee (2026-09-09 08:22:40) (darwin, arm64)\nYARA 4.5.8\n"
+V11_VERSION = b"THOR 11.0.0-rc.3\nBuild b962c3a (2026-10-16 14:57:41) (darwin, arm64)\nYARA 4.5.8\n"
+V10_HELP = b"--module --path --jsonfile --jsonv2 --rebase-dir --suppresspi --nolog --nocsv --nothordb"
+V11_HELP = b"--module --path --json --output-directory --no-personal-data --no-html --no-csv --no-thordb"
+
+
 def scan_setup(tmp_path):
     exe = tmp_path / "scanner"
     exe.write_text("# fake; never actually executed by this unit test\n")
     exe.chmod(0o700)
     target = tmp_path / "target"
     target.mkdir()
-    help_output = b"--jsonfile --jsonv2 --rebase-dir --suppresspi --path --module --nolog --nocsv"
-    return exe, target, help_output
+    return exe, target
+
+
+def probes(version, help_output):
+    return [SimpleNamespace(returncode=0, stdout=version), SimpleNamespace(returncode=0, stdout=help_output)]
 
 
 def test_scan_missing_no_download(tmp_path):
@@ -272,34 +287,70 @@ def test_scan_missing_no_download(tmp_path):
     assert not r["ok"] and "nextron-systems.com" in r["download"]
 
 
-def test_scan_dry_run_and_exact_flags(tmp_path):
-    exe, target, help_output = scan_setup(tmp_path)
-    with patch("subprocess.run", return_value=SimpleNamespace(returncode=0, stdout=help_output)) as run:
+@pytest.mark.parametrize("version,help_output,help_call,schema", [
+    (V10_VERSION, V10_HELP, ["--fullhelp"], "v2"),
+    (V11_VERSION, V11_HELP, ["--help", "long"], "v3")])
+def test_scan_dry_run_and_exact_flags(tmp_path, version, help_output, help_call, schema):
+    exe, target = scan_setup(tmp_path)
+    with patch("subprocess.run", side_effect=probes(version, help_output)) as run:
         result = thor.scan(str(exe), str(target), [target], tmp_path / "data")
-        assert result["dry_run"] and run.call_count == 1
-        assert run.call_args.args[0] == [str(exe), "--help"]
-    with patch("subprocess.run", return_value=SimpleNamespace(returncode=0, stdout=b"--jsonfile-unsafe")):
+        assert result["dry_run"] and result["json_schema"] == schema and run.call_count == 2
+        assert [c.args[0] for c in run.call_args_list] == [[str(exe), "--version"], [str(exe), *help_call]]
+    with patch("subprocess.run", side_effect=probes(version, b"--jsonfile-unsafe")):
+        with pytest.raises(BoundaryError):
+            thor.scan(str(exe), str(target), [target], tmp_path / "data")
+    # THOR 10's short --help lacks --jsonfile/--jsonv2/--suppresspi; only the verified full list counts.
+    with patch("subprocess.run", side_effect=probes(version, help_output.rsplit(b" ", 1)[0])):
         with pytest.raises(BoundaryError):
             thor.scan(str(exe), str(target), [target], tmp_path / "data")
 
 
+@pytest.mark.parametrize("version", [b"THOR 10.6.21\n", b"THOR 12.0.0\n", b"Loki 0.51.0\n", b""])
+def test_scan_unsupported_or_unknown_version_refused(tmp_path, version):
+    exe, target = scan_setup(tmp_path)
+    with patch("subprocess.run", return_value=SimpleNamespace(returncode=0, stdout=version)) as run:
+        with pytest.raises(BoundaryError):
+            thor.scan(str(exe), str(target), [target], tmp_path / "data")
+        assert run.call_count == 1
+
+
+@pytest.mark.parametrize("name", ["a,b", "<hostname>", "$HOME", "%TEMP%"])
+def test_scan_refuses_paths_thor_would_rewrite(tmp_path, name):
+    exe, _ = scan_setup(tmp_path)
+    target = tmp_path / name
+    target.mkdir()
+    with patch("subprocess.run") as run:
+        with pytest.raises(BoundaryError):
+            thor.scan(str(exe), str(target), [target], tmp_path / "data")
+        run.assert_not_called()
+
+
 def test_scan_timeout_is_incomplete(tmp_path):
-    exe, target, help_output = scan_setup(tmp_path)
-    with patch("subprocess.run", side_effect=[SimpleNamespace(returncode=0, stdout=help_output),
-                                             subprocess.TimeoutExpired("thor", 10)]):
+    exe, target = scan_setup(tmp_path)
+    with patch("subprocess.run", side_effect=probes(V10_VERSION, V10_HELP) + [subprocess.TimeoutExpired("thor", 10)]):
         result = thor.scan(str(exe), str(target), [target], tmp_path / "data", execute=True)
         assert result["timed_out"] and not result["ok"]
 
 
-def test_scan_file_only_scope_and_suppressed_outputs(tmp_path):
-    exe, target, help_output = scan_setup(tmp_path)
-    with patch("subprocess.run", side_effect=[SimpleNamespace(returncode=0, stdout=help_output),
-                                             SimpleNamespace(returncode=0)]) as run:
+@pytest.mark.parametrize("version,help_output,expected,absent", [
+    (V10_VERSION, V10_HELP, ["--jsonfile=thor.json", "--jsonv2", "--suppresspi", "--nolog", "--nocsv", "--nothordb"],
+     ["--jsonfile", "thor.json"]),
+    (V11_VERSION, V11_HELP, ["--json", "thor.jsonl", "--no-personal-data", "--no-html", "--no-csv", "--no-thordb"],
+     ["--jsonv2", "--suppresspi", "--nolog"])])
+def test_scan_file_only_scope_and_suppressed_outputs(tmp_path, version, help_output, expected, absent):
+    exe, target = scan_setup(tmp_path)
+    with patch("subprocess.run", side_effect=probes(version, help_output) + [SimpleNamespace(returncode=0)]) as run:
         result = thor.scan(str(exe), str(target), [target], tmp_path / "data", execute=True)
         argv = run.call_args.args[0]
-        assert argv[1:3] == ["--module", "FileScan"]
-        assert "--suppresspi" in argv and "--nolog" in argv and "--nocsv" in argv
+        assert argv[1:5] == ["--module", "Filescan", "--path", str(target.resolve())]
+        assert set(expected) <= set(argv) and not set(absent) & set(argv)
         assert not result["ok"]  # zero exit without JSON is not a completed scan.
+
+
+def test_thor_license_reaches_thor_only(tmp_path):
+    with patch.dict("os.environ", {"THOR_LICENSE": "bGljZW5zZQ==", "AWS_SECRET_ACCESS_KEY": "nope"}):
+        env = thor.subprocess_env()
+        assert env["THOR_LICENSE"] == "bGljZW5zZQ==" and "AWS_SECRET_ACCESS_KEY" not in env
 
 
 def test_every_template_skill_and_registry_complete():

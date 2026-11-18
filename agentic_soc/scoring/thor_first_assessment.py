@@ -15,6 +15,10 @@ def display(value) -> str:
     return re.sub(r"([\\`*_\[\]{}()#!|>])", r"\\\1", text)
 
 
+def status_messages(count: int) -> str:
+    return f"{count} THOR-Statusmeldung" + ("" if count == 1 else "en")
+
+
 def timeline_rows(events):
     rows = set()
     rejected = 0
@@ -41,13 +45,17 @@ def assess(parsed: dict) -> dict:
         scores = [e["score"] for e in events if e["score"] is not None]
         levels = {e["level"] for e in events}
         severity = next((x for x in ("ALERT", "WARNING", "NOTICE", "ERROR", "UNKNOWN", "INFO", "DEBUG") if x in levels), "UNKNOWN")
-        findings.append({"finding_id": finding_id, "event_ids": [e["event_id"] for e in events],
+        kind = "finding" if any(e.get("record_kind", "finding") == "finding" for e in events) else "message"
+        findings.append({"finding_id": finding_id, "record_kind": kind, "event_ids": [e["event_id"] for e in events],
                          "host": events[0]["host"], "module": events[0]["module"],
                          "modules": sorted({e["module"] for e in events}),
                          "score": max(scores) if scores else None, "level": severity,
                          "evidence_strength": "Strong Indicator" if severity in {"ALERT", "WARNING"} else "Confirmed",
                          "rationale": "Scanner severity drives triage; it does not establish malware execution or a compromised host."})
-    levels = {f["level"] for f in findings}
+    # THOR status messages (licence, privilege and coverage notices) never raise suspicion; an ERROR or
+    # unknown-level message still prevents low-risk reassurance.
+    levels = {f["level"] for f in findings
+              if f["record_kind"] == "finding" or f["level"] in {"ERROR", "UNKNOWN"}}
     if "ALERT" in levels:
         priority, criticality = "P2", "HIGH"
         classification, verdict = "Suspicious – Further Investigation Required", "Verdächtig"
@@ -74,28 +82,32 @@ def assess(parsed: dict) -> dict:
         "limitations": parsed["limitations"] + [
             "Initial access, attacker identity, execution, lateral movement and successful remediation are not established.",
             "Priority is provisional: impact, asset criticality, scope and recency require analyst validation.",
-            "THOR score thresholds may be operator-customized; exported level takes precedence over default score bands.",
+            "Exported level takes precedence over default score bands: an alert also needs a sub-score above 75, and only THOR 10 permits custom thresholds.",
         ],
         "recommended_actions": [
             "Validate the highest-severity artifact and triggering rule in the original restricted evidence.",
             "Preserve original evidence and verify its SHA-256 against the import record.",
             "Determine asset criticality, scan scope, event recency and whether containment already occurred.",
             "For validated active compromise, request explicit incident-response approval before isolation or blocking.",
-            "Where Lite coverage is insufficient, evaluate appropriately licensed THOR Enterprise or Thunderstorm with Nextron.",
+            "Where Lite coverage is insufficient (no registry, SHIM cache, Amcache, service or task modules), evaluate full THOR under a suitable commercial license, or THOR Cloud Lite (full module set, Lite signatures) for internal use, with Nextron.",
         ],
         "ticket_draft": {"status": "draft_only", "writes_performed": False, "requires_human_approval": True,
-                         "title": f"THOR triage: {len(findings)} correlated observations; {priority} provisional"},
+                         "title": f"THOR triage: {sum(f['record_kind'] == 'finding' for f in findings)} "
+                                  f"correlated observations; {priority} provisional"},
     }
     return result
 
 
 def markdown(case: dict, parsed: dict) -> str:
     i = case["inventory"]
-    events = parsed["events"]
+    all_events = parsed["events"]
+    events = [e for e in all_events if e.get("record_kind", "finding") == "finding"]
+    messages = [e for e in all_events if e.get("record_kind", "finding") == "message"]
     lines = [
         "# Titel", "THOR-Erstbewertung des bereitgestellten Exports",
         "", "## Summary",
-        f"Der Export enthält exakt {i['event_count']} Events und {i['finding_count']} korrelierte Beobachtungsgruppen.",
+        f"Der Export enthält exakt {i['event_count']} Events ({len(events)} Befund-Datensätze, "
+        f"{status_messages(len(messages))}) und {i['finding_count']} korrelierte Beobachtungsgruppen.",
         f"Scanner-Level: {display(i['levels'])}. Module: {display(i['modules'])}.",
         f"Vorläufiges Verdict: {case['verdict']}. Vollständige Scanabdeckung ist nicht nachgewiesen.",
         "", "## Assessment",
@@ -126,6 +138,13 @@ def markdown(case: dict, parsed: dict) -> str:
         specific.append(f"- {e['event_id']}: {display(e['module'])}, {e['level']}, "
                         f"Score {e['score'] if e['score'] is not None else 'unbekannt'}; "
                         f"Beobachtung: {display(e['message'])}; Gründe: {reasons}.")
+    if not top:
+        specific.append("- Keine Befund-Datensätze; der Export enthält nur THOR-Statusmeldungen.")
+    errors = sum(e["level"] in {"ERROR", "UNKNOWN"} for e in messages)
+    if messages:
+        specific.append(f"- {status_messages(len(messages))} (Start, Lizenz, Init, Report): keine Befunde"
+                        + (f"; {errors} davon auf Level ERROR oder ohne Level, sie schränken die Aussagekraft ein."
+                           if errors else "."))
     insert_at = lines.index("## Bewertung") - 1
     lines[insert_at:insert_at] = specific
     for event in events[:100]:
@@ -134,7 +153,9 @@ def markdown(case: dict, parsed: dict) -> str:
         for key, value in event["hashes"].items():
             lines.append(f"  - Artefakt-{key}: `{value}`; kein Nachweis bösartiger Ausführung.")
     if len(events) > 100:
-        lines.append(f"- Anzeige auf 100 Events begrenzt; alle {len(events)} Events stehen in normalized.json.")
+        lines.append(f"- Anzeige auf 100 von {len(events)} Befund-Datensätzen begrenzt; alle Events stehen in normalized.json.")
+    if messages:
+        lines.append(f"- {status_messages(len(messages))} hier nicht aufgeführt; vollständig in normalized.json.")
     lines.extend(["", "## Timeline",
                   "Erkennungszeitpunkte sind keine Angriffszeitpunkte; Artefaktzeiten werden separat bezeichnet."])
     timeline, rejected_times = timeline_rows(events)

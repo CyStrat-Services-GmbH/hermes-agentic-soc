@@ -56,7 +56,7 @@ def test_non_scalar_host_or_scan_cannot_establish_identity(tmp_path, field, valu
                                      (12, "yesterday"), (12, "2026-11-11T00:00:00")])
 def test_invalid_process_identity_does_not_merge(tmp_path, pid, start):
     e = {"hostname": "host", "scanid": "scan", "level": "Info", "module": "ProcessCheck",
-         "process": {"pid": pid, "start_time": start}}
+         "pid": pid, "created": start}
     p = tmp_path / "input.json"
     p.write_text(json.dumps([e, e]))
     assert parse(p, R)["inventory"]["finding_count"] == 2

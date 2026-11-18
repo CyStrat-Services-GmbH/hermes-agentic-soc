@@ -30,7 +30,7 @@ TOOLS = [
         "execute": {"type": "boolean", "default": False}}, ("template", "name")),
     schema("thor_lite_scan", "Probe separately installed THOR Lite or execute an operator-allowed local directory scan after host approval.", {
         "target": {"type": "string"}, "execute": {"type": "boolean", "default": False}}, ("target",)),
-    schema("thor_parse", "Import THOR JSON v1/v2 or NDJSON from an allowed root; count and correlate all events.", {
+    schema("thor_parse", "Import THOR JSON v2 (THOR 10.7 --jsonv2) or v3 (THOR 11) from an allowed root; count and correlate all events.", {
         "path": {"type": "string"}}, ("path",)),
     schema("thor_first_assessment", "Create deterministic, evidence-bounded German THOR Markdown and JSON case reports.", {
         "path": {"type": "string"}}, ("path",)),
