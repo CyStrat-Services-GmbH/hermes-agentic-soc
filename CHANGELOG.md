@@ -9,6 +9,8 @@ and the released commit is the one pinned in the catalog entry.
 
 ## [Unreleased]
 
+## [0.2.7] — 2026-11-23
+
 ### Fixed
 - `thor_lite_scan` refused every current THOR build. THOR 10.7's `--help` omits
   `--jsonfile`, `--jsonv2` and `--suppresspi`, and THOR 11 renamed the flags. The
