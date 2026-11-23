@@ -7,4 +7,6 @@ agentic-soc:thor-false-positive-review
 agentic-soc:thor-timeline-correlation
 agentic-soc:thor-fleet-triage
 agentic-soc:thor-ioc-handling
-agentic-soc:incident-response
+agentic-soc:evidence-handling
+agentic-soc:analytical-reasoning
+agentic-soc:case-handoff

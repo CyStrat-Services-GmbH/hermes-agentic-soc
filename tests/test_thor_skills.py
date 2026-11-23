@@ -40,7 +40,7 @@ def frontmatter(name):
 def test_suite_is_complete_and_registered():
     assert len(THOR_SKILLS) == 9
     assert set(THOR_SKILLS) <= ALL_SKILLS
-    assert len(ALL_SKILLS) == 39
+    assert len(ALL_SKILLS) == 44
 
 
 @pytest.mark.parametrize("name", THOR_SKILLS)
@@ -123,8 +123,10 @@ def test_soul_contract(name):
     soul = (ROOT / "templates/profiles" / name / "SOUL.md").read_text(encoding="utf-8")
     shipped = (ROOT / "templates/profiles" / name / "skills.txt").read_text().split()
     assert soul.startswith(f"# {name} · ")
-    for section in ("## Identity", "## How you work", "## Decision standards", "## What you deliver",
-                    "## When to escalate", "## Boundaries", "## Communication", "## Skills and workflow"):
+    for section in ("## Identity", "## What you receive", "## How you work",
+                    "## What you decide — and what you do not", "## Decision standards",
+                    "## What you deliver", "## Handoff contract", "## When to escalate",
+                    "## Emergency path", "## Boundaries", "## Communication", "## Skills and workflow"):
         assert section in soul
     assert shipped == [f"agentic-soc:{s}" for s in ROLES[name]["skills"]]
     for skill in ROLES[name]["skills"]:
@@ -135,6 +137,46 @@ def test_soul_contract(name):
         assert phrase in soul
     assert "built by CyStrat Services × Nextron Systems" in soul
     assert "offensive_preview_enabled" not in soul and "soc_research_plan" not in soul
+
+
+def test_every_role_has_one_distinct_leading_skill():
+    """Two roles pointing at the same leading skill means one of them is under-specified."""
+    leading = {name: ROLES[name]["skills"][0] for name in PROFILES}
+    assert len(set(leading.values())) == len(leading), leading
+    assert set(leading.values()) <= ALL_SKILLS
+
+
+def test_analysis_and_response_are_separate_roles():
+    """Investigation and response must not share one persona or one decision right."""
+    assert "soc-l2-analyst" in PROFILES and "soc-incident-handler" in PROFILES
+    assert "soc-l2-incident-responder" not in PROFILES
+    l2 = ROLES["soc-l2-analyst"]
+    handler = ROLES["soc-incident-handler"]
+    handler_text = " ".join(handler["decision_rights"] + handler["not_responsible"] + handler["standards"]).replace("**", "")
+    l2_text = " ".join(l2["decision_rights"] + l2["not_responsible"]).replace("**", "")
+    # The handler owns execution approval tracking but never execution itself.
+    assert any("do not decide to execute" in item.lower() for item in handler["not_responsible"])
+    assert "rollback" in handler_text.lower()
+    # L2 recommends, but does not coordinate containment or communication.
+    assert "containment" in l2_text.lower() and "recommend" in l2_text.lower()
+    assert any("do not coordinate containment" in item.lower() for item in l2["not_responsible"])
+
+
+@pytest.mark.parametrize("name", sorted(PROFILES))
+def test_every_role_names_a_human_emergency_path(name):
+    soul = (ROOT / "templates/profiles" / name / "SOUL.md").read_text(encoding="utf-8")
+    emergency = soul.split("## Emergency path", 1)[1].split("## ", 1)[0]
+    assert "in parallel" in emergency
+    assert "human" in emergency.lower()
+    assert "do not wait" in emergency.lower()
+
+
+@pytest.mark.parametrize("name", sorted(PROFILES))
+def test_every_handoff_states_what_the_receiver_must_reverify(name):
+    role = ROLES[name]
+    assert role["handoff_contract"]
+    joined = " ".join(role["handoff_contract"]).lower()
+    assert "re-verify" in joined or "must re-" in joined
 
 
 def test_dfir_profile_ships_the_whole_thor_suite():

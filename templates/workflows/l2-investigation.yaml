@@ -1,0 +1,37 @@
+{
+  "name": "l2-investigation",
+  "version": "0.2.7",
+  "execution": "declarative_reference_not_workflow_engine",
+  "steps": [
+    {
+      "id": "handover",
+      "type": "human",
+      "require": "L1 handover with evidence IDs, counts and named gaps"
+    },
+    {
+      "id": "reverify",
+      "type": "skill",
+      "skill": "agentic-soc:soc-l2-investigation",
+      "require": "re-derive counts and asset context independently"
+    },
+    {
+      "id": "scope",
+      "type": "draft_only",
+      "lists": [
+        "confirmed",
+        "suspected",
+        "unknown"
+      ]
+    },
+    {
+      "id": "classify",
+      "type": "human",
+      "require": "true positive, false positive or inconclusive with rationale"
+    },
+    {
+      "id": "recommend",
+      "type": "human",
+      "require": "next step and its decision owner"
+    }
+  ]
+}

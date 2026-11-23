@@ -9,6 +9,8 @@ and the released commit is the one pinned in the catalog entry.
 
 ## [Unreleased]
 
+## [0.2.7] — 2026-11-23
+
 ### Fixed
 - `thor_lite_scan` refused every current THOR build. THOR 10.7's `--help` omits
   `--jsonfile`, `--jsonv2` and `--suppresspi`, and THOR 11 renamed the flags. The
@@ -38,6 +40,24 @@ and the released commit is the one pinned in the catalog entry.
   expand them.
 - The THOR skills state which facts apply to THOR 10 or 11 and to Lite or full
   THOR, aligned with Nextron's thor-skill. The YARA skills point to yara-rule-skill.
+
+- **Role split:** `soc-l2-incident-responder` is replaced by `soc-l2-analyst`
+  (independent validation, scope, impact, incident recommendation) and
+  `soc-incident-handler` (approval-ready response options, evidence custody,
+  coordination, approval tracking). Analysis and response no longer share one
+  persona or one decision right. Migration: [L2 role split](docs/MIGRATION-L2-SPLIT.md).
+- **Profile contracts:** every SOUL now carries six additional contract
+  sections — intake fields, owned versus not-owned decisions, an explicit
+  handoff contract stating what the receiver must re-verify, and a direct
+  human emergency path. The durable contract stays in the SOUL; the ordered
+  procedure stays in the skill.
+- **Shared method library:** five new product-neutral skills —
+  `evidence-handling`, `analytical-reasoning`, `data-quality-coverage`,
+  `case-handoff` and `soc-l2-investigation`. Role count 6 → 7, skill count
+  39 → 44, workflow references 3 → 7.
+- Every role now names exactly one leading skill. L2 and vulnerability
+  management previously pointed at `alert-triage`; they now own
+  `soc-l2-investigation` and `vulnerability-management`.
 
 ## [0.2.6] — 2026-11-12
 

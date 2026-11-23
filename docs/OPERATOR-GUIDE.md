@@ -2,7 +2,7 @@
 
 # Operator guide
 
-This guide is the detailed operational reference for Hermes Agentic SOC v0.2.6. Start with [Getting started](GETTING-STARTED.md) for a short evaluation path, or use the sections below to review configuration, tool behavior and assessment policy.
+This guide is the detailed operational reference for Hermes Agentic SOC v0.2.7. Start with [Getting started](GETTING-STARTED.md) for a short evaluation path, or use the sections below to review configuration, tool behavior and assessment policy.
 
 [Obtain THOR Lite](#obtain-thor-lite) · [Install](#install) · [Offline demo](#quick-offline-demonstration) · [Configuration](#operator-configuration) · [Tools and profiles](#tools-and-profiles) · [Companion skills](#companion-skills) · [Assessment policy](#assessment-policy) · [MCP expansion](#technology-and-mcp-expansion) · [Security](#security-disclosure)
 
@@ -114,7 +114,7 @@ Offensive research is not part of this version. There is no research profile, no
 
 | Tool | Purpose |
 |---|---|
-| `soc_template_list` | List all nine role templates, status and workflow |
+| `soc_template_list` | List all seven role templates, status and workflow |
 | `soc_capabilities` | Distinguish implemented functions, planned integrations and configuration presence; optional technology filter |
 | `soc_template_install` | Preview or create a new `soc-` profile via `hermes profile create --no-credentials` |
 | `thor_lite_scan` | Probe local THOR capabilities (10.7 or 11), or request a human-approved Filescan |
@@ -122,7 +122,7 @@ Offensive research is not part of this version. There is no research profile, no
 | `thor_first_assessment` | Deterministic first assessment and nine-section German case report |
 | `soc_alert_triage` | Supplied-evidence triage, no remote enrichment |
 
-Shipped roles: `soc-l1-triage`, `soc-l2-incident-responder`, `threat-hunter`, `dfir-compromise-assessment`, `detection-engineer`, `vulnerability-manager`. Offensive/research roles are not shipped in this version.
+Shipped roles: `soc-l1-triage`, `soc-l2-analyst`, `soc-incident-handler`, `threat-hunter`, `dfir-compromise-assessment`, `detection-engineer`, `vulnerability-manager`. Analysis and response are deliberately separate profiles: `soc-l2-analyst` investigates and recommends, `soc-incident-handler` prepares the approval-ready response and never executes it. Offensive/research roles are not shipped in this version.
 
 Profile installation uses only documented CLI commands, never private profile-store imports. A successful new-profile create is followed by path discovery from the labelled `profile show` output; the plugin fails closed if that public CLI format changes. It replaces only the newly seeded default persona, preserving it as `SOUL.hermes-default.md`, and copies shipped skills. Existing profiles are never overwritten.
 

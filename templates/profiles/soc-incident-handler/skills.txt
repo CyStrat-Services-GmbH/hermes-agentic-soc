@@ -1,0 +1,5 @@
+agentic-soc:incident-response
+agentic-soc:analytical-reasoning
+agentic-soc:case-handoff
+agentic-soc:evidence-handling
+agentic-soc:thor-timeline-correlation

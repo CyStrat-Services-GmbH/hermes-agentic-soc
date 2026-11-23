@@ -9,7 +9,7 @@
 <p align="center"><strong>Cybersecurity from Germany. For the world.</strong></p>
 
 <p align="center">
-  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.6"></a>
+  <a href="plugin.yaml"><img src="assets/badges/version.svg" alt="Version 0.2.7"></a>
   <a href="docs/GETTING-STARTED.md#prerequisites"><img src="assets/badges/python.svg" alt="Standalone-Engine: Python ab 3.11"></a>
   <a href="docs/GETTING-STARTED.md#install-in-hermes"><img src="assets/badges/hermes.svg" alt="Hermes ab 0.23.0"></a>
 </p>
@@ -42,7 +42,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 </p>
 
 > [!IMPORTANT]
-> **Frühe öffentliche Vorschau · v0.2.6.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
+> **Frühe öffentliche Vorschau · v0.2.7.** Die lokale Evidenzanalyse ist implementiert. Die 25 Technologieanbindungen sind Vorlagen, keine produktiven Connectoren. Offensive Research ist **für eine spätere Version geplant und nicht Teil dieser Fassung** — es existiert dafür kein Profil, Skill, Workflow, Tool oder Schalter. Lizenziert unter Apache-2.0.
 
 ## Was heute enthalten ist
 
@@ -51,8 +51,8 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 | Hermes-Erweiterung | 8 native Tools, 4 Slash-Kommandos, 1 Approval-Hook | Öffentliche Plugin-Schnittstellen |
 | Evidenzanalyse | THOR JSON v2 (THOR 10.7 mit `--jsonv2`) und v3 (THOR 11) sowie NDJSON, exakte Zählung und konservative Beobachtungsgruppen | Keine Unterstützung für THOR JSON v1, Hash-CSV oder Textlog |
 | Erstbewertung | Deterministische Bewertung, JSON und deutscher Neun-Abschnitte-Bericht | Vorläufige Triage, kein automatischer Kompromittierungsnachweis |
-| Fachwissen | 6 Defense-Profile, 39 Skills | 9 Skills für die THOR-Ergebnisanalyse, 6 Domain-Skills, 25 technologiebezogene Planungsvorlagen |
-| Workflows | 4 deklarative Referenzen | Keine ausführbare Workflow-Engine |
+| Fachwissen | 7 Defense-Profile, 44 Skills | 9 Skills für die THOR-Ergebnisanalyse, 10 Domain-Skills, 25 technologiebezogene Planungsvorlagen |
+| Workflows | 7 deklarative Referenzen | Keine ausführbare Workflow-Engine |
 | Anbindungen | 25 geplante Technologien; CyStrat SOC Suite domänenübergreifend | 0 verifiziert aktive Remote-Connectoren |
 | Lokaler Scan | Wrapper für separat bezogenes THOR | Menschliche Freigabe nötig; echter Herstellerscan hier nicht validiert |
 

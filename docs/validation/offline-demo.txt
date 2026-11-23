@@ -1,9 +1,9 @@
 Hermes Agentic SOC | CyStrat Services × Nextron Systems
 OFFLINE SYNTHETIC DEMO. No scanner or target interaction.
-Profiles: 9; six defense MVP templates, three research scaffolds.
+Profiles: 7; every shipped template is a defense MVP template, no research scaffolds.
 {
   "ok": true,
-  "report_id": "1b95b1c4fe5742ad9c6e08b8186b5906",
+  "report_id": "ee50ed740ee24632979544f4f4d6124e",
   "inventory": {
     "event_count": 4,
     "finding_count": 3,
@@ -19,22 +19,34 @@ Profiles: 9; six defense MVP templates, three research scaffolds.
       "Init": 1
     },
     "hosts": [
-      "[host-677a374f794b]"
+      "[host-7fa6f0722a00]"
     ],
     "scans": [
-      "[scan-abec43f759f0]"
+      "[scan-b2e55ba9fa16]"
     ],
+    "log_versions": {
+      "v2": 4
+    },
+    "record_kinds": {
+      "finding": 3,
+      "message": 1
+    },
+    "message_levels": {
+      "INFO": 1
+    },
     "unique_files": 1,
     "unique_hashes": 1,
     "unknown_score_count": 1,
-    "coverage_verified": false
+    "coverage_verified": false,
+    "duplicate_observation_count": 1,
+    "score_level_disagreement_count": 0
   },
-  "source_sha256": "2c928c5e52e9cc724164271dc636ab4737c9f2e9359a9af1b1ef6dd59f97f89e",
-  "normalized": "/home/user/workspace/soc-demo-final/reports/1b95b1c4fe5742ad9c6e08b8186b5906/normalized.json",
+  "source_sha256": "db0a8a4cada9f20f33497027999066a0d98e0b7fe64e8e7819c9647b20d6213a",
+  "normalized": "/home/user/workspace/soc-demo-final/reports/ee50ed740ee24632979544f4f4d6124e/normalized.json",
   "verdict": "Verdächtig",
   "priority": "P2",
-  "case_json": "/home/user/workspace/soc-demo-final/reports/1b95b1c4fe5742ad9c6e08b8186b5906/case.json",
-  "report": "/home/user/workspace/soc-demo-final/reports/1b95b1c4fe5742ad9c6e08b8186b5906/report.md"
+  "case_json": "/home/user/workspace/soc-demo-final/reports/ee50ed740ee24632979544f4f4d6124e/case.json",
+  "report": "/home/user/workspace/soc-demo-final/reports/ee50ed740ee24632979544f4f4d6124e/report.md"
 }
 Exact inventory: 4 events, 3 correlated observation groups.
 Evidence-bounded verdict; no automatic containment. Ticket remains draft-only.

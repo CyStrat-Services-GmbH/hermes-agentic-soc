@@ -2,7 +2,7 @@
 
 # Capability reference
 
-The native entrypoint is `plugin.yaml` plus `register(ctx)` in `__init__.py`. This reference describes v0.2.6; `soc_capabilities` provides a local inventory without contacting vendors or exposing configuration values.
+The native entrypoint is `plugin.yaml` plus `register(ctx)` in `__init__.py`. This reference describes v0.2.7; `soc_capabilities` provides a local inventory without contacting vendors or exposing configuration values.
 
 ## Native tools
 
@@ -33,8 +33,9 @@ The single `pre_tool_call` hook requests host-owned approval for sensitive execu
 
 | Profile ID | Focus | Status |
 |---|---|---|
-| `soc-l1-triage` | Initial alert triage and evidence gaps | Defense profile |
-| `soc-l2-incident-responder` | Incident analysis and draft response recommendations | Defense profile |
+| `soc-l1-triage` | Initial alert triage, first-pass disposition and evidence gaps | Defense profile |
+| `soc-l2-analyst` | Independent validation, scope, impact and the incident recommendation | Defense profile |
+| `soc-incident-handler` | Approval-ready response options, evidence custody and coordination | Defense profile |
 | `threat-hunter` | Hypothesis-led investigation | Defense profile |
 | `dfir-compromise-assessment` | Evidence-led compromise assessment | Defense profile |
 | `detection-engineer` | Detection logic and validation guidance | Defense profile |
@@ -44,8 +45,8 @@ Profiles and skills guide behavior; they are not a sandbox for unrelated host to
 
 ## Skills, workflows and integrations
 
-- **39 skills:** Nine THOR analysis skills (see [THOR analysis suite](THOR-ANALYSIS.md)), six domain/workflow skills and 25 technology-specific scaffolds. Skill availability is not proof of a live integration.
-- **3 workflow references:** Declarative YAML guidance, not an executable orchestration engine.
+- **44 skills:** Nine THOR analysis skills (see [THOR analysis suite](THOR-ANALYSIS.md)), ten domain/workflow skills and 25 technology-specific scaffolds. Skill availability is not proof of a live integration.
+- **7 workflow references:** Declarative YAML guidance, not an executable orchestration engine.
 - **25 technology entries:** Each has a planning skill and inactive MCP descriptor. The verified live remote connector count is zero.
 - **CyStrat SOC Suite:** Dedicated skill, inactive descriptor and proposed read-only contract; no invented live endpoint.
 
