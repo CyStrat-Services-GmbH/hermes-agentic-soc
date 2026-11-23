@@ -29,6 +29,9 @@ Use the [original contributor logos](../assets/brand/README.md) without recolori
 
 Avoid “25 connected platforms,” “fully autonomous SOC,” “confirmed compromise” from an ALERT alone, “GDPR compliant by default” and “Apache-2.0 open source” before license approval. Prefer precise descriptions of the implemented scope and explicit roadmap labels.
 
-## Publication gate
+## Publication state
 
-This is an internal review asset, not a public launch. Repository visibility, the final license, external publication and catalog/hackathon submission require renewed explicit authorization.
+The repository is public under Apache-2.0 and listed in the Hermes plugin catalog at
+the commit pinned in its catalog entry. Visibility, licence and catalog changes are
+a maintainer decision, not a side effect of a content change; the messaging here
+describes the shipped scope and must not claim more than the code does.

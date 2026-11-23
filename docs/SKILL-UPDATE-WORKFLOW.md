@@ -35,9 +35,9 @@ fixtures. Real exports, paths, hosts, accounts and hashes stay in the case direc
 | Role | Owns |
 |---|---|
 | SOC profile (`soc-*`) | Authors the finding during a case: what was misunderstood, what the export showed, what the skill should say instead |
-| `dev-tl` (team lead) | Harvests, forms the branch, keeps commits thematic, opens the PR |
-| `dev-qa` | Reviews the lesson for correctness and for the four gates below |
-| Repo maintainer | Merges, cuts the version, distributes to the profiles |
+| Maintainer | Harvests, forms the branch, keeps commits thematic, opens the PR |
+| Reviewer | Reviews the lesson for correctness and for the four gates below |
+| Release owner | Merges, cuts the version, distributes to the profiles |
 | Operator | Approves anything that restarts a gateway or widens an evidence root |
 
 ## 3. The two channels
@@ -54,7 +54,7 @@ Proposed change: dedupe on (EVENT_ID, EVENT_TIME, channel, ruleset, score) befor
 Confidence: confirmed
 ```
 
-**Channel B — harvest.** The team lead compares profile snapshots against the repository, takes the
+**Channel B — harvest.** The maintainer compares profile snapshots against the repository, takes the
 findings that are worth generalising and turns them into a pull request. Channel B never trusts the
 profile as a source of truth: it re-derives the change against the current `skills/` tree and
 reviews it file by file.
@@ -62,28 +62,30 @@ reviews it file by file.
 ## 4. Harvest procedure
 
 ```bash
-cd ~/projects/hermers-agentic-soc-plugin
-git fetch origin && git switch -c dev origin/main    # or continue an existing dev branch
+cd ~/projects/hermes-agentic-soc
+git fetch origin && git switch -c docs/<slug> origin/dev
 
 # 1. Drift report — read-only, no writes anywhere
 python3 scripts/harvest_profile_skills.py \
-  --profile ~/.hermes/profiles/soc-dfir-thor/skills/agentic-soc \
-  --profile ~/.hermes/profiles/soc-thor-assessment/skills/agentic-soc
+  --profile ~/.hermes/profiles/<tool-profile>/skills/agentic-soc \
+  --profile ~/.hermes/profiles/<assessment-profile>/skills/agentic-soc
 
 # 2. Take one profile at a time, file by file
 python3 scripts/harvest_profile_skills.py \
-  --profile ~/.hermes/profiles/soc-dfir-thor/skills/agentic-soc --only thor-assessment --write
+  --profile ~/.hermes/profiles/<tool-profile>/skills/agentic-soc --only thor-assessment --write
 git diff                                   # mandatory reading, every file
 
-# 3. Validate, commit, push, open the PR
+# 3. Validate, commit, push the branch, open the PR against dev
 python scripts/build_assets.py && git diff --exit-code
 python -m pytest -q
 python scripts/check_docs.py
 hermes plugins doctor . --ci
 git commit -m "feat(skills): <one lesson>"
-git push -u origin dev
-gh pr create --base main --head dev --fill
+git push -u origin docs/<slug>
+gh pr create --base dev --head docs/<slug> --fill
 ```
+
+`main` and `dev` are pull-request only; a branch is pushed, never the integration branch itself.
 
 Never harvest two profiles into one commit. When both profiles changed the same file, merge them
 deliberately and say in the PR which half came from which profile and why both survive.
@@ -122,12 +124,15 @@ git tag -a vX.Y.Z -m "Release X.Y.Z" && git push origin vX.Y.Z
 gh release create vX.Y.Z --title "…" --notes "…"
 
 # 4. bring dev back onto main -- the merge commit exists only on main
-git switch dev && git merge --ff-only origin/main && git push origin dev
+#    pull-request only: open main -> dev, merge it, then fast-forward locally
+gh pr create --base dev --head main --title "Sync main into dev after release X.Y.Z" --fill
+gh pr merge <n> --merge
+git switch dev && git pull --ff-only
 
 # 5. distribute to the profiles (see below)
 ```
 
-**Step 4 is not optional.** `main` always gains a merge commit that `dev` does not have, so leaving it out shows `dev is 1 commit behind` on every release. `git rev-parse main^{tree}` and `git rev-parse dev^{tree}` must be equal afterwards — equal commits, not just equal content.
+**Step 4 is not optional.** `main` always gains a merge commit that `dev` does not have, so leaving it out shows `dev is 1 commit behind` on every release. `main` and `dev` are pull-request only, so the return path is itself a pull request (`main` → `dev`); afterwards `git rev-parse main^{tree}` and `git rev-parse dev^{tree}` must be equal — equal trees, not just equal files.
 
 A tag without a release page is a half-finished release: `gh release list` is where a reader looks for what shipped. Both are part of step 3.
 
