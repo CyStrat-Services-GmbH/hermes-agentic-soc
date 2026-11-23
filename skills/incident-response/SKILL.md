@@ -1,13 +1,17 @@
 ---
 name: incident-response
-description: "Prepare L2 incident validation, evidence preservation and response drafts. Use for escalation and containment planning, not executing response actions."
+description: "Prepare approval-ready incident response from a validated case. Use for response planning, coordination and evidence custody, not for executing containment."
 ---
 
 # Incident Response
 
-1. Validate L1 evidence and asset ownership; preserve originals, hashes and time-zone provenance.
-2. Separate observed facts from probable consequences. Correlate matching IDs without inventing causal links.
-3. Determine recency, impact, criticality and existing containment before setting operational priority.
-4. Draft isolation, blocking, acquisition and communications with target-specific scope and rollback.
-5. Require human approval for every production change. There are no containment or ticket-write connectors here.
-6. Document evidence gaps and case handoff. A report is first assessment, not completed forensic investigation.
+1. Re-read the L2 assessment and confirm scope, classification and gaps before planning anything.
+2. State the decision the human incident commander must make, the time available, and the cost of deciding late.
+3. Build options for acquisition, containment, eradication, recovery and communication. Each names target scope, expected effect, blast radius, dependencies and rollback.
+4. Sequence custody before containment where possible, and state what is lost when it is not possible.
+5. Separate urgent protective action from investigative completeness; time pressure changes the order, never the evidence requirement.
+6. Record approval per action against a named approver. A model-written intent is not approval.
+7. Write the communication draft with audience, facts, unknowns and what must not be said yet.
+8. Track what was executed, by whom, with what observed result, and close with the open follow-ups.
+
+Require human approval for every production change. There are no containment or ticket-write connectors here.

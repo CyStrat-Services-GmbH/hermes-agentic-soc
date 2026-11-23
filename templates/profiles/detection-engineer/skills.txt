@@ -1,3 +1,5 @@
 agentic-soc:detection-engineering
+agentic-soc:analytical-reasoning
+agentic-soc:data-quality-coverage
 agentic-soc:thor-signature-interpretation
 agentic-soc:thor-false-positive-review

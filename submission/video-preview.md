@@ -4,8 +4,8 @@ A 76-second German product-video draft accompanies review release 0.1.1 as a sep
 
 ## Content
 
-- Evidence-first positioning and six defense specialist roles.
-- 39 skills (including a nine-skill THOR analysis suite) and 25 technology scaffolds, plus CyStrat SOC Suite as the cross-domain platform.
+- Evidence-first positioning and seven defense specialist roles, with analysis and response as separate profiles.
+- 44 skills (including a nine-skill THOR analysis suite) and 25 technology scaffolds, plus CyStrat SOC Suite as the cross-domain platform.
 - Real offline CLI results from synthetic THOR evidence: four events, three observation groups, provisional P2/suspicious.
 - Strict separation between observation, suspicion and unsupported conclusions.
 - THOR as a separately installed external tool; no bundled scanner/signatures.

@@ -1,0 +1,43 @@
+{
+  "name": "incident-handling",
+  "version": "0.2.6",
+  "execution": "declarative_reference_not_workflow_engine",
+  "steps": [
+    {
+      "id": "case",
+      "type": "human",
+      "require": "validated L2 assessment, incident commander and approval route"
+    },
+    {
+      "id": "custody",
+      "type": "draft_only",
+      "require": "evidence preservation before containment where possible"
+    },
+    {
+      "id": "options",
+      "type": "draft_only",
+      "fields": [
+        "target_scope",
+        "expected_effect",
+        "blast_radius",
+        "rollback"
+      ]
+    },
+    {
+      "id": "approval",
+      "type": "human",
+      "require": "named approver per action",
+      "per_action": true
+    },
+    {
+      "id": "execute",
+      "type": "human_only",
+      "note": "No execution connector exists in this plugin."
+    },
+    {
+      "id": "closeout",
+      "type": "draft_only",
+      "writes": false
+    }
+  ]
+}

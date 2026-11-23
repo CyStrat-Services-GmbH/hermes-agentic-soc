@@ -1,4 +1,7 @@
 agentic-soc:alert-triage
+agentic-soc:evidence-handling
+agentic-soc:data-quality-coverage
+agentic-soc:case-handoff
 agentic-soc:thor-assessment
 agentic-soc:thor-false-positive-review
 agentic-soc:thor-siem-export-intake

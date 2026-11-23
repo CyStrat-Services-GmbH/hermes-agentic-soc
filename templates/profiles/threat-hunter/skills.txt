@@ -1,4 +1,8 @@
 agentic-soc:threat-hunt
+agentic-soc:analytical-reasoning
+agentic-soc:data-quality-coverage
+agentic-soc:evidence-handling
+agentic-soc:case-handoff
 agentic-soc:thor-fleet-triage
 agentic-soc:thor-signature-interpretation
 agentic-soc:thor-ioc-handling

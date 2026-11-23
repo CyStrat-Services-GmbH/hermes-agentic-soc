@@ -1,0 +1,31 @@
+{
+  "name": "detection-engineering",
+  "version": "0.2.6",
+  "execution": "declarative_reference_not_workflow_engine",
+  "steps": [
+    {
+      "id": "behaviour",
+      "type": "human",
+      "require": "confirmed observation, telemetry source, available fields"
+    },
+    {
+      "id": "draft",
+      "type": "skill",
+      "skill": "agentic-soc:detection-engineering"
+    },
+    {
+      "id": "fixtures",
+      "type": "draft_only",
+      "require": "at least one positive and one negative fixture"
+    },
+    {
+      "id": "test",
+      "type": "supplied_evidence_only"
+    },
+    {
+      "id": "review",
+      "type": "human",
+      "require": "rule review and deployment decision"
+    }
+  ]
+}

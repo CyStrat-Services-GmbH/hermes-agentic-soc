@@ -1,0 +1,10 @@
+agentic-soc:soc-l2-investigation
+agentic-soc:evidence-handling
+agentic-soc:analytical-reasoning
+agentic-soc:data-quality-coverage
+agentic-soc:case-handoff
+agentic-soc:alert-triage
+agentic-soc:thor-assessment
+agentic-soc:thor-timeline-correlation
+agentic-soc:thor-false-positive-review
+agentic-soc:thor-ioc-handling
