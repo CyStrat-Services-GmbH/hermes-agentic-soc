@@ -150,8 +150,8 @@ A patch release on top of 0.1.4. It restores two skill paragraphs the harvest dr
 
 | Content | Status |
 |---|---|
-| `thor-module-analysis/SKILL.md`: an AmCache `first_run` is not per-file execution time; count distinct values and bucket sizes before dating an execution, and never read a `$Recycle.Bin` path as proof of where a program ran | Restored from `soc-thor-assessment` |
-| `thor-timeline-correlation/references/timestamp-semantics.md`: every `accessed` time inside the scan window is an artefact of the scan itself; same distribution check on the AmCache `first_run` row | Restored from `soc-thor-assessment` |
+| `thor-module-analysis/SKILL.md`: an AmCache `first_run` is not per-file execution time; count distinct values and bucket sizes before dating an execution, and never read a `$Recycle.Bin` path as proof of where a program ran | Restored from the assessment profile |
+| `thor-timeline-correlation/references/timestamp-semantics.md`: every `accessed` time inside the scan window is an artefact of the scan itself; same distribution check on the AmCache `first_run` row | Restored from the assessment profile |
 | `.github/workflows/test.yml` removed, Actions disabled in the repository settings | No hosted CI |
 | `CONTRIBUTING.md`: local validation policy — checks run before every push, a failing local run blocks, no workflow without an owner decision | Documentation |
 
@@ -164,7 +164,7 @@ A patch release on top of 0.1.4. It restores two skill paragraphs the harvest dr
 | Catalog validation | Validation passed |
 | Drift after both harvests | `harvest_profile_skills.py`: the repository is a superset of both profiles |
 
-Why the correction was needed: one commit took the `soc-dfir-thor` version of two files wholesale instead of merging both profiles. The re-run of the drift report after the merge caught it — which is the behaviour the workflow in `docs/SKILL-UPDATE-WORKFLOW.md` prescribes.
+Why the correction was needed: one commit took the the THOR profile version of two files wholesale instead of merging both profiles. The re-run of the drift report after the merge caught it — which is the behaviour the workflow in `docs/SKILL-UPDATE-WORKFLOW.md` prescribes.
 
 No hosted CI exists in this repository. Every figure above comes from a local run on Python 3.14.9 and Hermes Agent v0.23.0; nothing is inferred from a runner.
 
@@ -174,8 +174,8 @@ Version 0.1.4 brings back what two running SOC profiles learned while working re
 
 | Content | Status |
 |---|---|
-| THOR skill lessons from `soc-dfir-thor` (tool path): output-shape intake, `--lookback` semantics, max file size, behavioural coverage, Eventlog/EVTX double count, per-rule match cap, Sigma titles in `DESCRIPTION_1`; four new references and four inventory scripts | Implemented |
-| THOR skill lessons from `soc-thor-assessment` (no-tool path): `references/export-inventory.md`, fallback for an exposed-but-refusing tool, artefact-family grouping, "quantify an all N claim" | Implemented |
+| THOR skill lessons from the THOR profile (tool path): output-shape intake, `--lookback` semantics, max file size, behavioural coverage, Eventlog/EVTX double count, per-rule match cap, Sigma titles in `DESCRIPTION_1`; four new references and four inventory scripts | Implemented |
+| THOR skill lessons from the assessment profile (no-tool path): `references/export-inventory.md`, fallback for an exposed-but-refusing tool, artefact-family grouping, "quantify an all N claim" | Implemented |
 | `docs/SKILL-UPDATE-WORKFLOW.md` — repo-first authoring, harvest, review gates, distribution including the gateway restart | Documentation |
 | `scripts/harvest_profile_skills.py` — dry-run drift report, `--write` into the repository only | Tooling |
 | Hermes minimum lowered from 0.23.1 to 0.23.0 after registration and real tool execution on 0.23.0 | Implemented |

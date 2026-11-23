@@ -13,7 +13,7 @@ runtime/
 /thor-lite*
 /submission/catalog-entry.yaml
 
-# Internal agent instructions - never published
+# Local agent tooling and plans (not part of the package)
 /AGENTS.md
 /CLAUDE.md
 /.agents/
