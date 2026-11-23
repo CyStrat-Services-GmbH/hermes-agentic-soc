@@ -81,7 +81,7 @@ def test_core_safety_rules_are_present():
                    "Tool-Erstbewertung", "Analystenbewertung", "require human approval"):
         assert phrase in lead
     lite = (ROOT / "skills/thor-lite/SKILL.md").read_text(encoding="utf-8")
-    assert "no Registry, Eventlog, SHIMCache or Sigma" in lite
+    assert "has RegistryChecks, SHIM cache, Amcache" in lite and "allowsigma" in lite
     ioc = (ROOT / "skills/thor-ioc-handling/SKILL.md").read_text(encoding="utf-8")
     assert "Never upload a file" in ioc and "LM/NTLM" in ioc
 

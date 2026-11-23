@@ -26,8 +26,8 @@ def inventory(root, get_config, technology=None):
             "live_remote_connectors": 0,
         },
         "implemented": [
-            "Local THOR JSON v1/v2 evidence import and deterministic first assessment",
-            "Local THOR FileScan wrapper, requiring an external executable and host approval",
+            "Local THOR JSON v2/v3 evidence import and deterministic first assessment",
+            "Local THOR Filescan wrapper for THOR 10.7 and 11, requiring an external executable and host approval",
             "Specialist profile templates and approved fresh-profile provisioning",
             "Supplied-alert triage, offline reports and auditable planning",
         ],

@@ -5,7 +5,7 @@
     "message": "Synthetic suspicious artifact; no actual malware included",
     "score": 90,
     "file": {"path": "/home/analyst/demo/synthetic-loader.txt", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
-    "reasons": [{"name": "DEMO_ONLY_LOADER_PATTERN", "score": 90, "description": "Synthetic detection fixture"}]
+    "reasons": [{"name": "DEMO_ONLY_LOADER_PATTERN", "score": 90, "signature": {"description": "Synthetic detection fixture"}}]
   },
   {
     "log_version": "v2.0.0", "time": "2026-11-11T08:00:01Z", "hostname": "LAB-WS01",
@@ -20,7 +20,7 @@
     "scanid": "S-DEMO", "level": "Notice", "module": "ProcessCheck",
     "message": "Synthetic process metadata requiring contextual review",
     "score": 45,
-    "process": {"name": "demo-process", "pid": 4242},
+    "pid": 4242, "process_name": "demo-process",
     "reasons": [{"name": "DEMO_ONLY_PROCESS", "score": 45}]
   },
   {

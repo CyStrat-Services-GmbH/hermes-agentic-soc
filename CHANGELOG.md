@@ -9,6 +9,36 @@ and the released commit is the one pinned in the catalog entry.
 
 ## [Unreleased]
 
+### Fixed
+- `thor_lite_scan` refused every current THOR build. THOR 10.7's `--help` omits
+  `--jsonfile`, `--jsonv2` and `--suppresspi`, and THOR 11 renamed the flags. The
+  launcher now reads `--version`, verifies `--fullhelp` (10.7) or `--help long`
+  (11) and runs each version with its own flags, including `--nothordb` /
+  `--no-thordb`.
+- THOR's own status messages (Lite licence notice, root and Full Disk Access
+  notices, match limits) counted as findings, so a clean THOR Lite scan was
+  assessed "Verdächtig". They are now `record_kind: message` and never raise the
+  verdict; ERROR messages still prevent a low-risk result.
+- The default score band ignored THOR's alert rule. A score of 81 or more is now
+  an alert only with a sub-score above 75.
+- Process, event-log, file-time and reason fields are read from the names real
+  JSON v2 exports use (`pid`/`created`, `event_id`/`event_channel`/`EventRecordID`,
+  `file.created`, `signature.description`).
+
+### Added
+- `thor_parse` reads THOR 11 JSON v3.
+- `THOR_LICENSE` is passed through to THOR, and only to THOR.
+- Operator guide: how to obtain THOR Lite and its licence, and how to add
+  Nextron's thor-skill and YARAHQ's yara-rule-skill as companion skills.
+
+### Changed
+- JSON v1 is refused with a hint to use `--jsonv2`, instead of being imported
+  without its reasons.
+- Scan paths containing `,`, `<…>`, `$` or `%` are refused; THOR would split or
+  expand them.
+- The THOR skills state which facts apply to THOR 10 or 11 and to Lite or full
+  THOR, aligned with Nextron's thor-skill. The YARA skills point to yara-rule-skill.
+
 ## [0.2.6] — 2026-11-12
 
 ### Changed

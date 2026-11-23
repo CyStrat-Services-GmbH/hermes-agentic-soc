@@ -9,20 +9,26 @@ A THOR score expresses confidence and severity together, from 0 to 100. A rule n
 
 ## How THOR scores
 
-- **Signature scores.** YARA rules carry a score in their metadata; filename IOCs carry one in their second CSV field; hash IOCs default to 100; keyword and C2 IOCs map to warning or alert defaults. YARA rules flagged `falsepositive` reduce an element's score ([scoring system](https://thor-manual.nextron-systems.com/en/latest/usage/other-topics.html)).
+- **Signature scores** ([scoring system](https://thor-manual.nextron-systems.com/en/latest/usage/other-topics.html), [scoring and levels](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/scoring-and-levels.md), [custom signatures](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-custom-signatures/SKILL.md)):
+  - YARA: the rule's `score` meta, 75 if it has none. A `falsepositive` meta turns the rule's score negative. Combined with a negative `score` it flips back to positive.
+  - Filename IOC: the score in the second CSV field; negative values are allowed.
+  - Hash IOC: 100 for `hash` or `hash;description`, otherwise the given score. THOR 11 YAML IOCs have no default: an omitted score counts as 0.
+  - Keyword IOC 70, C2 IOC 75, named-pipe IOC 100, mutex/event IOC 70, STIX IOC 75.
+  - Sigma: by rule level, low 40, medium 50, high 70, critical 100. In THOR 11 a custom `score:` field in the rule overrides the level.
+  - Trusted-hash IOC files: THOR 10 drops all Filescan reasons of the file; THOR 11 adds -100, so the total becomes 0.
 - **Total score.** Sub-scores are not added. They are sorted descending and combined so that each further reason weighs half as much as the previous one:
 
   ```text
   100 * (1 - (1 - s0/100/2^0) * (1 - s1/100/2^1) * (1 - s2/100/2^2) * …)
   ```
 
-  Several weak reasons therefore cannot simply add up to an alert.
-- **Alert condition.** File system alerts additionally require at least one sub-score above 75 (alert threshold minus 25).
-- **Default levels.** Notice from 40, warning from 60, alert from 81 on the command line (`--notice`, `--warning`, `--alert`). Operators can change these thresholds ([CLI flags](https://thor-manual.nextron-systems.com/en/latest/usage/flags.html)).
-- **Default scores for unscored messages:** warning 60, alert 80.
-- **Shown reasons.** Only positive scores and, by default, the top two reasons are printed. `--max-reasons` changes this. A missing reason in the export is not evidence that no other reason existed.
+  Several weak reasons therefore cannot simply add up to an alert. Positive sub-scores are capped at 100. Each negative sub-score multiplies the remaining uncertainty by `(1 + |s|/100)`: it lowers the total but cannot pull a 100 down. A sub-score of -100 or lower forces the total to 0.
+- **Alert condition.** Every alert needs a total of at least 81 **and** at least one sub-score above 75 (THOR 11: 76 or higher). A total of 81 or more without such a sub-score is a Warning, and a Warning can reach 100: two default YARA hits (75, 75) give 84, a Warning ([scoring and levels](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/scoring-and-levels.md)).
+- **Default levels.** Notice from 40, warning from 60, alert from 81. THOR 10 lets operators change these with `--notice`, `--warning` and `--alert`. THOR 11 fixes them; those flags are deprecated and ignored there. In both versions `-x`/`--min` (default 40) hides lower scores ([CLI flags](https://thor-manual.nextron-systems.com/en/latest/usage/flags.html), [flag map](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor/references/flag-map-v10-v11.md)).
+- **Unscored findings (THOR 10).** Some THOR 10 findings carry no score at all, for example the SHIMCache Warning `Found entry in suspicious directory`. `--min` does not filter them. Treat the level as given and the score as unknown ([scoring and levels](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/scoring-and-levels.md)).
+- **Shown reasons.** Only positive scores and, by default, the top two reasons are printed. `--max-reasons` (THOR 10) or `--alert-reason-limit` (THOR 11) changes this; `--intense`, `--deep` and `--lab` print all. The real count is in `REASONS_COUNT` (text), `reasons_count` (THOR 10 JSON v1) or `reason_count` (THOR 11 JSON); THOR 10 JSON v2 has no count. A missing reason in the export is not evidence that no other reason existed.
 
-Plugin behaviour: the exported level takes precedence over the default score bands because thresholds may have been customised. `score_level_disagreement_count` in the inventory shows how often level and default band disagree; a high count usually means custom thresholds, not data corruption. The plugin never sums reason scores to invent a total.
+Plugin behaviour: the exported level takes precedence over the default score bands. `score_level_disagreement_count` in the inventory shows how often the level and the plugin's score-only band disagree. Disagreement is expected and is not data corruption: a score of 81 or more without a sub-score above 75 is exported as Warning by design. On THOR 10, custom thresholds are a further cause; THOR 11 thresholds are fixed. The plugin never sums reason scores to invent a total.
 
 ## Signature types and their weight
 
@@ -35,7 +41,7 @@ Plugin behaviour: the exported level takes precedence over the default score ban
 | Filename IOC (regex) | A naming pattern | Low; frequent false positives |
 | Keyword IOC | A string in a log line, command line or registry value | Medium; context decides |
 | C2 IOC | A known C2 domain or IP | Medium to high; check freshness and sinkholes |
-| Sigma (full THOR) | A log-event pattern | Depends on the rule level and log context |
+| Sigma (full THOR and THOR Lite 11; THOR Lite 10 only with the `allowsigma` licence special) | A log-event pattern | Depends on the rule level and log context |
 | Anomaly checks | Location, extension, size, signature, parent/child, timestamp anomalies | Low alone; meaningful in combination |
 
 ## Rule name prefixes
@@ -58,16 +64,17 @@ Rules without a category prefix (older rules, custom rules, Sigma titles) need t
 
 ## Looking up a rule
 
-- THOR lists initialised rules with `--print-signatures`.
+- THOR lists initialised rules with `--print-signatures` (THOR 10) or `--list-signatures` (THOR 11).
 - Nextron's public VALHALLA rule info page (`https://valhalla.nextron-systems.com/info/rule/RULE_NAME`) shows metadata, past matches and AV verdicts; lookups are rate limited ([analysis and info](https://thor-manual.nextron-systems.com/en/latest/usage/analysis-and-info.html)).
 - This plugin performs no lookups. A rule name alone is not customer data, but do not combine it with host, path or customer identifiers in any external query.
-- THOR Lite ships only the open-source signature base. A rule from Nextron's private set cannot appear in a Lite result.
+- THOR Lite ships only the open-source signature base, plus YARA Forge rules and the operator's own signatures if installed. A rule from Nextron's private set cannot appear in a Lite result.
+- Nextron's companion skills, if installed: `thor-custom-signatures` documents IOC file formats, YARA meta attributes and how custom signatures are scored; `thor-log-analysis` explains levels and the scoring formula with worked examples.
 
 ## Output block
 
 ```text
 Event <E-ID> · Score <Score> · Level <Level> (Default-Band: <Band>)
-Gründe: <Regel (Sub-Score)>, … (ggf. gekürzt durch --max-reasons)
+Gründe: <Regel (Sub-Score)>, … (ggf. gekürzt durch --max-reasons / --alert-reason-limit)
 Signaturtyp: <Hash / YARA spezifisch / YARA generisch / Filename IOC / Keyword / C2 / Sigma / Anomalie>
 Präfix-Lesart: <z. B. HKTL = Tool-Präsenz, keine Nutzung belegt>
 Aussagekraft: <hoch / mittel / gering> – Begründung: <…>

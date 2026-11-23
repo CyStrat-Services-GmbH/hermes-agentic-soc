@@ -1,6 +1,6 @@
 # Export inventory when `thor_parse` cannot run
 
-`thor_parse` and `thor_first_assessment` accept THOR JSON v1/v2 only. They return `BOUNDARY_REJECTED` for **THOR JSON v3** (`"… unsupported events (including possible THOR v3)"`), for a **plain-text report** (`"Malformed JSON/NDJSON"`) and for truncated NDJSON. A refusal is not a reason to sample. Count the export yourself with the recipes below, then reconcile against the export's own `Report` module — that reconciliation is the evidence that your inventory is complete.
+`thor_parse` and `thor_first_assessment` accept THOR JSON v2 and v3. They return `BOUNDARY_REJECTED` for **THOR JSON v1** (`"… THOR JSON v1 records; v1 is not supported …"`), for a **plain-text report** (`"Malformed JSON/NDJSON"`) and for truncated NDJSON. A refusal is not a reason to sample. Count the export yourself with the recipes below, then reconcile against the export's own `Report` module — that reconciliation is the evidence that your inventory is complete.
 
 A refusal is a legitimate tool outcome: quote it in the case's `Analysegrundlage` instead of working around it silently.
 
@@ -20,7 +20,7 @@ One object per line, two `type` values: `THOR assessment` (findings, every one c
 }
 ```
 
-What breaks naive v1/v2 scripts: level/module/host/scan live under `meta.`; the artefact is `subject.` behind a `type` discriminator (`file`, `process`, `eventlog entry`, `Windows service`, `registry value`, `registry key`, `shim cache`, `shim database entry`, `AmCache entry`, `process start`, `hotfix summary`, `autorun entry`, `scheduled task`, `WMI startup command`, `antivirus exclusion`); `reasons` may be `null`; timestamps are RFC 3339 with offset.
+What breaks naive v1/v2 scripts: level/module/host/scan live under `meta.`; the artefact is `subject.` behind a `type` discriminator (`file`, `process`, `eventlog entry`, `Windows service`, `registry value`, `registry key`, `shim cache entry`, `shim database entry`, `AmCache entry`, `process start`, `hotfix summary`, `autorun entry`, `scheduled task`, `WMI startup command`, `antivirus exclusion`); `reasons` may be `null`; timestamps are RFC 3339 with offset.
 
 ```python
 import json, collections
@@ -46,8 +46,8 @@ Group 1 timestamp, 2 hostname, 3 IP, 4 level, 5 module, 6 payload. The payload i
 
 Two traps:
 
-- **No year in the timestamp.** The year comes from the file name and is confirmed by the `Report` line `Begin Time: Tue Aug 18 15:27:27 2026`. State the derivation; never imply the year was in the data.
-- **The line prefix is local wall-clock while `Eventlog` payload fields are UTC.** Windows `TimeCreated_SystemTime` differs from the prefix by the UTC offset. Convert explicitly and label which clock you used.
+- **No year in the line prefix.** The year comes from the file name and is confirmed by the `Report` line `Begin Time: Tue Aug 18 15:27:27 2026`; embedded ANSI C times such as this one carry it. State the derivation; never imply the year was in the prefix.
+- **The line prefix is UTC; THOR's embedded fields are host-local.** `EVENT_TIME`, `CREATED`, `MODIFIED` and similar fields are local time unless the scan used `--utc` (THOR 10) or `--timestamp-utc` (THOR 11) ([log formats](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/log-formats.md)). The raw Windows `TimeCreated_SystemTime` inside an `ENTRY` is UTC. Convert explicitly and label which clock you used.
 
 ```python
 import re, collections
@@ -66,7 +66,8 @@ A text export has no module-wide hash inventory: hashes exist only on individual
 | JSONL v3 | `Assessments` → `{"alerts":n,"warnings":n,"notices":n,"infos":n}` | Must equal your level counter over assessments |
 | JSONL v3 | `Messages` → `{"errors":n,"notices":n,"infos":n}` | Lifecycle lines; `errors` must be 0 on a healthy scan |
 | JSONL v3 | `Begin Time` / `End Time` / `Scan took …` | Scan duration for the case header |
-| Text | `Results` → `ALERTS: n WARNINGS: n NOTICES: n ERRORS: n` | Must equal the per-level line counts |
+| Text (THOR 10) | `Results` → `ALERTS: n WARNINGS: n NOTICES: n ERRORS: n` | Must equal the per-level line counts |
+| Text (THOR 11, `--text`) | `Assessments` and `Messages` lines, as in JSONL v3 | Same check as the JSONL rows |
 | Text | `Thor Version`, `Thor Build`, `Effective argument list`, `Signature Database`, `Sigma Database` | Edition, flags and signature base for `Analysegrundlage` |
 
 One unit of disagreement means the export is truncated or filtered. A filtered export is a scope statement, not a data set.
@@ -83,7 +84,7 @@ One unit of disagreement means the export is truncated or filtered. A filtered e
 ## Pitfalls
 
 - **The `Messages` counter excludes the `Report` block.** In THOR 11 exports the `Messages` line (`{"errors":…,"notices":…,"infos":…}`) counts only non-report messages; the export still contains the 7 `Report`/`Init`-report lines (`Assessments`, `Messages`, `Begin Time`, `End Time`, `Scan took …`, `Thor Scan finished`, log-file note). So `messages_parsed = infos + notices + 7`. Reconcile with that offset instead of reporting a 7-line mismatch. `errors` must still be 0.
-- **Match limits make rule counts lower bounds.** `MatchLimit` notices (`Rule triggered more than 10 times. Future matches will be suppressed`) mean the export stops listing further matches for that rule. Quote the count as "n shown, further matches suppressed" and never as the total. In THOR 11 this hits bulk Sigma rules first (`Important Windows Event Auditing Disabled`, `Suspicious Process By Web Server Process`, `System Processes CLI Anomaly`).
+- **Match limits make rule counts lower bounds.** `MatchLimit` notices (`Rule triggered more than 10 times. Future matches will be suppressed`) mean the export stops listing further matches for that rule. Quote the count as "n shown, further matches suppressed" and never as the total. In THOR 11 this muting applies to the live Eventlog module only; `--lab` lifts it, `--match-limit 0` does not ([output flags](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-scan/references/output.md)). It hits bulk Sigma rules first (`Important Windows Event Auditing Disabled`, `Suspicious Process By Web Server Process`, `System Processes CLI Anomaly`).
 - **Boot time from process creation times.** `Init` → `System Information` → `uptime` is reported in a unit that does not always match seconds and can contradict the rest of the export. Derive the boot time from the creation times of `smss.exe`/`csrss.exe`/`wininit.exe`/`services.exe` in `ProcessCheck` and cross-check any "running since …" claim against it before asserting continuous runtime.
 - **A single `SUSP_Echo_Pipe_Pattern_*` fact lands in many containers.** The same `cmd.exe /c echo <x> > \\.\pipe\<x>` string is reported in the Eventlog entry, the registry hive, `SYSTEM.LOG1`, `System.evtx`/`Security.evtx`, the Defender MPLog (`LogScan`) and often `access.log`. Count it once and merge every hit onto the originating event.
 - **A unique-hash count over the whole export is dominated by benign `Info` events.** Thousands of hashes from `ServiceCheck`, `Firewall` and `Amcache` mean nothing as an indicator; quote per artefact family.

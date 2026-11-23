@@ -1,6 +1,6 @@
 # THOR modules: fields, typical false positives and evaluation questions
 
-Primary sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.com/en/latest/) and [THOR scan modes](https://thor-manual.nextron-systems.com/en/latest/usage/scan-modes.html). Field names follow THOR's log output; exact casing differs between text, JSON v1 and JSON v2. Weights: L low, M medium, H high. "→ benign" or "→ malicious" is the direction of the indicator when the answer is yes.
+Primary sources: [THOR Log Analysis Manual](https://log-analysis-manual.nextron-systems.com/en/latest/) and [THOR scan modes](https://thor-manual.nextron-systems.com/en/latest/usage/scan-modes.html). Field names follow THOR's log output; exact casing differs between text, JSON v1 and JSON v2. THOR 11 JSON v3 uses lowercase names under `subject`; on THOR 11, `--describe-object-type <type>` lists them ([module notes](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/module-notes.md)). Weights: L low, M medium, H high. "→ benign" or "→ malicious" is the direction of the indicator when the answer is yes.
 
 ## Filescan
 
@@ -118,19 +118,19 @@ Typical false positives: software updaters and administrative jobs. `LASTRUN` is
 
 Queries WMI for persistence elements. The same items often appear in Autoruns. Correlate both instead of counting them twice.
 
-## Eventlog and EVTX (full THOR only)
+## Eventlog and EVTX (full THOR, THOR Lite 11)
 
-Applies Sigma, keyword and IOC checks to Windows event logs; EVTX file scanning covers exported logs on disk. The same source event can appear from the live log and from an EVTX copy; deduplicate by channel, event ID and record ID.
+Applies Sigma, keyword and IOC checks to Windows event logs; EVTX file scanning covers exported logs on disk. THOR Lite 10 runs them only with the `allowsigma` licence special ([Lite feature matrix](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-lite/references/limitations.md)). The same source event can appear from the live log and from an EVTX copy; deduplicate by channel, event ID and record ID.
 
 Interpretation notes:
 
 - The event's own timestamp is the source-event time, distinct from THOR's detection time.
 - For security products' events (e.g. Microsoft Defender detection and action events), confirm the action's result status and error code before claiming a threat was removed. An action name such as "remove" is not proof of success.
-- A Sigma rule level is the rule author's rating, not THOR's score. Nextron's default minimum Sigma level is high, reduced to medium in intense mode ([changelog](https://thor-manual.nextron-systems.com/en/latest/changelog/log.html)).
+- A Sigma rule level is the rule author's rating, not THOR's score. THOR turns it into a sub-score: low 40, medium 50, high 70, critical 100. Rules below the minimum level are not loaded. The default minimum is high, lowered to medium in intense, deep and lab mode. Set it with `--minimum-sigma-level` (THOR 10) or `--sigma-threshold` (THOR 11); a THOR 11 rule with its own `score:` field bypasses the threshold ([changelog](https://thor-manual.nextron-systems.com/en/latest/changelog/log.html), [scoring and levels](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/scoring-and-levels.md)).
 
 ## LogScan
 
-Processes `*.log` files line by line with filename and keyword IOCs and log-type YARA rules. Fields: `FILE`, `LINE`, `ELEMENT`, `PATTERN`.
+Processes `*.log` files line by line with filename and keyword IOCs and log-type YARA rules. THOR 11 selects log files through meta rules tagged `LOGSCAN` and also applies Sigma and C2/domain IOCs to the lines ([module notes](https://github.com/Nextron-Labs/thor-skill/blob/master/skills/thor-log-analysis/references/module-notes.md)). Fields: `FILE`, `LINE`, `ELEMENT`, `PATTERN`.
 
 Typical false positives: vulnerability scans producing HTTP 404 lines; RoboCopy logs listing hack-tool file names.
 

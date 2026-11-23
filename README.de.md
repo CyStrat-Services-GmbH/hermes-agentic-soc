@@ -49,7 +49,7 @@ Hermes Agentic SOC übersetzt Cybersicherheitsexpertise in spezialisierte Hermes
 | Bereich | Umfang | Einordnung |
 |---|---|---|
 | Hermes-Erweiterung | 8 native Tools, 4 Slash-Kommandos, 1 Approval-Hook | Öffentliche Plugin-Schnittstellen |
-| Evidenzanalyse | THOR JSON v1/v2 und NDJSON, exakte Zählung und konservative Beobachtungsgruppen | Keine Unterstützung für v3 oder Legacy-CSV/Text |
+| Evidenzanalyse | THOR JSON v2 (THOR 10.7 mit `--jsonv2`) und v3 (THOR 11) sowie NDJSON, exakte Zählung und konservative Beobachtungsgruppen | Keine Unterstützung für THOR JSON v1, Hash-CSV oder Textlog |
 | Erstbewertung | Deterministische Bewertung, JSON und deutscher Neun-Abschnitte-Bericht | Vorläufige Triage, kein automatischer Kompromittierungsnachweis |
 | Fachwissen | 6 Defense-Profile, 39 Skills | 9 Skills für die THOR-Ergebnisanalyse, 6 Domain-Skills, 25 technologiebezogene Planungsvorlagen |
 | Workflows | 4 deklarative Referenzen | Keine ausführbare Workflow-Engine |
@@ -98,12 +98,12 @@ Was das Plugin auf der Maschine tut, in den Kategorien, die vor einer Installati
 | Verhalten | Was passiert |
 |---|---|
 | **Netzwerk** | Keines. Kein HTTP-Client, kein Abruf, keine Telemetrie, keine Update-Prüfung. Evidenz verlässt die Maschine über dieses Plugin nicht. |
-| **Kommandozeile** | Zwei Subprozesse. `thor_lite_scan` startet die THOR-Binary des Betreibers aus `thor_path` — separat lizenziert, nie gebündelt oder nachgeladen — nachdem die `--help`-Ausgabe auf die erforderlichen Flags geprüft wurde. `soc_template_install` ruft nach ausdrücklicher Freigabe lokal `hermes profile create … --no-credentials --no-skills --no-alias` auf. Beide bekommen eine PATH-only-Umgebung, erben also keinen Provider-Key und kein Proxy-Secret. |
+| **Kommandozeile** | Zwei Subprozesse. `thor_lite_scan` startet die THOR-Binary des Betreibers aus `thor_path` — separat lizenziert, nie gebündelt oder nachgeladen — nachdem ihre Version gelesen und die vollständige CLI-Hilfe (`--fullhelp` bei THOR 10.7, `--help long` bei THOR 11) auf die erforderlichen Flags geprüft wurde. `soc_template_install` ruft nach ausdrücklicher Freigabe lokal `hermes profile create … --no-credentials --no-skills --no-alias` auf. Beide bekommen eine PATH-only-Umgebung (THOR zusätzlich sein eigenes `THOR_LICENSE`, falls gesetzt), erben also keinen Provider-Key und kein Proxy-Secret. |
 | **Lesen außerhalb des Plugins** | Evidenzdateien werden nur innerhalb der konfigurierten `evidence_roots` und `scan_roots` gelesen. Pfade außerhalb werden abgewiesen, Symlinks aufgelöst und eingegrenzt, Zugangsdateien (`.env`, `auth.json`, Schlüsselmaterial) namentlich verweigert. |
 | **Schreiben** | Fälle, Berichte, Inventare und ein JSONL-Audit landen unter `plugin_data_dir("agentic-soc")` mit Modus `0700`. In die untersuchte Evidenz wird nichts geschrieben. |
 | **Zugangsdaten** | Werden nicht gelesen, gespeichert oder weitergereicht. Das Plugin deklariert kein `requires_env` und berührt keinen Secret-Store. |
 | **Hintergrundaktivität** | Keine. Kein Watcher, kein Scheduler, kein Daemon; THOR läuft mit Timeout, die Ausgabe wird beim Rückkehr des Aufrufs gelesen. |
-| **Modell-Kontext** | Geparste Events und erzeugte Berichte gehen wie jedes andere Tool-Ergebnis in den Session-Kontext und damit zum konfigurierten Modell-Provider. Personendaten werden nach bestem Bemühen minimiert (`--suppresspi`); Ausgaben vor Weitergabe prüfen. |
+| **Modell-Kontext** | Geparste Events und erzeugte Berichte gehen wie jedes andere Tool-Ergebnis in den Session-Kontext und damit zum konfigurierten Modell-Provider. Personendaten werden nach bestem Bemühen minimiert (`--suppresspi` bei THOR 10.7, `--no-personal-data` bei THOR 11); Ausgaben vor Weitergabe prüfen. |
 
 ## Lizenz und Veröffentlichungsstatus
 
